@@ -4,7 +4,6 @@ TARGET = cprime
 TEMPLATE = lib
 
 # disable all build warnings
-CONFIG += warn_off
 CONFIG += silent warn_on shared_and_static
 
 
