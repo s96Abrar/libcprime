@@ -31,7 +31,7 @@ unix {
         else: target.path = $$INSTALL_PREFIX/lib
 
         target.path			= $$PREFIX/lib/
-        includes.files	=  globalfunctions.h utilities.h settingsmanage.h
+        includes.files	=  globalfunctions.h utilities.h settingsmanage.h bookmarkmanage.h
         includes.path		= $$PREFIX/include/
 
         data.path = $$PREFIX/share/lib$$TARGET/
@@ -49,12 +49,15 @@ unix {
 HEADERS += \
     globalfunctions.h \
     utilities.h \
-    settingsmanage.h
+    settingsmanage.h \
+    bookmarkmanage.h
 
 SOURCES += \
     globalfunctions.cpp \
     utilities.cpp \
-    settingsmanage.cpp
+    settingsmanage.cpp \
+    bookmarkmanage.cpp
 
 RESOURCES += \
-    style.qrc
+    style.qrc \
+    icons.qrc
