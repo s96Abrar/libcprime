@@ -60,4 +60,3 @@ SOURCES += \
 
 RESOURCES += \
     style.qrc \
-    icons.qrc
