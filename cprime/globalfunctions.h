@@ -32,7 +32,11 @@ along with this program; if not, see {http://www.gnu.org/licenses/}. */
 #include "settingsmanage.h"
 #include "utilities.h"
 
-namespace GlobalFunc {
+#include "libcprime_global.h"
+
+class LIBCPRIMESHARED_EXPORT GlobalFunc {
+
+public:
 
 enum AppsName {
     damn = -1,
@@ -61,14 +65,14 @@ enum Category {
     Terminal
 };
 
-void appEngine(GlobalFunc::Category ctg , const QString path);
+static void appEngine(GlobalFunc::Category ctg , const QString path);
 
-void appEngines(QString appName, const QString &arg = nullptr);
+static void appEngines(QString appName, const QString &arg = nullptr);
 
 // bool checkRecentActivityFile();
 
-void appSelectionEngine(const QString &path);
+static void appSelectionEngine(const QString &path);
 
-}
+};
 
 #endif // GLOBALFUNCTIONS_H

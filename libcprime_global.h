@@ -1,0 +1,12 @@
+#ifndef LIBCPRIME_GLOBAL_H
+#define LIBCPRIME_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(LIBCPRIME_LIBRARY)
+#  define LIBCPRIMESHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define LIBCPRIMESHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // LIBCPRIME_GLOBAL_H

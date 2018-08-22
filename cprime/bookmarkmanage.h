@@ -29,8 +29,9 @@ along with this program; if not, see {http://www.gnu.org/licenses/}. */
 
 #include "utilities.h"
 
+#include "libcprime_global.h"
 
-class BookmarkManage
+class LIBCPRIMESHARED_EXPORT BookmarkManage
 {
 
 public:

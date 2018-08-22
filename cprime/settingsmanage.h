@@ -23,8 +23,9 @@ along with this program; if not, see {http://www.gnu.org/licenses/}. */
 #include <QSettings>
 #include <QVariant>
 
+#include "libcprime_global.h"
 
-class SettingsManage
+class LIBCPRIMESHARED_EXPORT SettingsManage
 {
 
 public:

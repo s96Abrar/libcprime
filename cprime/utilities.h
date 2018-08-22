@@ -29,8 +29,11 @@ along with this program; if not, see {http://www.gnu.org/licenses/}. */
 #include "settingsmanage.h"
 //#include "corefm/fileutils.h"
 
-namespace Utilities {
+#include "libcprime_global.h"
 
+class LIBCPRIMESHARED_EXPORT Utilities {
+
+public:
 enum MessageType {
     Info = 0,
     Warning = 1,
@@ -48,35 +51,35 @@ enum FolderSetup {
     TrashFolder
 };
 
-QRect screensize();
+static QRect screensize();
 
-QString checkIsValidDir(const QString str);
-QString checkIsValidFile(const QString str);
+static QString checkIsValidDir(const QString str);
+static QString checkIsValidFile(const QString str);
 
-bool moveToTrash(const QString &fileName);
+static bool moveToTrash(const QString &fileName);
 
-void messageEngine(const QString &message, Utilities::MessageType messageType);
+static void messageEngine(const QString &message, Utilities::MessageType messageType);
 
-QSettings *getStylesheetValue();
-QString getStylesheetFileContent(const QString &path);
-QString readStringFromFile(const QString &path, const QIODevice::OpenMode &mode);
+static QSettings *getStylesheetValue();
+static QString getStylesheetFileContent(const QString &path);
+static QString readStringFromFile(const QString &path, const QIODevice::OpenMode &mode);
 
-QStringList fStringList(QStringList left, QStringList right, QFont font);
+static QStringList fStringList(QStringList left, QStringList right, QFont font);
 
-QString formatSize(qint64 num);
+static QString formatSize(qint64 num);
 
-QString sentDateText(const QString &dateTime);
-bool saveToRecent(const QString &appName, const QString &pathName);
+static QString sentDateText(const QString &dateTime);
+static bool saveToRecent(const QString &appName, const QString &pathName);
 
-void setupFolder(Utilities::FolderSetup fs);
+static void setupFolder(Utilities::FolderSetup fs);
 
-QIcon getAppIcon(const QString &appName);
-QIcon getFileIcon(const QString &filePath);
+static QIcon getAppIcon(const QString &appName);
+static QIcon getFileIcon(const QString &filePath);
 
-QStringList sortDate(QStringList &dateList, Utilities::sortOrder s = ASCENDING);
-QStringList sortTime(QStringList &timeList, Utilities::sortOrder s = ASCENDING, QString format = "hh.mm.ss");
-QStringList sortList(QStringList &list, Utilities::sortOrder s = ASCENDING);
-QStringList sortDateTime(QStringList &dateTimeList, Utilities::sortOrder s = ASCENDING);
+static QStringList sortDate(QStringList &dateList, Utilities::sortOrder s = ASCENDING);
+static QStringList sortTime(QStringList &timeList, Utilities::sortOrder s = ASCENDING, QString format = "hh.mm.ss");
+static QStringList sortList(QStringList &list, Utilities::sortOrder s = ASCENDING);
+static QStringList sortDateTime(QStringList &dateTimeList, Utilities::sortOrder s = ASCENDING);
 
 static void addDropShadow(QWidget *widget, const int alpha, const int blur = 25, const QString stylesheet = "") {
     SettingsManage sm;
@@ -91,6 +94,6 @@ static void addDropShadow(QWidget *widget, const int alpha, const int blur = 25,
     }
 }
 
-}
+};
 
 #endif // UTILITIES_H
