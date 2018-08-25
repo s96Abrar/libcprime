@@ -68,7 +68,9 @@ SOURCES += \
     cprime/bookmarkdialog.cpp
 
 RESOURCES += \
+    style.qrc \
     icons.qrc
-
+    
 FORMS += \
     cprime/bookmarkdialog.ui
+    
