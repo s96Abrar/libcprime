@@ -36,6 +36,7 @@ void SettingsManage::createDefaultSettings()
         cSetting->setValue("File-Manager", "CoreFM");
         cSetting->setValue("Text-Editor", "CorePad");
         cSetting->setValue("Image-Viewer", "CoreImage");
+        cSetting->setValue("Image-Editor", "CorePaint");
         cSetting->endGroup();
 
         cSetting->beginGroup("CoreFM");
@@ -129,28 +130,36 @@ QString SettingsManage::getTerminal() {
     return getSpecificValue("CoreApps", "Terminal").toString();
 }
 
-bool SettingsManage::setFileManager(QString termName) {
-    return setSpecificValue("CoreApps", "File-Manager", termName);
+bool SettingsManage::setFileManager(QString fmName) {
+    return setSpecificValue("CoreApps", "File-Manager", fmName);
 }
 
 QString SettingsManage::getFileManager() {
     return getSpecificValue("CoreApps", "File-Manager").toString();
 }
 
-bool SettingsManage::setTextEditor(QString termName) {
-    return setSpecificValue("CoreApps", "Text-Editor", termName);
+bool SettingsManage::setTextEditor(QString textEditorName) {
+    return setSpecificValue("CoreApps", "Text-Editor", textEditorName);
 }
 
 QString SettingsManage::getTextEditor() {
     return getSpecificValue("CoreApps", "Text-Editor").toString();
 }
 
-bool SettingsManage::setImageViewer(QString termName) {
-    return setSpecificValue("CoreApps", "Image-Viewer", termName);
+bool SettingsManage::setImageViewer(QString imageViewerName) {
+    return setSpecificValue("CoreApps", "Image-Viewer", imageViewerName);
 }
 
 QString SettingsManage::getImageViewer() {
     return getSpecificValue("CoreApps", "Image-Viewer").toString();
+}
+
+bool SettingsManage::setImageEditor(QString imageEditorName) {
+    return setSpecificValue("CoreApps", "Image-Editor", imageEditorName);
+}
+
+QString SettingsManage::getImageEditor() {
+    return getSpecificValue("CoreApps", "Image-Editor").toString();
 }
 //-------------------------CoreApps--------------------------------------
 

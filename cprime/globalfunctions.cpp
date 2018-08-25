@@ -16,25 +16,6 @@ along with this program; if not, see {http://www.gnu.org/licenses/}. */
 
 #include "globalfunctions.h"
 
-//#include "corepad/corepad.h"
-//#include "start/start.h"
-//#include "settings/settings.h"
-//#include "start/sessionsavedialog.h"
-//#include "about/about.h"
-//#include "help/help.h"
-//#include "search/search.h"
-//#include "dashboard/dashboard.h"
-//#include "corefm/corefm.h"
-//#include "corepaint/corepaint.h"
-//#include "coreimage/coreimage.h"
-//#include "coreplayer/coreplayer.h"
-//#include "coreaction/coreaction.h"
-//#include "coretime/coretime.h"
-//#include "corepdf/corepdf.h"
-//#include "coreterminal/coreterminal.h"
-//#include "corerenamer/corerenamer.h"
-
-
 
 //bool checkRecentActivityFile()
 //{
@@ -63,9 +44,12 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg ,const QString path)
 
         QProcess::startDetached(defultFileManager, QStringList() << path);
 
-        // Function from utilities.cpp
+        // Show message
         QString mess = defultFileManager + " opening " ;
         Utilities::messageEngine(mess, Utilities::MessageType::Info);
+
+        // Save file to RecentActivity
+        Utilities::saveToRecent(defultFileManager,path);
 
         break;
     }
@@ -75,9 +59,12 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg ,const QString path)
 
         QProcess::startDetached(defultTextEditor, QStringList() << path);
 
-        // Function from utilities.cpp
+        // Show message
         QString mess = defultTextEditor + " opening " ;
         Utilities::messageEngine(mess, Utilities::MessageType::Info);
+
+        // Save file to RecentActivity
+        Utilities::saveToRecent(defultTextEditor,path);
 
         break;
     }
@@ -87,12 +74,32 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg ,const QString path)
 
         QProcess::startDetached(defultImageViewer, QStringList() << path);
 
-        // Function from utilities.cpp
+        // Show message
         QString mess = defultImageViewer + " opening " ;
         Utilities::messageEngine(mess, Utilities::MessageType::Info);
 
+        // Save file to RecentActivity
+        Utilities::saveToRecent(defultImageViewer,path);
+
         break;
     }
+
+    case GlobalFunc::Category::ImageEditor: {
+
+        QString defultImageEditor = sm.getImageEditor(); // selected ImageEditor name from settings.
+
+        QProcess::startDetached(defultImageEditor, QStringList() << path);
+
+        // Show message
+        QString mess = defultImageEditor + " opening " ;
+        Utilities::messageEngine(mess, Utilities::MessageType::Info);
+
+        // Save file to RecentActivity
+        Utilities::saveToRecent(defultImageEditor,path);
+
+        break;
+    }
+
     case GlobalFunc::Category::Terminal: {
 
         QString defultTerminal = sm.getTerminal(); // selected terminal name from settings.
@@ -101,12 +108,12 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg ,const QString path)
         args.removeAt(0);
 
         if (name == "CoreTerminal") {
-            GlobalFunc::appEngines("CoreTerminal",path);
+            GlobalFunc::systemAppOpener("CoreTerminal",path);
         } else {
             QProcess::startDetached(name, args, path);
         }
 
-        // Function from utilities.cpp
+        // Show message
         QString mess = defultTerminal + " opening " ;
         Utilities::messageEngine(mess, Utilities::MessageType::Info);
 
@@ -119,12 +126,12 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg ,const QString path)
 
 #include <QString>
 #include <QStringList>
-void GlobalFunc::appEngines(QString appName, const QString &arg) // engine to open app in window
+void GlobalFunc::systemAppOpener(QString appName, const QString &arg) // engine to open app in window
 {
     QString cmd = "coreBox";
     QProcess::startDetached(cmd ,QStringList() <<  QString ("--" + appName.toLower()) << arg);
 
-    // Function from utilities.cpp
+    // Show message
     QString mess = appName + " opening " ;
     Utilities::messageEngine(mess, Utilities::MessageType::Info);
 }
@@ -146,27 +153,27 @@ void GlobalFunc::appSelectionEngine(const QString &path) // engine send right fi
 
     QString suffix = QFileInfo(path).suffix();
 
-    //CoreFM
+    //File Manager
     if (info.isDir()) {
         GlobalFunc::appEngine(GlobalFunc::Category::FileManager, info.absoluteFilePath());
         return;
     }
 
-    //CoreImage
+    //Image Viewer
     else if (image.contains(suffix, Qt::CaseInsensitive)) {
         GlobalFunc::appEngine(GlobalFunc::Category::ImageViewer, info.absoluteFilePath());
         return;
     }
 
-    //CorePad
+    //Text Editor
     else if (txts.contains(suffix, Qt::CaseInsensitive)) {
         GlobalFunc::appEngine(GlobalFunc::Category::TextEditor, info.absoluteFilePath());
         return;
     }
 
-    //CorePDF
+    //PDF Viewer
     else if (pdf.contains(suffix, Qt::CaseInsensitive)) {
-        GlobalFunc::appEngines("CorePDF", info.absoluteFilePath());
+        GlobalFunc::systemAppOpener("CorePDF", info.absoluteFilePath());
         return;
     }
 
