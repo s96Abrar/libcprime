@@ -51,17 +51,41 @@ enum FolderSetup {
     TrashFolder
 };
 
+enum StyleAppName {
+    AboutStyle,
+    BookmarkItStyle,
+    BookmarksStyle,
+    CoreActionStyle,
+    CoreArchiverStyle,
+    CoreBoxStyle,
+    CoreFMStyle,
+    CoreImageStyle,
+    CorePadStyle,
+    CorePaintStyle,
+    CorePlayerStyle,
+    CoreRenamerStyle,
+    CoreShotStyle,
+    CoreTimeStyle,
+    DashBoardStyle,
+    DialogStyle,
+    HelpStyle,
+    PropertiesStyle,
+    SearchStyle,
+    SettingsStyle,
+    StartStyle
+};
+
 static QRect screensize();
 
 static QString checkIsValidDir(const QString str);
 static QString checkIsValidFile(const QString str);
 
-static bool moveToTrash(const QString &fileName);
+static bool moveToTrash(const QStringList &fileNames);
 
 static void messageEngine(const QString &message, Utilities::MessageType messageType);
 
 static QSettings *getStylesheetValue();
-static QString getStylesheetFileContent(const QString &path);
+static QString getStylesheetFileContent(Utilities::StyleAppName san);
 static QString readStringFromFile(const QString &path, const QIODevice::OpenMode &mode);
 
 static QStringList fStringList(QStringList left, QStringList right, QFont font);

@@ -17,9 +17,6 @@ along with this program; if not, see {http://www.gnu.org/licenses/}. */
 #include "utilities.h"
 #include <QScreen>
 #include <QFileInfo>
-
-
-
 #include <QMessageBox>
 #include <QFile>
 #include <QDir>
@@ -38,7 +35,7 @@ along with this program; if not, see {http://www.gnu.org/licenses/}. */
 #include <QDate>
 #include <QTime>
 #include <QCollator>
-
+#include <QMessageBox>
 
 QRect Utilities::screensize() // gives the system screen size
 {
@@ -78,14 +75,17 @@ QString Utilities::checkIsValidFile(const QString str) // check if a file is val
 
 // FIX ME
 // Need QStringlist As parameter
-bool Utilities::moveToTrash(const QString &fileName) // moves a file or folder to trash folder
+bool Utilities::moveToTrash(const QStringList &fileNames) // moves a file or folder to trash folder
 {
-//    if (FileUtils::getSize(fileName) >= 1073741824) {
+    QStringList fileNamess(fileNames);
 
-    if (!fileName.isNull()) {
+    foreach (QString fileName, fileNamess) {
+//    if (FileUtils::getSize(fileName) >= 1073741824) {
+        if (!fileName.isNull()) {
+    if (QFileInfo(fileName).size() >= 1073741824) {
         QMessageBox message(QMessageBox::Warning, "Warning!","File size is about 1 GB or larger.\nPlease delete it instead of moveing to trash.\nDo you want to delete it?", QMessageBox::No | QMessageBox::Yes);
         message.setWindowIcon(QIcon(":/app/icons/app-icons/CoreFM.svg"));
-        message.setStyleSheet(getStylesheetFileContent(":/appStyle/style/Dialog.qss"));
+        message.setStyleSheet(getStylesheetFileContent(StyleAppName::DialogStyle));
 
         int reply = message.exec();
 
@@ -106,7 +106,7 @@ bool Utilities::moveToTrash(const QString &fileName) // moves a file or folder t
 
         QMessageBox message(QMessageBox::Warning, "Warning!", "Do you want to Trash the '" + fileName + "' ?", QMessageBox::No | QMessageBox::Yes);
         message.setWindowIcon(QIcon(":/app/icons/app-icons/CoreFM.svg"));
-        message.setStyleSheet(getStylesheetFileContent(":/appStyle/style/Dialog.qss"));
+        message.setStyleSheet(getStylesheetFileContent(StyleAppName::DialogStyle));
 
         int reply = message.exec();
         if (reply == QMessageBox::Yes) {
@@ -124,8 +124,19 @@ bool Utilities::moveToTrash(const QString &fileName) // moves a file or folder t
 
             // Function from utilities.cpp
             Utilities::messageEngine("File Moved to Trash", Utilities::MessageType::Info);
-            return true;
+
+            // .....
+            fileNamess.removeOne(fileName);
+            if (fileNamess.count()) {
+                continue;
+            } else {
+                return true;
+            }
+            //-----------
         }
+    }
+
+    }
     }
     return false;
 }
@@ -182,7 +193,7 @@ QSettings * Utilities::getStylesheetValue()
     // Load view mode
     if (sm.getStyleMode()) {
         appThemePath = ":/theme/style/modeLight.ini";
-    }else {
+    } else {
         appThemePath = ":/theme/style/modeDark.ini";
     }
 
@@ -191,8 +202,104 @@ QSettings * Utilities::getStylesheetValue()
     return mStyleValues;
 }
 
-QString Utilities::getStylesheetFileContent(const QString &path)
+QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
 {
+    /*
+     * /home/abrar/Desktop/Projects/MyRepo/libcprime/style/About.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/BookmarkIt.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Bookmarks.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreAction.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreArchiver.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreBox.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreFM.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreImage.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePad.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePaint.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePlayer.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreRenamer.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreShot.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreTime.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/DashBoard.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Dialog.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Help.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Properties.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Search.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Settings.qss
+/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Start.qss
+     */
+
+    QString path;
+
+    QString argPath = "/usr/share/libcprime/Theme/%1.qss";
+    switch (san) {
+    case StyleAppName::AboutStyle:
+        path = argPath.arg("About");
+        break;
+    case StyleAppName::BookmarkItStyle:
+        path = argPath.arg("BookmarkIt");
+        break;
+    case StyleAppName::BookmarksStyle:
+        path = argPath.arg("Bookmarks");
+        break;
+    case StyleAppName::CoreActionStyle:
+        path = argPath.arg("CoreAction");
+        break;
+    case StyleAppName::CoreArchiverStyle:
+        path = argPath.arg("CoreArchiver");
+        break;
+    case StyleAppName::CoreBoxStyle:
+        path = argPath.arg("CoreBox");
+        break;
+    case StyleAppName::CoreFMStyle:
+        path = argPath.arg("CoreFM");
+        break;
+    case StyleAppName::CoreImageStyle:
+        path = argPath.arg("CoreImage");
+        break;
+    case StyleAppName::CorePadStyle:
+        path = argPath.arg("CorePad");
+        break;
+    case StyleAppName::CorePaintStyle:
+        path = argPath.arg("CorePaint");
+        break;
+    case StyleAppName::CorePlayerStyle:
+        path = argPath.arg("CorePlayer");
+        break;
+    case StyleAppName::CoreRenamerStyle:
+        path = argPath.arg("CoreRenamer");
+        break;
+    case StyleAppName::CoreShotStyle:
+        path = argPath.arg("CoreShot");
+        break;
+    case StyleAppName::CoreTimeStyle:
+        path = argPath.arg("CoreTime");
+        break;
+    case StyleAppName::DashBoardStyle:
+        path = argPath.arg("DashBoard");
+        break;
+    case StyleAppName::DialogStyle:
+        path = argPath.arg("Dialog");
+        break;
+    case StyleAppName::HelpStyle:
+        path = argPath.arg("Help");
+        break;
+    case StyleAppName::PropertiesStyle:
+        path = argPath.arg("Properties");
+        break;
+    case StyleAppName::SearchStyle:
+        path = argPath.arg("Search");
+        break;
+    case StyleAppName::SettingsStyle:
+        path = argPath.arg("Settings");
+        break;
+    case StyleAppName::StartStyle:
+        path = argPath.arg("Start");
+        break;
+    default:
+        return NULL;
+        break;
+    }
+
     SettingsManage sm;
     QSettings *mStyleValues;
     QString mStylesheetFileContent;
@@ -200,9 +307,9 @@ QString Utilities::getStylesheetFileContent(const QString &path)
 
     // Load view mode
     if (sm.getStyleMode()) {
-        appThemePath = ":/theme/style/modeLight.ini";
+        appThemePath = "/usr/share/libcprime/Theme/modeLight.ini";
     }else {
-        appThemePath = ":/theme/style/modeDark.ini";
+        appThemePath = "/usr/share/libcprime/Theme/modeDark.ini";
     }
 
     mStyleValues = new QSettings(appThemePath, QSettings::IniFormat);
@@ -234,6 +341,8 @@ QString Utilities::readStringFromFile(const QString &path, const QIODevice::Open
     if(file->open(mode)) {
       data = file->readAll();
       file->close();
+    } else {
+        QMessageBox::warning(nullptr, "PROBLEM", path + " Not found for theme.", QMessageBox::Ok);
     }
 
     return data;

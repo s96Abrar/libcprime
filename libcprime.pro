@@ -1,15 +1,18 @@
-QT       += widgets core
+QT       += widgets core gui
 
 TARGET = cprime
 TEMPLATE = lib
 
 # disable all build warnings
-CONFIG += silent warn_on static
+CONFIG += silent warn_on
 
 DEFINES += LIBCPRIME_LIBRARY
 
+INCLUDEPATH += ./cprime/
+DEPENDPATH  += ./cprime/
+
 # Disable Debug on Release
-CONFIG(release):DEFINES += QT_NO_DEBUG_OUTPUT
+#CONFIG(release):DEFINES += QT_NO_DEBUG_OUTPUT
 
 VERSION = 1.0.9
 DEFINES += LIBCPRIME_LIBRARY
@@ -24,17 +27,21 @@ unix {
                 PREFIX = /usr
         }
 
-        INSTALLS	+= target includes data
+        INSTALLS	+= target includes data themefiles
         CONFIG		+= create_pc no_install_prl link_pkgconfig
         contains(DEFINES, LIB64): target.path = $$INSTALL_PREFIX/lib64
         else: target.path = $$INSTALL_PREFIX/lib
 
         target.path			= $$PREFIX/lib/
+
         includes.files	                = cprime/*.h libcprime_global.h
         includes.path		        = $$PREFIX/include/cprime/
 
         data.path = $$PREFIX/share/lib$$TARGET/
         data.files = Changelog README
+
+        themefiles.path = $$PREFIX/share/lib$$TARGET/Theme
+        themefiles.files = style/*.qss style/*.ini
 
         QMAKE_PKGCONFIG_NAME = libcprime
         QMAKE_PKGCONFIG_DESCRIPTION = Library for coreapps
@@ -50,14 +57,18 @@ HEADERS += \
     cprime/utilities.h \
     cprime/settingsmanage.h \
     cprime/bookmarkmanage.h \
-    libcprime_global.h
+    libcprime_global.h \
+    cprime/bookmarkdialog.h
 
 SOURCES += \
     cprime/globalfunctions.cpp \
     cprime/utilities.cpp \
     cprime/settingsmanage.cpp \
-    cprime/bookmarkmanage.cpp
+    cprime/bookmarkmanage.cpp \
+    cprime/bookmarkdialog.cpp
 
 RESOURCES += \
-    style.qrc \
     icons.qrc
+
+FORMS += \
+    cprime/bookmarkdialog.ui
