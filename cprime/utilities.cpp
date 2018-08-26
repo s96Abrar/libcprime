@@ -439,20 +439,10 @@ void Utilities::setupFolder(Utilities::FolderSetup fs)
 
 QIcon Utilities::getAppIcon(const QString &appName) // gives a app icon from selected theme
 {
-    QStringList apps;
-    apps << "About" << "Bookmarks" << "CoreAction" << "CoreArchiver" << "CoreFM"
-         << "CoreImage" << "CoreInfo" << "CorePad" << "CorePaint" << "CorePDF"
-         << "CorePlayer" << "CoreRenamer" << "CoreShot" << "CoreTerminal" << "CoreTime"
-         << "Search" << "DashBoard" << "Help" << "Settings" << "Start";
-
     SettingsManage sm;
     QIcon icon;
 
-    if (apps.contains(appName)) {
-        icon = QIcon(QString(":/app/icons/app-icons/%1.svg").arg(appName));
-    } else {
-        icon = QIcon::fromTheme(appName, QIcon::fromTheme(sm.getThemeName()));
-    }
+    icon = QIcon::fromTheme(appName, QIcon::fromTheme(sm.getThemeName()));
 
     if (icon.isNull())
         return QApplication::style()->standardIcon(QStyle::SP_DesktopIcon);
