@@ -57,6 +57,12 @@ public:
     bool setImageEditor(QString imageEditorName);
     QString getImageEditor();
 
+    bool setPDFVierwer(QString imageEditorName);
+    QString getPDFVierwer();
+
+    bool setMediaPlayer(QString imageEditorName);
+    QString getMediaPlayer();
+
     bool getIsRealMimeType();
     bool setIsRealMimeType(bool isRealMime);
 

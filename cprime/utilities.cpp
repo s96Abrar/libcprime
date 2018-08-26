@@ -466,7 +466,6 @@ QIcon Utilities::getFileIcon(const QString &filePath) // gives a file or folder 
         return QApplication::style()->standardIcon(QStyle::SP_FileIcon);
     else
         return icon;
-
 }
 
 QStringList Utilities::sortDate(QStringList &dateList, Utilities::sortOrder s)

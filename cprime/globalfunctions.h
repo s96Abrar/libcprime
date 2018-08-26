@@ -63,6 +63,8 @@ enum Category {
     TextEditor,
     ImageViewer,
     ImageEditor,
+    MediaPlayer,
+    PDFViwer,
     Terminal
 };
 
