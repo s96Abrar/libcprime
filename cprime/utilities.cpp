@@ -168,9 +168,9 @@ QSettings * Utilities::getStylesheetValue()
 
     // Load view mode
     if (sm.getStyleMode()) {
-        appThemePath = ":/theme/style/modeLight.ini";
+        appThemePath = "/usr/share/libcprime/Theme/modeLight.ini";
     } else {
-        appThemePath = ":/theme/style/modeDark.ini";
+        appThemePath = "/usr/share/libcprime/Theme/modeDark.ini";
     }
 
     mStyleValues = new QSettings(appThemePath, QSettings::IniFormat);
