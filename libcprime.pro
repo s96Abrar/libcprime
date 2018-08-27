@@ -14,7 +14,7 @@ DEPENDPATH  += ./cprime/
 # Disable Debug on Release
 #CONFIG(release):DEFINES += QT_NO_DEBUG_OUTPUT
 
-VERSION  = 1.0.9
+VERSION  = 1.1.1
 DEFINES += LIBCPRIME_LIBRARY
 
 MOC_DIR			= ../build/moc
@@ -37,10 +37,10 @@ unix {
         includes.files    = cprime/*.h libcprime_global.h
         includes.path     = $$PREFIX/include/cprime/
 
-        data.path         = $$PREFIX/share/lib$$TARGET/
-        data.files        = Changelog README
+        data.path         = $$PREFIX/share/coreapps/docs
+        data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt
 
-        themefiles.path   = $$PREFIX/share/lib$$TARGET/Theme
+        themefiles.path   = $$PREFIX/share/coreapps/Theme
         themefiles.files  = style/*.qss style/*.ini
 
         QMAKE_PKGCONFIG_NAME        = libcprime
