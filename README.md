@@ -1,5 +1,5 @@
 # LibCPrime
-An Library of CoreApps family.libcprime is a library for CoreApps.
+An Library for CoreApps .
 
 ### Download
 
