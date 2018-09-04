@@ -171,9 +171,9 @@ QSettings * Utilities::getStylesheetValue()
 
     // Load view mode
     if (sm.getStyleMode()) {
-        appThemePath = "/usr/share/libcprime/Theme/modeLight.ini";
+        appThemePath = "/usr/share/coreapps/theme/modeLight.ini";
     } else {
-        appThemePath = "/usr/share/libcprime/Theme/modeDark.ini";
+        appThemePath = "/usr/share/coreapps/theme/modeDark.ini";
     }
 
     mStyleValues = new QSettings(appThemePath, QSettings::IniFormat);
@@ -209,7 +209,7 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
 
     QString path;
 
-    QString argPath = "/usr/share/libcprime/Theme/%1.qss";
+    QString argPath = "/usr/share/coreapps/theme/%1.qss";
     switch (san) {
     case StyleAppName::AboutStyle:
         path = argPath.arg("About");

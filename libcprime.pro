@@ -40,7 +40,7 @@ unix {
         data.path         = $$PREFIX/share/coreapps/docs
         data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt
 
-        themefiles.path   = $$PREFIX/share/coreapps/Theme
+        themefiles.path   = $$PREFIX/share/coreapps/theme
         themefiles.files  = style/*.qss style/*.ini
 
         QMAKE_PKGCONFIG_NAME        = libcprime

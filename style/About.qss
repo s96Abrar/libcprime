@@ -5,6 +5,11 @@
     color: @color07;
     border: none;}
 
+#selectedsection{
+    background-color: transparent;
+    color: @color07;
+    padding: 1px 5px 1px 5px;}
+
 QWidget [accessibleName="content"]{
     background-color: @color01;
     color: @color07;

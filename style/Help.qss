@@ -6,7 +6,7 @@
     border: none;}
 
 
-QFrame [accessibleName="nameBar"]{
+#nameBar{
     background-color: @color03;
     color: @color07;
     border: none;}

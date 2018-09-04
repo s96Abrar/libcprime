@@ -11,7 +11,7 @@ QWidget [accessibleName="shortcut"]{
     color: @color09;
     border: none;}
 
-QFrame [accessibleName="navigationBar"] {
+QWidget [accessibleName="navigationBar"] {
     background-color: @color03;
     color: @color07;
     border: none;}

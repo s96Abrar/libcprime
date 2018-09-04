@@ -10,16 +10,15 @@ QWidget [accessibleName="shortcut"]{
     color: @color09;
     border: none;}
 
-QFrame [accessibleName="searchBox"]{
+QWidget [accessibleName="searchBox"]{
     background-color: @color03;
     color: @color07;
     border: none;}
 
 
 QLineEdit{
-    background-color: transparent;
+    background-color: transparent ;
     color: @color07;
-    height: 22px;
     border: 1px solid @color05;
     padding: 5px 5px 5px 10px;}
 
@@ -63,7 +62,6 @@ QMenu::separator {
 QToolButton{
     background-color: transparent;
     color: @color07;
-    padding: 3px 5px 3px 5px;
     border: 1px solid @color05;}
 QToolButton:pressed{
     background-color: @color04;
