@@ -14,7 +14,7 @@ DEPENDPATH  += ./cprime/
 # Disable Debug on Release
 #CONFIG(release):DEFINES += QT_NO_DEBUG_OUTPUT
 
-VERSION  = 1.1.1
+VERSION  = 2.3
 DEFINES += LIBCPRIME_LIBRARY
 
 MOC_DIR			= ../build/moc
