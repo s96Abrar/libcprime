@@ -23,7 +23,8 @@ Version 2.3
 - fixed corefm opens two tab and added close button.
 - corefm's drive size text not counting properly is fixed.
 - fixed corefm's pathedit not showing compliter by moving to lineEdit widget.
-
+- fixed appicon function in libcprime
+- removed unused cpp file from corefm.
 
 
 

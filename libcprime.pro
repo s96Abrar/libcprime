@@ -14,7 +14,7 @@ DEPENDPATH  += ./cprime/
 # Disable Debug on Release
 #CONFIG(release):DEFINES += QT_NO_DEBUG_OUTPUT
 
-VERSION  = 2.3
+VERSION  = 1.3
 DEFINES += LIBCPRIME_LIBRARY
 
 MOC_DIR			= ../build/moc
@@ -58,6 +58,9 @@ HEADERS += \
     cprime/settingsmanage.h \
     cprime/bookmarkmanage.h \
     cprime/bookmarkdialog.h \
+    cprime/applicationdialog.h \
+    cprime/desktopfile.h \
+    cprime/properties.h \
     libcprime_global.h \
 
 SOURCES += \
@@ -65,7 +68,10 @@ SOURCES += \
     cprime/utilities.cpp \
     cprime/settingsmanage.cpp \
     cprime/bookmarkmanage.cpp \
-    cprime/bookmarkdialog.cpp
+    cprime/bookmarkdialog.cpp \
+    cprime/applicationdialog.cpp \
+    cprime/desktopfile.cpp \
+    cprime/properties.cpp
     
 FORMS += \
     cprime/bookmarkdialog.ui

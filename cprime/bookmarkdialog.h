@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 #include "utilities.h"
 #include "bookmarkmanage.h"
+
 #include "libcprime_global.h"
 
 namespace Ui {

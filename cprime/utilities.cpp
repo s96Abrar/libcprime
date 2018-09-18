@@ -183,30 +183,6 @@ QSettings * Utilities::getStylesheetValue()
 
 QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
 {
-    /*
-     * /home/abrar/Desktop/Projects/MyRepo/libcprime/style/About.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/BookmarkIt.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Bookmarks.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreAction.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreArchiver.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreBox.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreFM.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreImage.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePad.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePaint.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePlayer.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreRenamer.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreShot.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreTime.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/DashBoard.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Dialog.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Help.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Properties.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Search.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Settings.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Start.qss
-     */
-
     QString path;
 
     QString argPath = "/usr/share/coreapps/theme/%1.qss";
@@ -442,15 +418,10 @@ void Utilities::setupFolder(Utilities::FolderSetup fs)
 
 QIcon Utilities::getAppIcon(const QString &appName) // gives a app icon from selected theme
 {
-    SettingsManage sm;
-    QIcon icon;
+    DesktopFile df = DesktopFile("/usr/share/applications/" + appName + ".desktop");
 
-    icon = QIcon::fromTheme(appName, QIcon::fromTheme(sm.getThemeName()));
-
-    if (icon.isNull())
-        return QApplication::style()->standardIcon(QStyle::SP_DesktopIcon);
-    else
-        return icon;
+    QIcon icon(ApplicationDialog::searchAppIcon(df));
+    return icon;
 }
 
 QIcon Utilities::getFileIcon(const QString &filePath) // gives a file or folder icon from system

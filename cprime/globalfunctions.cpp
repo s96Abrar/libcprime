@@ -186,7 +186,7 @@ void GlobalFunc::appSelectionEngine(const QString &path) // engine send right fi
     txts << "txt" << "pro" << "" ;
     pdf << "pdf" << "xps" << "oxps" << "epub" << "cbr" << "cbz" << "cbt" << "cba" ;
     media << "webm" << "ogg" << "mpeg" << "mov" << "mkv" << "flv" << "avi"
-           << "mp3" << "aac" << "m4a"  << "flac";
+           << "mp3" << "aac" << "m4a"  << "flac" << "mp4";
 
     QString suffix = QFileInfo(path).suffix();
 

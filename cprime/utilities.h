@@ -49,6 +49,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include <QMessageBox>
 
 #include "settingsmanage.h"
+#include "desktopfile.h"
+#include "applicationdialog.h"
 
 #include "libcprime_global.h"
 
