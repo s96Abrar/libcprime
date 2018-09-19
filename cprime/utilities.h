@@ -51,6 +51,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include "settingsmanage.h"
 #include "desktopfile.h"
 #include "applicationdialog.h"
+#include "mimeutils.h"
 
 #include "libcprime_global.h"
 
@@ -68,10 +69,11 @@ enum sortOrder {
     DESCENDING = 1
 };
 
-enum FolderSetup {
+enum FileFolderSetup {
     BookmarkFolder = 0,
     DriveMountFolder = 1,
-    TrashFolder
+    TrashFolder,
+    MimeFile
 };
 
 enum StyleAppName {
@@ -118,7 +120,7 @@ static QString formatSize(qint64 num);
 static QString sentDateText(const QString &dateTime);
 static bool saveToRecent(const QString &appName, const QString &pathName);
 
-static void setupFolder(Utilities::FolderSetup fs);
+static void setupFileFolder(Utilities::FileFolderSetup fs);
 
 static QIcon getAppIcon(const QString &appName);
 static QIcon getFileIcon(const QString &filePath);

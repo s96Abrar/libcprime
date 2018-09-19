@@ -27,8 +27,8 @@ SettingsManage::SettingsManage()
 
 void SettingsManage::createDefaultSettings()
 {
-    if (!QFileInfo(cSetting->fileName()).exists()) {
-
+    if (!QFileInfo(cSetting->fileName()).exists())
+    {
         cSetting->beginGroup("CoreApps");
         cSetting->setValue("Recent-Disable", false);
         cSetting->setValue("Force-Theme", QIcon::themeName());
@@ -103,11 +103,11 @@ QString SettingsManage::getThemeName() {
     return getSpecificValue("CoreApps", "Force-Theme").toString();
 }
 
-bool SettingsManage::setDisableRecent(bool showRecent) {
+bool SettingsManage::setShowRecent(bool showRecent) {
     return setSpecificValue("CoreApps", "Recent-Disable", showRecent);
 }
 
-bool SettingsManage::getDisableRecent() {
+bool SettingsManage::getShowRecent() {
     return getSpecificValue("CoreApps", "Recent-Disable").toBool();
 }
 

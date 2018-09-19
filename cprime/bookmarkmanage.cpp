@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 void BookmarkManage::createBook()
 {
     // Function from utilities.cpp setupFolder...
-    Utilities::setupFolder(Utilities::FolderSetup::BookmarkFolder);
+    Utilities::setupFileFolder(Utilities::FileFolderSetup::BookmarkFolder);
 
     QFile file(cbookFullPath);
     file.open(QFile::ReadWrite);

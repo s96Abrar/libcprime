@@ -38,7 +38,7 @@ unix {
         includes.path     = $$PREFIX/include/cprime/
 
         data.path         = $$PREFIX/share/coreapps/docs
-        data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt
+        data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt docs/ReleaseNotes
 
         themefiles.path   = $$PREFIX/share/coreapps/theme
         themefiles.files  = style/*.qss style/*.ini
@@ -62,6 +62,7 @@ HEADERS += \
     cprime/desktopfile.h \
     cprime/properties.h \
     libcprime_global.h \
+    cprime/mimeutils.h
 
 SOURCES += \
     cprime/globalfunctions.cpp \
@@ -71,7 +72,8 @@ SOURCES += \
     cprime/bookmarkdialog.cpp \
     cprime/applicationdialog.cpp \
     cprime/desktopfile.cpp \
-    cprime/properties.cpp
+    cprime/properties.cpp \
+    cprime/mimeutils.cpp
     
 FORMS += \
     cprime/bookmarkdialog.ui

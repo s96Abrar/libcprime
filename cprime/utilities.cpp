@@ -78,7 +78,7 @@ bool Utilities::moveToTrash(const QStringList &fileNames) // moves a file or fol
             }
             else {
                 // Check the trash folder for it't existence
-                Utilities::setupFolder(Utilities::FolderSetup::TrashFolder);
+                Utilities::setupFileFolder(Utilities::FileFolderSetup::TrashFolder);
 
                 QDir trash(QDir::homePath() + "/.local/share/Trash");
                 QFile directorySizes(trash.path() + "/directorysizes");
@@ -364,7 +364,7 @@ QString Utilities::sentDateText(const QString &dateTime)
 bool Utilities::saveToRecent(const QString &appName, const QString &pathName) // save file path and app name for recent activites
 {
     SettingsManage sm;
-    if (sm.getDisableRecent() == false) {
+    if (sm.getShowRecent() == true) {
         if (appName.count() && pathName.count()) {
             QSettings recentActivity(QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat);
             QDateTime currentDT = QDateTime::currentDateTime();
@@ -380,10 +380,10 @@ bool Utilities::saveToRecent(const QString &appName, const QString &pathName) //
 }
 //+++++++++++++++++++++++
 
-void Utilities::setupFolder(Utilities::FolderSetup fs)
+void Utilities::setupFileFolder(FileFolderSetup fs)
 {
     switch (fs) {
-    case Utilities::FolderSetup::BookmarkFolder: {
+    case Utilities::FileFolderSetup::BookmarkFolder: {
         // Setup corebox folder for bookmarks
         const QString b = QDir::homePath() + ".config/coreBox";
         if (!QDir(b).exists()) {
@@ -391,7 +391,7 @@ void Utilities::setupFolder(Utilities::FolderSetup fs)
         }
         break;
     }
-    case Utilities::FolderSetup::DriveMountFolder: {
+    case Utilities::FileFolderSetup::DriveMountFolder: {
         // Setup drive mount folder
         const QString d = QDir::homePath() + "/.coreBox";
         if(!QDir(d).exists()) {
@@ -399,7 +399,7 @@ void Utilities::setupFolder(Utilities::FolderSetup fs)
         }
         break;
     }
-    case Utilities::FolderSetup::TrashFolder: {
+    case Utilities::FileFolderSetup::TrashFolder: {
         // Setup trash folder
         const QString t = QDir::homePath() + ".local/share/Trash";
         if (!QDir(t).exists()) {
@@ -411,6 +411,16 @@ void Utilities::setupFolder(Utilities::FolderSetup fs)
             trash.mkdir("info");
         }
         break;
+    }
+    case Utilities::FileFolderSetup::MimeFile: {
+        // Setup drive mount folder
+        QFileInfo file(QDir::homePath() + "/Desktop/mimeapps.list");
+        if(!file.exists()){
+            MimeUtils *mimeUtils = new MimeUtils();
+            const QString name = "/Desktop/mimeapps.list";
+            mimeUtils->setDefaultsFileName(name);
+            break;
+        }
     }
 
     }
