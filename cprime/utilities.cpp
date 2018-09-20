@@ -414,10 +414,10 @@ void Utilities::setupFileFolder(FileFolderSetup fs)
     }
     case Utilities::FileFolderSetup::MimeFile: {
         // Setup drive mount folder
-        QFileInfo file(QDir::homePath() + "/Desktop/mimeapps.list");
+        QFileInfo file(QDir::homePath() + "/.config/coreBox/mimeapps.list");
         if(!file.exists()){
             MimeUtils *mimeUtils = new MimeUtils();
-            const QString name = "/Desktop/mimeapps.list";
+            const QString name = "/.config/coreBox/mimeapps.list";
             mimeUtils->setDefaultsFileName(name);
             break;
         }
