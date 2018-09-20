@@ -220,7 +220,8 @@ QString BookmarkManage::checkingBookPath(QString sectionn, QString bookPath)
     return line->text();
 }
 
-QString BookmarkManage::checkingBookPathEx(QString bookPath) {
+QString BookmarkManage::checkingBookPathEx(QString bookPath)
+{
     QLineEdit *line = new QLineEdit();
 
     foreach (QString section, getBookSections()) {
