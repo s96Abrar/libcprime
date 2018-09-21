@@ -96,8 +96,8 @@ public:
     bool getShowBattery();
     bool setSHowBattery(bool showBattery);
 
-    bool getDisableRecent();
-    bool setDisableRecent(bool showRecent);
+    bool getShowRecent();
+    bool setShowRecent(bool showRecent);
 
     QString getTimeFormat();
     bool setTimeFormat(QString AmPm);

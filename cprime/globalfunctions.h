@@ -71,13 +71,13 @@ enum Category {
     Terminal
 };
 
-static void appEngine(GlobalFunc::Category ctg , const QString path);
+static void appEngine(GlobalFunc::Category ctg , const QFileInfo &file, QObject *processOwner);
 
 static void systemAppOpener(QString appName, const QString &arg = nullptr);
 
 // bool checkRecentActivityFile();
 
-static void appSelectionEngine(const QString &path);
+static void appSelectionEngine(const QString &path, QObject *processOwner);
 
 };
 

@@ -32,8 +32,7 @@ QLabel{
 
 QFrame{
     background-color: @color06;
-    color: @color07;
-    border-radius: 5px;}
+    color: @color07;}
 
 QTextEdit{
     padding: 5px 5px 5px 5px;

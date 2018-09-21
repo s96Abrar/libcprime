@@ -78,7 +78,7 @@ bool Utilities::moveToTrash(const QStringList &fileNames) // moves a file or fol
             }
             else {
                 // Check the trash folder for it't existence
-                Utilities::setupFolder(Utilities::FolderSetup::TrashFolder);
+                Utilities::setupFileFolder(Utilities::FileFolderSetup::TrashFolder);
 
                 QDir trash(QDir::homePath() + "/.local/share/Trash");
                 QFile directorySizes(trash.path() + "/directorysizes");
@@ -183,30 +183,6 @@ QSettings * Utilities::getStylesheetValue()
 
 QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
 {
-    /*
-     * /home/abrar/Desktop/Projects/MyRepo/libcprime/style/About.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/BookmarkIt.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Bookmarks.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreAction.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreArchiver.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreBox.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreFM.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreImage.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePad.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePaint.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CorePlayer.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreRenamer.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreShot.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/CoreTime.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/DashBoard.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Dialog.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Help.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Properties.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Search.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Settings.qss
-/home/abrar/Desktop/Projects/MyRepo/libcprime/style/Start.qss
-     */
-
     QString path;
 
     QString argPath = "/usr/share/coreapps/theme/%1.qss";
@@ -388,7 +364,7 @@ QString Utilities::sentDateText(const QString &dateTime)
 bool Utilities::saveToRecent(const QString &appName, const QString &pathName) // save file path and app name for recent activites
 {
     SettingsManage sm;
-    if (sm.getDisableRecent() == false) {
+    if (sm.getShowRecent() == true) {
         if (appName.count() && pathName.count()) {
             QSettings recentActivity(QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat);
             QDateTime currentDT = QDateTime::currentDateTime();
@@ -404,10 +380,10 @@ bool Utilities::saveToRecent(const QString &appName, const QString &pathName) //
 }
 //+++++++++++++++++++++++
 
-void Utilities::setupFolder(Utilities::FolderSetup fs)
+void Utilities::setupFileFolder(FileFolderSetup fs)
 {
     switch (fs) {
-    case Utilities::FolderSetup::BookmarkFolder: {
+    case Utilities::FileFolderSetup::BookmarkFolder: {
         // Setup corebox folder for bookmarks
         const QString b = QDir::homePath() + ".config/coreBox";
         if (!QDir(b).exists()) {
@@ -415,7 +391,7 @@ void Utilities::setupFolder(Utilities::FolderSetup fs)
         }
         break;
     }
-    case Utilities::FolderSetup::DriveMountFolder: {
+    case Utilities::FileFolderSetup::DriveMountFolder: {
         // Setup drive mount folder
         const QString d = QDir::homePath() + "/.coreBox";
         if(!QDir(d).exists()) {
@@ -423,7 +399,7 @@ void Utilities::setupFolder(Utilities::FolderSetup fs)
         }
         break;
     }
-    case Utilities::FolderSetup::TrashFolder: {
+    case Utilities::FileFolderSetup::TrashFolder: {
         // Setup trash folder
         const QString t = QDir::homePath() + ".local/share/Trash";
         if (!QDir(t).exists()) {
@@ -436,21 +412,26 @@ void Utilities::setupFolder(Utilities::FolderSetup fs)
         }
         break;
     }
+    case Utilities::FileFolderSetup::MimeFile: {
+        // Setup drive mount folder
+        QFileInfo file(QDir::homePath() + "/.config/coreBox/mimeapps.list");
+        if(!file.exists()){
+            MimeUtils *mimeUtils = new MimeUtils();
+            const QString name = "/.config/coreBox/mimeapps.list";
+            mimeUtils->setDefaultsFileName(name);
+            break;
+        }
+    }
 
     }
 }
 
 QIcon Utilities::getAppIcon(const QString &appName) // gives a app icon from selected theme
 {
-    SettingsManage sm;
-    QIcon icon;
+    DesktopFile df = DesktopFile("/usr/share/applications/" + appName + ".desktop");
 
-    icon = QIcon::fromTheme(appName, QIcon::fromTheme(sm.getThemeName()));
-
-    if (icon.isNull())
-        return QApplication::style()->standardIcon(QStyle::SP_DesktopIcon);
-    else
-        return icon;
+    QIcon icon(ApplicationDialog::searchAppIcon(df));
+    return icon;
 }
 
 QIcon Utilities::getFileIcon(const QString &filePath) // gives a file or folder icon from system

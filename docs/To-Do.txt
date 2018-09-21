@@ -6,31 +6,30 @@ FIX MUST BE SIMPLE.
 3-impossible for us now.
 
 
-corebox
-0 - same name folder and file not move to trash if same name file exist.
+CoreBox
 0 - Mouse left button click is not working for corebox tabwidget beside the tabbar.
 0 - icon and title not changing perfectly.
 0 - closing the corebox needs to inform the app.
-1 - add display scale support.
-1 - add option for using default window manager.
-3 - separate process for per app.
 1 - tab text align left.
+1 - add option for using default window manager or CoreBox.
+3 - separate process for per app.
+
+CoreApps
+1 - add display scale support.
 
 libcprime
+0 - same name folder and file not move to trash if same name file exist.
 1 - file moved message.
 1 - finished copying message.
 1 - file deleted & delete failed message.
 
 style
-0 - save change dialog button >> light mode >> qmessagebox.
-1 - disable text color
+1 - disable widget must have a sperate text color
 2 - changing the theme ,sometime crashes the app(change immediately needed?)
 
 start
 0 - after changing the font >>start >> coreapps grid size not incising
-1 - delete the last one from list and add new at first in all list.
-1 - start button in side of tab(+).
-1 - option to sidebar or tab button(+).
+1 - delete the last one from list and add new at first in Recent activites list.
 1 - add reminder option.
 
 bookmarks
@@ -62,12 +61,11 @@ corefm
 1 - save the splitter position of viewDir in coreFM
 0 - able to create file/folder shortcuts.
 0 - page text in root folder is showing blank.
-0 - pathedit to lineEdit.
 1 - rightbuttonMenu>new add a new option. directly make a paint app file.
 3 - set custom icon in home's folder.
 1 - Can't open other terminal using QProcess.
 3 - Implement clearDeadDefaults() method in MimeUtils.
-3 - Some *.desktop file has more groups(sections) and each group can contain.
+3 - Some *.desktop file has more groups(sections) and each group can contain
     exec command, but only first is read, this must be fixed.
 
 corepaint
@@ -108,7 +106,7 @@ coreshot
 1 - take fullscreen shot using x11.
 
 coreterminal
-1 - htop like shortcut.create custom coomeand
+1 - htop like shortcut.create custom commeand
 0 - Add search bar at coreterminal (not needed for now).
 2 - Open terminal as root for current directory is not supported.
 
@@ -140,25 +138,26 @@ in-future
 *code merge
 
 
-
 Y - Hidden file count at fileutils.cpp struct
 all close function name will be same
 
 
-[corepdf not working] - save to recent = fix
-  - add tray icon and integrate with all app.code utilities line 171.
+
+Discuss
 [not working] - utilities line 482. using qfilewatcher at bookmark, start. 
-[Need to check after save session fixed] restore session dose not restore all the app.
-Discuss - see the itemtotext function in corefm line 2325 .discuss the result in every folder
-  - closeAllTabs and on_paintTabs_tabCloseRequested in corepaint never executed
+- see the itemtotext function in corefm line 2325 .discuss the result in every folder
+- closeAllTabs and on_paintTabs_tabCloseRequested in corepaint never executed
 [can't Fix] - zoom problem in corepaint
 [More knowledge needed] - prgonce in utilites
 [MyModel.cpp -> cacheInfo() ] - find the thumbs.cache creation function.
-  - occurs problem in thumbs
+  - occurs problem in thumbs 
+[corepdf not working] - save to recent = fix
+2 - changing the theme ,sometime crashes the app(change immediately needed?)
 
-
- - corefm line 2348 ,2292 .fix it.
-fix the corearchiver .
+Task
+0 - not working create file/folder shortcuts in corefm.
+corepaint
+0 - fix contex menu.
 
 
 test

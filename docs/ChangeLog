@@ -19,6 +19,16 @@ Version 2.3
 - added qstringlist in all app's open fnunction's as parameter.
 - fixed coreshot preview widgts crashs.
 - fixed all stylsheet releated issues.
+- fixed start speedial icon gape.
+- fixed corefm opens two tab and added close button.
+- corefm's drive size text not counting properly is fixed.
+- fixed corefm's pathedit not showing compliter by moving to lineEdit widget.
+- fixed appicon function in libcprime
+- removed unused cpp file from corefm.
+
+
+
+
 
 
 Version 2.2,Released date Thursday, July 26, 2018.
