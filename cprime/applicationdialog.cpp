@@ -17,8 +17,15 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
-#include "applicationdialog.h"
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QCompleter>
+#include <QStringListModel>
+#include <QDirIterator>
+#include <QDebug>
 
+#include "utilities.h"
+#include "applicationdialog.h"
 
 ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
 {
@@ -73,6 +80,7 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
 
     // Load applications and create category tree list
     QList<DesktopFile> apps = ApplicationDialog::getApplications();
+
     foreach (DesktopFile app, apps) {
 
       // Check for name
@@ -92,6 +100,9 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
       // Register application
       applications.insert(app.getPureFileName(), item);
     }
+
+    appList->setSortingEnabled(true);
+    appList->sortByColumn(0, Qt::AscendingOrder);
 
     // Create completer and its model for editation of command
     QStringListModel* model = new QStringListModel(this);
@@ -162,10 +173,12 @@ QList<DesktopFile> ApplicationDialog::getApplications()
     QDirIterator it("/usr/share/applications", QStringList("*.desktop"),
                     QDir::Files | QDir::NoDotAndDotDot,
                     QDirIterator::Subdirectories);
+
     while (it.hasNext()) {
       it.next();
       apps.append(DesktopFile(it.filePath()));
     }
+
     return apps;
 }
 
@@ -184,7 +197,7 @@ QString ApplicationDialog::getCurrentLauncher() const
  */
 void ApplicationDialog::createCategories()
 {
-    // Crate cathegories
+    // Create cathegories
     foreach (QString name, catNames.keys()) {
 
       // Find icon
@@ -252,7 +265,7 @@ QTreeWidgetItem* ApplicationDialog::findCategory(const DesktopFile &app)
  * @param current
  * @param previous
  */
-void ApplicationDialog::updateCommand(QTreeWidgetItem *current,QTreeWidgetItem *previous)
+void ApplicationDialog::updateCommand(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     Q_UNUSED(previous);
     edtCommand->setText(applications.key(current));

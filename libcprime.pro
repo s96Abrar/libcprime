@@ -14,8 +14,7 @@ DEPENDPATH  += ./cprime/
 # Disable Debug on Release
 #CONFIG(release):DEFINES += QT_NO_DEBUG_OUTPUT
 
-VERSION  = 1.3
-DEFINES += LIBCPRIME_LIBRARY
+VERSION  = 2.3.0
 
 MOC_DIR			= ../build/moc
 OBJECTS_DIR		= ../build/obj
@@ -62,7 +61,8 @@ HEADERS += \
     cprime/desktopfile.h \
     cprime/properties.h \
     libcprime_global.h \
-    cprime/mimeutils.h
+    cprime/mimeutils.h \
+    cprime/stringfunc.h
 
 SOURCES += \
     cprime/globalfunctions.cpp \
@@ -73,7 +73,8 @@ SOURCES += \
     cprime/applicationdialog.cpp \
     cprime/desktopfile.cpp \
     cprime/properties.cpp \
-    cprime/mimeutils.cpp
+    cprime/mimeutils.cpp \
+    cprime/stringfunc.cpp
     
 FORMS += \
     cprime/bookmarkdialog.ui

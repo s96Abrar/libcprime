@@ -227,7 +227,7 @@ QString BookmarkManage::checkingBookPathEx(QString bookPath)
     foreach (QString section, getBookSections()) {
         foreach (QString bName, getBookNames(section)) {
             if (!QString::compare(bookmarkPath(section, bName), bookPath, Qt::CaseSensitive)) {
-                line->setText(QString("\"%1\" exists in \"%2\" section.").arg(bookPath).arg(section));
+                line->setText(QString("\"%1\" exists in \"%2\" section.").arg(bName).arg(section));
                 return line->text();
             } else { line->setText(""); continue;}
         }
