@@ -18,7 +18,7 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 #include "utilities.h"
-
+#include <QDebug>
 
 QRect Utilities::screensize() // gives the system screen size
 {
@@ -262,9 +262,9 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
 
     // Load view mode
     if (sm.getStyleMode()) {
-        appThemePath = "/usr/share/libcprime/Theme/modeLight.ini";
+        appThemePath = "/usr/share/coreapps/theme/modeLight.ini";
     }else {
-        appThemePath = "/usr/share/libcprime/Theme/modeDark.ini";
+        appThemePath = "/usr/share/coreapps/theme/modeDark.ini";
     }
 
     mStyleValues = new QSettings(appThemePath, QSettings::IniFormat);

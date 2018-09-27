@@ -17,27 +17,24 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
+#pragma once
+
 #ifndef APPLICATIONDIALOG_H
 #define APPLICATIONDIALOG_H
 
-#include "desktopfile.h"
-
+#include <QObject>
 #include <QDialog>
+#include <QWidget>
+#include <QIcon>
 #include <QTreeWidget>
-#include <QVBoxLayout>
-#include <QDialogButtonBox>
+#include <QTreeWidgetItem>
 #include <QLineEdit>
-#include <QFormLayout>
-#include <QCompleter>
-#include <QStringListModel>
-#include <QDirIterator>
+#include <QVBoxLayout>
 
-#include <cprime/utilities.h>
-
+#include "desktopfile.h"
 #include "libcprime_global.h"
 
-
-class ApplicationDialog : public QDialog {
+class LIBCPRIMESHARED_EXPORT ApplicationDialog : public QDialog {
 
     Q_OBJECT
 

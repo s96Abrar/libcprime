@@ -17,17 +17,16 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
+#pragma once
 
 #ifndef BOOKMARKDIALOG_H
 #define BOOKMARKDIALOG_H
 
+#include <QObject>
 #include <QWidget>
 #include <QDialog>
-#include <QTimer>
 
-#include "utilities.h"
 #include "bookmarkmanage.h"
-
 #include "libcprime_global.h"
 
 namespace Ui {

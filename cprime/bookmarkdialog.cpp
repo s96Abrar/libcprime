@@ -17,9 +17,11 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
+#include <QTimer>
+
 #include "bookmarkdialog.h"
 #include "ui_bookmarkdialog.h"
-
+#include "utilities.h"
 
 bookmarkDialog::bookmarkDialog(QWidget *parent) : QDialog(parent),ui(new Ui::bookmarkDialog)
 {
@@ -148,7 +150,7 @@ void bookmarkDialog::callBookMarkDialog(QWidget *parent, const QString &currentP
     QFileInfo info(currentPath);
     BookmarkManage bm;
     const QString str = bm.checkingBookPathEx(currentPath);
-    if (str.isEmpty() || str.isNull()) {
+    if (str.count() == 0) {
         bookmarkDialog *bkdlg = new bookmarkDialog(parent);
         QIcon ico = Utilities::getFileIcon(currentPath);
         QPixmap pix = ico.pixmap(QSize(100, 80));

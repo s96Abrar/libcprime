@@ -18,7 +18,7 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 #include "globalfunctions.h"
-
+#include <QDebug>
 
 //bool checkRecentActivityFile()
 //{
@@ -47,8 +47,17 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg , const QFileInfo &file,QObj
 
         QString defultFileManager = sm.getFileManager(); // selected FileManager name from settings.
 
-        QString appName = defultFileManager.toLower() + ".desktop";
+        QString appName = defultFileManager/*.toLower()*/ + ".desktop";
+
+//        if (defultFileManager == "Thunar") {
+//           appName = defultFileManager + ".desktop";
+//        }
+
         DesktopFile df = DesktopFile("/usr/share/applications/" + appName);
+//        if (!QFileInfo("/usr/share/applications/" + appName).exists()) {
+//            Utilities::messageEngine(QString("Selected File Manager (%1) Not Found.").arg(appName), Utilities::MessageType::Warning);
+//            return;
+//        }
         mimeUtils->openInApp(df.getExec(), file, processOwner);
 
         // Show message
@@ -187,9 +196,9 @@ void GlobalFunc::systemAppOpener(QString appName, const QString &arg) // engine 
 void GlobalFunc::appSelectionEngine(const QString &path,QObject *processOwner) // engine send right file to coreapps or system
 {
     QFileInfo file(path);
-    if(!file.exists() && !path.isEmpty()){
+    if(!file.exists() || path.count() == 0){
         // Function from utilities.cpp
-        Utilities::messageEngine("File not exists", Utilities::MessageType::Warning);
+        Utilities::messageEngine("File not exists...", Utilities::MessageType::Warning);
         return;
     }
 
@@ -204,7 +213,7 @@ void GlobalFunc::appSelectionEngine(const QString &path,QObject *processOwner) /
 
     //File Manager
     if (file.isDir()) {
-        GlobalFunc::appEngine(GlobalFunc::Category::FileManager, file,processOwner);
+        GlobalFunc::appEngine(GlobalFunc::Category::FileManager, file, processOwner);
         return;
     }
 

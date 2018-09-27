@@ -17,16 +17,16 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
+#pragma once
+
 #ifndef DESKTOPFILE_H
 #define DESKTOPFILE_H
 
-#include "properties.h"
-
+#include <QObject>
 #include <QStringList>
-#include <QFile>
 
+#include "properties.h"
 #include "libcprime_global.h"
-
 
 /**
  * @class DesktopFile
@@ -34,10 +34,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
  * @author Michal Rost
  * @date 13.1.2013
  */
-class DesktopFile {
+class LIBCPRIMESHARED_EXPORT DesktopFile {
 
 public:
     explicit DesktopFile(const QString &fileName = "");
+
     QString getFileName() const;
     QString getPureFileName() const;
     QString getName() const;
