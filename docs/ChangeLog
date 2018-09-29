@@ -25,6 +25,15 @@ Version 2.3
 - fixed corefm's pathedit not showing compliter by moving to lineEdit widget.
 - fixed appicon function in libcprime
 - removed unused cpp file from corefm.
+- fixed mimelist is not creating by coreapps in libcprime.
+- enabled sort in application dialog in libcprime.
+- sort in application dialog in libcprime.
+- changed bothe library version to 2.3 .
+- fix bookmark delete and edit button( leave the row button).
+- if folder/file is bookmarked, now will only show the file/folder name in messagebox
+- fixed coreinfo not opening any file after installing.
+- added a function to make first letter capital of any word in libcprime.
+
 
 
 

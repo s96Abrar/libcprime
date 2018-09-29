@@ -363,7 +363,9 @@ QString Utilities::sentDateText(const QString &dateTime)
 
 bool Utilities::saveToRecent(const QString &appName, const QString &pathName) // save file path and app name for recent activites
 {
+    StringFunc sf;
     SettingsManage sm;
+    QString appname = sf.CapitalizeEachWord(appName);
     if (sm.getShowRecent() == true) {
         if (appName.count() && pathName.count()) {
             QSettings recentActivity(QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat);
@@ -371,7 +373,7 @@ bool Utilities::saveToRecent(const QString &appName, const QString &pathName) //
             QString group = currentDT.toString("dd.MM.yyyy");
             QString key = currentDT.toString("hh.mm.ss");
             recentActivity.beginGroup(group);
-            recentActivity.setValue(key, appName + "\t\t\t" + pathName);
+            recentActivity.setValue(key, appname + "\t\t\t" + pathName);
             recentActivity.endGroup();
             return true;
         }

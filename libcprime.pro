@@ -6,8 +6,6 @@ TEMPLATE  = lib
 # disable all build warnings
 CONFIG   += silent warn_on thread silent build_all c++11
 
-DEFINES  += LIBCPRIME_LIBRARY
-
 INCLUDEPATH += ./cprime/
 DEPENDPATH  += ./cprime/
 
@@ -15,6 +13,36 @@ DEPENDPATH  += ./cprime/
 #CONFIG(release):DEFINES += QT_NO_DEBUG_OUTPUT
 
 VERSION  = 2.3.0
+DEFINES  += LIBCPRIME_LIBRARY
+
+HEADERS += \
+    cprime/globalfunctions.h \
+    cprime/utilities.h \
+    cprime/settingsmanage.h \
+    cprime/bookmarkmanage.h \
+    cprime/bookmarkdialog.h \
+    cprime/applicationdialog.h \
+    cprime/desktopfile.h \
+    cprime/properties.h \
+    libcprime_global.h \
+    cprime/mimeutils.h \
+    cprime/stringfunc.h
+
+SOURCES += \
+    cprime/globalfunctions.cpp \
+    cprime/utilities.cpp \
+    cprime/settingsmanage.cpp \
+    cprime/bookmarkmanage.cpp \
+    cprime/bookmarkdialog.cpp \
+    cprime/applicationdialog.cpp \
+    cprime/desktopfile.cpp \
+    cprime/properties.cpp \
+    cprime/mimeutils.cpp \
+    cprime/stringfunc.cpp
+
+FORMS += \
+    cprime/bookmarkdialog.ui
+
 
 MOC_DIR			= ../build/moc
 OBJECTS_DIR		= ../build/obj
@@ -50,32 +78,4 @@ unix {
         QMAKE_PKGCONFIG_VERSION     = $$VERSION
         QMAKE_PKGCONFIG_DESTDIR     = pkgconfig
 }
-
-HEADERS += \
-    cprime/globalfunctions.h \
-    cprime/utilities.h \
-    cprime/settingsmanage.h \
-    cprime/bookmarkmanage.h \
-    cprime/bookmarkdialog.h \
-    cprime/applicationdialog.h \
-    cprime/desktopfile.h \
-    cprime/properties.h \
-    libcprime_global.h \
-    cprime/mimeutils.h \
-    cprime/stringfunc.h
-
-SOURCES += \
-    cprime/globalfunctions.cpp \
-    cprime/utilities.cpp \
-    cprime/settingsmanage.cpp \
-    cprime/bookmarkmanage.cpp \
-    cprime/bookmarkdialog.cpp \
-    cprime/applicationdialog.cpp \
-    cprime/desktopfile.cpp \
-    cprime/properties.cpp \
-    cprime/mimeutils.cpp \
-    cprime/stringfunc.cpp
-    
-FORMS += \
-    cprime/bookmarkdialog.ui
     

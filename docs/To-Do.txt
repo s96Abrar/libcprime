@@ -35,7 +35,6 @@ start
 bookmarks
 1 - make bookmark count more relevant
 0 - when a bookmark is selected show the delete and edit button on side of the selected bookmark otherwise hide them.
-1 - one click to open all the bookmark in one section(only first 8 of them).
 1 - one button to bookmark all the opened tabs.
 
 dashboard
@@ -55,9 +54,6 @@ setting
 
 corefm
 1 - delete FileUtils::totalSize and use getsize
-1 - openwithDialog>> needs sort.
-1 - move mime-related code from FileUtils to MimeUtils.
-1 - combine the properties, fileUtils and desktopfile code to one file named utilities.
 1 - save the splitter position of viewDir in coreFM
 0 - able to create file/folder shortcuts.
 0 - page text in root folder is showing blank.
@@ -149,7 +145,6 @@ Discuss
 - closeAllTabs and on_paintTabs_tabCloseRequested in corepaint never executed
 [can't Fix] - zoom problem in corepaint
 [More knowledge needed] - prgonce in utilites
-[MyModel.cpp -> cacheInfo() ] - find the thumbs.cache creation function.
   - occurs problem in thumbs 
 [corepdf not working] - save to recent = fix
 2 - changing the theme ,sometime crashes the app(change immediately needed?)
