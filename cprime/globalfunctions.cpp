@@ -185,8 +185,11 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg , const QFileInfo &file,QObj
 #include <QStringList>
 void GlobalFunc::systemAppOpener(QString appName, const QString &arg) // engine to open app in window
 {
-    QProcess::startDetached(appName.toLower(), QStringList() << arg);
-
+    if (arg.count())
+        QProcess::startDetached(appName.toLower(), QStringList() << arg);
+    else
+        QProcess::startDetached(appName.toLower());
+    
     // Show message
     QString mess = appName + " opening " ;
     Utilities::messageEngine(mess, Utilities::MessageType::Info);
