@@ -68,7 +68,7 @@ unix {
         data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt docs/ReleaseNotes
 
         themefiles.path   = $$PREFIX/share/coreapps/theme
-        themefiles.files  = style/*.qss style/*.ini
+        themefiles.files  = theme/*.qss theme/*.ini
 
         QMAKE_PKGCONFIG_NAME        = libcprime
         QMAKE_PKGCONFIG_DESCRIPTION = Library for coreapps

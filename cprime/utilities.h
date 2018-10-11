@@ -79,7 +79,6 @@ enum FileFolderSetup {
 
 enum StyleAppName {
     AboutStyle,
-    BookmarkItStyle,
     BookmarksStyle,
     CoreActionStyle,
     CoreArchiverStyle,

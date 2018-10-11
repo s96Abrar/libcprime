@@ -80,6 +80,7 @@ coretime
 1 - set reminder option.
 
 coreimage
+0 - thumbnails view is not showing the image with right height.
 1 - ctrl + wheel = zoom shortcut.
 1 - zoom from mouse pointer.
 

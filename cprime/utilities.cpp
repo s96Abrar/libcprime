@@ -190,9 +190,9 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
     case StyleAppName::AboutStyle:
         path = argPath.arg("About");
         break;
-    case StyleAppName::BookmarkItStyle:
-        path = argPath.arg("BookmarkIt");
-        break;
+//    case StyleAppName::BookmarkItStyle:
+//        path = argPath.arg("BookmarkIt");
+//        break;
     case StyleAppName::BookmarksStyle:
         path = argPath.arg("Bookmarks");
         break;
@@ -239,7 +239,7 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
         path = argPath.arg("Help");
         break;
     case StyleAppName::PropertiesStyle:
-        path = argPath.arg("Properties");
+        path = argPath.arg("Dialog");
         break;
     case StyleAppName::SearchStyle:
         path = argPath.arg("Search");
@@ -285,7 +285,6 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
 //    @color06=apps seconderyWidget Color
 //    @color07=apps text Color
 //    @color08=apps HightlightText color
-//    @color09=apps sidebarText color
 }
 
 QString Utilities::readStringFromFile(const QString &path, const QIODevice::OpenMode &mode)
