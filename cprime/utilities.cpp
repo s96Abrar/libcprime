@@ -58,6 +58,9 @@ QString Utilities::checkIsValidFile(const QString str) // check if a file is val
 
 bool Utilities::moveToTrash(const QStringList &fileNames) // moves a file or folder to trash folder
 {
+    // set the requried folders
+    Utilities::setupFileFolder(Utilities::FileFolderSetup::TrashFolder);
+
     QStringList fileNamess(fileNames);
 
     foreach (QString fileName, fileNamess) {
@@ -190,9 +193,6 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
     case StyleAppName::AboutStyle:
         path = argPath.arg("About");
         break;
-//    case StyleAppName::BookmarkItStyle:
-//        path = argPath.arg("BookmarkIt");
-//        break;
     case StyleAppName::BookmarksStyle:
         path = argPath.arg("Bookmarks");
         break;
@@ -239,7 +239,7 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
         path = argPath.arg("Help");
         break;
     case StyleAppName::PropertiesStyle:
-        path = argPath.arg("Dialog");
+        path = argPath.arg("Properties");
         break;
     case StyleAppName::SearchStyle:
         path = argPath.arg("Search");

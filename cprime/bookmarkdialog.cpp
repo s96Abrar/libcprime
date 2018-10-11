@@ -30,6 +30,9 @@ bookmarkDialog::bookmarkDialog(QWidget *parent) : QDialog(parent),ui(new Ui::boo
     // set stylesheet from style.qrc
     setStyleSheet(Utilities::getStylesheetFileContent(Utilities::StyleAppName::DialogStyle));
 
+    // set the requried folders
+    Utilities::setupFileFolder(Utilities::FileFolderSetup::BookmarkFolder);
+
     connect(ui->cancel, &QToolButton::clicked, this, &bookmarkDialog::close);
 
     ui->bkSection->clear();
