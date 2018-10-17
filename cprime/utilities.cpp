@@ -58,6 +58,9 @@ QString Utilities::checkIsValidFile(const QString str) // check if a file is val
 
 bool Utilities::moveToTrash(const QStringList &fileNames) // moves a file or folder to trash folder
 {
+    // set the requried folders
+    Utilities::setupFileFolder(Utilities::FileFolderSetup::TrashFolder);
+
     QStringList fileNamess(fileNames);
 
     foreach (QString fileName, fileNamess) {
@@ -190,9 +193,6 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
     case StyleAppName::AboutStyle:
         path = argPath.arg("About");
         break;
-    case StyleAppName::BookmarkItStyle:
-        path = argPath.arg("BookmarkIt");
-        break;
     case StyleAppName::BookmarksStyle:
         path = argPath.arg("Bookmarks");
         break;
@@ -285,7 +285,6 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
 //    @color06=apps seconderyWidget Color
 //    @color07=apps text Color
 //    @color08=apps HightlightText color
-//    @color09=apps sidebarText color
 }
 
 QString Utilities::readStringFromFile(const QString &path, const QIODevice::OpenMode &mode)
@@ -363,7 +362,9 @@ QString Utilities::sentDateText(const QString &dateTime)
 
 bool Utilities::saveToRecent(const QString &appName, const QString &pathName) // save file path and app name for recent activites
 {
+    StringFunc sf;
     SettingsManage sm;
+    QString appname = sf.CapitalizeEachWord(appName);
     if (sm.getShowRecent() == true) {
         if (appName.count() && pathName.count()) {
             QSettings recentActivity(QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat);
@@ -371,7 +372,7 @@ bool Utilities::saveToRecent(const QString &appName, const QString &pathName) //
             QString group = currentDT.toString("dd.MM.yyyy");
             QString key = currentDT.toString("hh.mm.ss");
             recentActivity.beginGroup(group);
-            recentActivity.setValue(key, appName + "\t\t\t" + pathName);
+            recentActivity.setValue(key, appname + "\t\t\t" + pathName);
             recentActivity.endGroup();
             return true;
         }

@@ -1,7 +1,7 @@
 /*CoreAction */
 
 QWidget{
-    background-color: @coreaction;
+    background-color: @color00;
     border: 1px #494949;
     color: @color07;}
 

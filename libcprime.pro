@@ -6,8 +6,6 @@ TEMPLATE  = lib
 # disable all build warnings
 CONFIG   += silent warn_on thread silent build_all c++11
 
-DEFINES  += LIBCPRIME_LIBRARY
-
 INCLUDEPATH += ./cprime/
 DEPENDPATH  += ./cprime/
 
@@ -15,41 +13,7 @@ DEPENDPATH  += ./cprime/
 #CONFIG(release):DEFINES += QT_NO_DEBUG_OUTPUT
 
 VERSION  = 2.3.0
-
-MOC_DIR			= ../build/moc
-OBJECTS_DIR		= ../build/obj
-RCC_DIR			= ../build/qrc
-UI_DIR			= ../build/uic
-
-unix {
-        isEmpty(PREFIX) {
-                PREFIX = /usr
-        }
-
-        INSTALLS	 += target includes data themefiles
-        CONFIG		 += create_pc no_install_prl link_pkgconfig
-        contains(DEFINES, LIB64): target.path = $$INSTALL_PREFIX/lib64
-        else: target.path = $$INSTALL_PREFIX/lib
-
-        target.path	  = $$PREFIX/lib/
-
-        includes.files    = cprime/*.h libcprime_global.h
-        includes.path     = $$PREFIX/include/cprime/
-
-        data.path         = $$PREFIX/share/coreapps/docs
-        data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt docs/ReleaseNotes
-
-        themefiles.path   = $$PREFIX/share/coreapps/theme
-        themefiles.files  = style/*.qss style/*.ini
-
-        QMAKE_PKGCONFIG_NAME        = libcprime
-        QMAKE_PKGCONFIG_DESCRIPTION = Library for coreapps
-        QMAKE_PKGCONFIG_PREFIX      = $$INSTALL_PREFIX
-        QMAKE_PKGCONFIG_LIBDIR      = $$target.path
-        QMAKE_PKGCONFIG_INCDIR      = $$includes.path
-        QMAKE_PKGCONFIG_VERSION     = $$VERSION
-        QMAKE_PKGCONFIG_DESTDIR     = pkgconfig
-}
+DEFINES  += LIBCPRIME_LIBRARY
 
 HEADERS += \
     cprime/globalfunctions.h \
@@ -75,7 +39,43 @@ SOURCES += \
     cprime/properties.cpp \
     cprime/mimeutils.cpp \
     cprime/stringfunc.cpp
-    
+
 FORMS += \
     cprime/bookmarkdialog.ui
+
+
+MOC_DIR			= ../build/moc
+OBJECTS_DIR		= ../build/obj
+RCC_DIR			= ../build/qrc
+UI_DIR			= ../build/uic
+
+unix {
+        isEmpty(PREFIX) {
+                PREFIX = /usr
+        }
+
+        INSTALLS	 += target includes data themefiles
+        CONFIG		 += create_pc no_install_prl link_pkgconfig
+        contains(DEFINES, LIB64): target.path = $$INSTALL_PREFIX/lib64
+        else: target.path = $$INSTALL_PREFIX/lib
+
+        target.path	  = $$PREFIX/lib/
+
+        includes.files    = cprime/*.h libcprime_global.h
+        includes.path     = $$PREFIX/include/cprime/
+
+        data.path         = $$PREFIX/share/coreapps/docs
+        data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt docs/ReleaseNotes
+
+        themefiles.path   = $$PREFIX/share/coreapps/theme
+        themefiles.files  = theme/*.qss theme/*.ini
+
+        QMAKE_PKGCONFIG_NAME        = libcprime
+        QMAKE_PKGCONFIG_DESCRIPTION = Library for coreapps
+        QMAKE_PKGCONFIG_PREFIX      = $$INSTALL_PREFIX
+        QMAKE_PKGCONFIG_LIBDIR      = $$target.path
+        QMAKE_PKGCONFIG_INCDIR      = $$includes.path
+        QMAKE_PKGCONFIG_VERSION     = $$VERSION
+        QMAKE_PKGCONFIG_DESTDIR     = pkgconfig
+}
     
