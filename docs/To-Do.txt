@@ -140,6 +140,7 @@ FIX MUST BE SIMPLE.
 - search >> schroolbar is extended beyond rows
 - changing the theme ,sometime crashes the app(change immediately needed?)
 - all close function name will be same
+- terminal not opening from corefm with new appOpenAppEngin ( only coreterminal opens)(move to the old only for terminal)
 
 
 [ABRAR]
@@ -148,7 +149,6 @@ FIX MUST BE SIMPLE.
 - make the sesssion fetures in start. 
 - not working, create file/folder shortcuts in corefm.(install it,then try)
 - coreimage,corerenamer loads a random folder and corepaint want a file path in start .
-- terminal not opening from corefm with new appOpenAppEngin ( only coreterminal opens)(move to the old
 - search is not opening any file with dobulclick.
 - search is not cheacking if the given folder path from "serch activity" or select a folder is exist or not.
 - is there any filewatcher for recentactivites file.if has, it is not working.
