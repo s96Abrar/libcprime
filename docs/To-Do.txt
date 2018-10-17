@@ -6,7 +6,7 @@ FIX MUST BE SIMPLE.
 3-impossible for us now.
 
 
-CoreBox
+[CoreBox]
 0 - Mouse left button click is not working for corebox tabwidget beside the tabbar.
 0 - icon and title not changing perfectly.
 0 - closing the corebox needs to inform the app.
@@ -14,46 +14,46 @@ CoreBox
 1 - add option for using default window manager or CoreBox.
 3 - separate process for per app.
 
-CoreApps
+[CoreApps]
 1 - add display scale support.
 
-libcprime
-0 - same name folder and file not move to trash if same name file exist.
-1 - file moved message.
-1 - finished copying message.
-1 - file deleted & delete failed message.
+[libcprime]
 
-style
+
+[Style]
 1 - disable widget must have a sperate text color
 2 - changing the theme ,sometime crashes the app(change immediately needed?)
+1 - fix all the lineedit , combobox hight in stylsheet.
+0 - fix all the messagebox style.
 
-start
+[Start]
 0 - after changing the font >>start >> coreapps grid size not incising
 1 - delete the last one from list and add new at first in Recent activites list.
 1 - add reminder option.
 
-bookmarks
+[Bookmarks]
 1 - make bookmark count more relevant
 0 - when a bookmark is selected show the delete and edit button on side of the selected bookmark otherwise hide them.
 1 - one button to bookmark all the opened tabs.
 
-dashboard
+[Dashboard]
+1 - drive view in dashboard.
 0 - multiple dashboard crash the whole app.
 1 - remove unwanted partition.
 1 - selected drive will show only it's partition.
 1 - mount specific partition on corebox startup.
 1 - add drive frame in drive view.
 
-search
+[Search]
 1 - if search opened from FM hide locate option.
 1 - show the file/folder in coerFM with selecting the file/folder.
 2 - if path is given ,find is not working.but locate is working.
 
-setting
+[Settings]
 0 - changes in app dose not save, when corebox is closed directly.(not app)
 
-corefm
-1 - delete FileUtils::totalSize and use getsize
+[CoreFM]
+1 - file moved message, copying message,deleted & delete failed message.
 1 - save the splitter position of viewDir in coreFM
 0 - able to create file/folder shortcuts.
 0 - page text in root folder is showing blank.
@@ -64,12 +64,12 @@ corefm
 3 - Some *.desktop file has more groups(sections) and each group can contain
     exec command, but only first is read, this must be fixed.
 
-corepaint
+[CorePaint]
 0 - fix contex menu.
 0 - save the changes>>yes>cancel>>closes the corebox(it should not).
 1 - add triangle instrument.
 
-coretime
+[CoreTime]
 0 - stopwatch timing is not perfect.
 0 - fix the timer start/pause button .
 0 - Notify user when an alarm is set.
@@ -79,84 +79,118 @@ coretime
 0 - need a done button for alarm completion.
 1 - set reminder option.
 
-coreimage
+[CoreImage]
 0 - thumbnails view is not showing the image with right height.
 1 - ctrl + wheel = zoom shortcut.
 1 - zoom from mouse pointer.
 
-coreplayer
+[CorePlayer]
 1 - video thumbnails of play-list.
 0 - after stop clicked player widget turns white color.
 
-corepdf
+[CorePDF]
+1 - save to recent = fix
 1 - move to poppler base.
 0 - fix the space in path issue.
 0 - on first start corepdf cannot show any pdf file.
 
-corepad
+[CorePad]
 0 - save the changes>>yes>cancel>>closes the corebox(it should not).
 
-corearchiver
+[CoreArchiver]
 1 - Inform user when extracting and compressing is finished.
 
-coreshot
+[CoreShot]
 1 - take fullscreen shot using x11.
 
-coreterminal
+[CoreTerminal]
 1 - htop like shortcut.create custom commeand
 0 - Add search bar at coreterminal (not needed for now).
 2 - Open terminal as root for current directory is not supported.
 
-coreaction
+[CoreAction]
 
-coreRenamer
+[CoreRenamer]
 
-help
+[Help]
 1 - add some recommendation.
 
-library
+[Library]
 3 - check library and its version before building from our app using qmake.
-1 - Update the libcterminal.
 1 - disable all the build warnings from librarys
 
-New app
+
+[New app]
 -Backup.
 
-
-Packaging
+[Packaging]
 0 - fix the fonts in appimage.
 0 - make all deb package at one
 
-in-future
+[In-Future]
 1 - make manjaro iso with lxqt desktop as base.
+
+
+[Discuss]
+- utilities line 482. using qfilewatcher at bookmark, start. 
+- see the itemtotext function in corefm line 2325 .discuss the result in every folder
+- Hidden file count at fileutils.cpp move to struct
+- add the bookmark edit and delete button in every row .
+- corepad >> save button should open the save dialog .( fix the whole tabInisazation function?? )
+- search >> schroolbar is extended beyond rows
+- changing the theme ,sometime crashes the app(change immediately needed?)
+- all close function name will be same
+
+
+[ABRAR]
+- same name folder and file not move to trash if same name file exist.
+- trashing picture from coreimage crashing the app.
+- make the sesssion fetures in start. 
+- not working, create file/folder shortcuts in corefm.(install it,then try)
+- coreimage,corerenamer loads a random folder and corepaint want a file path in start .
+- terminal not opening from corefm with new appOpenAppEngin ( only coreterminal opens)(move to the old
+- search is not opening any file with dobulclick.
+- search is not cheacking if the given folder path from "serch activity" or select a folder is exist or not.
+- is there any filewatcher for recentactivites file.if has, it is not working.
+- delete FileUtils::totalSize and use getsize
+- create the thumb/file/folder chache file in constractor of corefm.
+- create the recent activites file in the setupfilefolder funtion
+- bookmark edit /delete button dose no go unvisible after changing section.(after 1 time,2nd time changing works)
+- fix selection in corepaint.
+- fix contex menu in corepaint.
+- corearchiver library
+- message box somtimes not closing (just stuck ). add parent option .
+- closeAllTabs and on_paintTabs_tabCloseRequested in corepaint never executed
+- zoom problem in corepaint
+- fix all the muilt-tab function of corepad,corepaint,(corefm at last).
+
+
+[SHABER]
+- network download in byte
+- network histroy and bar in dashbord text color.
+- fix all the window name with path.corepad,coreimage,search,coreterminal
+- dashboard >> same left space in all pages
+- add hidden file count
+- coreinfo and coreshote ,corepaint ,coreimage(perfet pic) , corepad(with text) ,help, coreterminal= update the picture.
+- create a link to library in reademe
+- update the help>>corebox.
+- use coreinfo in properties and coreimage.
+- qdirstat
+- find the changed text in qtav lib
+
+
+[More knowledge needed]
+- prgonce in utilites
+- corefm getting desktop.h without adding it by typing >> #include <cprime/desktopfile.h>  (pragmaonce in all file in libcprime ??)
+
+
+
+[Test]
+multipal file trash ,like(702mb +1.2 gb)
+stylesheet [coreimage, about, help, corepad search bar]
+
 
 
 *remove unwanted function from all cpp files.
 *code merge
-
-
-Y - Hidden file count at fileutils.cpp struct
-all close function name will be same
-
-
-
-Discuss
-[not working] - utilities line 482. using qfilewatcher at bookmark, start. 
-- see the itemtotext function in corefm line 2325 .discuss the result in every folder
-- closeAllTabs and on_paintTabs_tabCloseRequested in corepaint never executed
-[can't Fix] - zoom problem in corepaint
-[More knowledge needed] - prgonce in utilites
-  - occurs problem in thumbs 
-[corepdf not working] - save to recent = fix
-2 - changing the theme ,sometime crashes the app(change immediately needed?)
-
-Task
-0 - not working create file/folder shortcuts in corefm.
-corepaint
-0 - fix contex menu.
-
-
-test
-multipal file trash ,like(702mb +1.2 gb)
-stylesheet [coreimage, about, help, corepad search bar]
 
