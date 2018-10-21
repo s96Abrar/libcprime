@@ -189,7 +189,11 @@ void GlobalFunc::systemAppOpener(QString appName, const QString &arg) // engine 
         QProcess::startDetached(appName.toLower(), QStringList() << arg);
     else
         QProcess::startDetached(appName.toLower());
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> a14ed78b4d9c66220fcab55eb9b4cc6bf4f496f6
     // Show message
     QString mess = appName + " opening " ;
     Utilities::messageEngine(mess, Utilities::MessageType::Info);

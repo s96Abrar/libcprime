@@ -2,17 +2,17 @@
 
 #appTitle{
     background-color: transparent;
-    color: @color09;
+    color: @color07;
     border: none;}
 
 
 QWidget [accessibleName="options"]{
-    background-color: @search;
+    background-color: @color00;
     color: @color07;
     border: none;}
 
 QWidget [accessibleName="infoPage"]{
-    background-color: @color03;
+    background-color: @color01;
     color : @color07;
     border: none;}
 
@@ -44,7 +44,7 @@ QToolButton:!checked{
 
 QPushButton{
     background-color: transparent;
-    color: @color09;
+    color: @color07;
     border: none;
     padding: 5px 5px 5px 5px;}
 QPushButton:pressed{

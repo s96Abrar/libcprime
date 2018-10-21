@@ -144,11 +144,19 @@ FIX MUST BE SIMPLE.
 
 
 [ABRAR]
+<<<<<<< HEAD
 [DONE]- same name folder and file not move to trash if same name file exist.
 [DONE] - trashing picture from coreimage crashing the app.
 - make the sesssion fetures in start. 
 - not working, create file/folder shortcuts in corefm.(install it,then try)
 [?] - coreimage,corerenamer loads a random folder and corepaint want a file path in start .
+=======
+- same name folder and file not move to trash if same name file exist.
+- trashing picture from coreimage crashing the app.
+- make the sesssion fetures in start. 
+- not working, create file/folder shortcuts in corefm.(install it,then try)
+- coreimage,corerenamer loads a random folder and corepaint want a file path in start .
+>>>>>>> a14ed78b4d9c66220fcab55eb9b4cc6bf4f496f6
 - search is not opening any file with dobulclick.
 - search is not cheacking if the given folder path from "serch activity" or select a folder is exist or not.
 - is there any filewatcher for recentactivites file.if has, it is not working.
@@ -181,7 +189,11 @@ FIX MUST BE SIMPLE.
 
 [More knowledge needed]
 - prgonce in utilites
+<<<<<<< HEAD
 - [Because of mimeutils.h don't know why] corefm getting desktop.h without adding it by typing >> #include <cprime/desktopfile.h>  (pragmaonce in all file in libcprime ??)
+=======
+- corefm getting desktop.h without adding it by typing >> #include <cprime/desktopfile.h>  (pragmaonce in all file in libcprime ??)
+>>>>>>> a14ed78b4d9c66220fcab55eb9b4cc6bf4f496f6
 
 
 

@@ -52,6 +52,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include "desktopfile.h"
 #include "applicationdialog.h"
 #include "mimeutils.h"
+#include "stringfunc.h"
 
 #include "libcprime_global.h"
 
@@ -78,7 +79,6 @@ enum FileFolderSetup {
 
 enum StyleAppName {
     AboutStyle,
-    BookmarkItStyle,
     BookmarksStyle,
     CoreActionStyle,
     CoreArchiverStyle,

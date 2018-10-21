@@ -2,12 +2,12 @@
 
 #appTitle{
     background-color: transparent;
-    color: @color09;
+    color: @color07;
     border: none;}
 
 QWidget [accessibleName="shortcut"]{
-    background-color: @corepad;
-    color: @color09;
+    background-color: @color00;
+    color: @color07;
     border: none;}
 
 QWidget [accessibleName="searchBox"]{
@@ -25,7 +25,7 @@ QLineEdit{
 
 QSpinBox {
     background-color: transparent;
-    color: @color09;
+    color: @color07;
     border: 1px solid @color05;
     padding: 5px 5px 5px 10px;}
 QSpinBox::up-button {
@@ -73,7 +73,7 @@ QToolButton:hover {
 
 QPushButton {
     background-color: transparent;
-    color: @color09;
+    color: @color07;
     border: none;
     Text-align:left;
     padding: 5px 5px 5px 5px;}

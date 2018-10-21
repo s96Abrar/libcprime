@@ -1,7 +1,7 @@
 /*CoreShot*/
 
 QWidget{
-    background-color: @color02;
+    background-color: @color01;
     color: @color07;
     border: none;}
 
