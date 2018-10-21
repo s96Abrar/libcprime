@@ -362,13 +362,9 @@ QString Utilities::sentDateText(const QString &dateTime)
 
 bool Utilities::saveToRecent(const QString &appName, const QString &pathName) // save file path and app name for recent activites
 {
-    StringFunc sf;
     SettingsManage sm;
-<<<<<<< HEAD
     QString appname = CPrime::StringFunc::CapitalizeEachWord(appName);
-=======
-    QString appname = sf.CapitalizeEachWord(appName);
->>>>>>> a14ed78b4d9c66220fcab55eb9b4cc6bf4f496f6
+
     if (sm.getShowRecent() == true) {
         if (appName.count() && pathName.count()) {
             QSettings recentActivity(QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat);

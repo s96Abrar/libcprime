@@ -15,35 +15,6 @@ DEPENDPATH  += ./cprime/
 VERSION  = 2.3.0
 DEFINES  += LIBCPRIME_LIBRARY
 
-HEADERS += \
-    cprime/globalfunctions.h \
-    cprime/utilities.h \
-    cprime/settingsmanage.h \
-    cprime/bookmarkmanage.h \
-    cprime/bookmarkdialog.h \
-    cprime/applicationdialog.h \
-    cprime/desktopfile.h \
-    cprime/properties.h \
-    libcprime_global.h \
-    cprime/mimeutils.h \
-    cprime/stringfunc.h
-
-SOURCES += \
-    cprime/globalfunctions.cpp \
-    cprime/utilities.cpp \
-    cprime/settingsmanage.cpp \
-    cprime/bookmarkmanage.cpp \
-    cprime/bookmarkdialog.cpp \
-    cprime/applicationdialog.cpp \
-    cprime/desktopfile.cpp \
-    cprime/properties.cpp \
-    cprime/mimeutils.cpp \
-    cprime/stringfunc.cpp
-
-FORMS += \
-    cprime/bookmarkdialog.ui
-
-
 MOC_DIR			= ../build/moc
 OBJECTS_DIR		= ../build/obj
 RCC_DIR			= ../build/qrc
@@ -72,13 +43,8 @@ unix {
         data.path         = $$PREFIX/share/coreapps/docs
         data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt docs/ReleaseNotes
 
-<<<<<<< HEAD
         themefiles.path   = /usr/share/coreapps/theme
         themefiles.files  = style/*.qss style/*.ini
-=======
-        themefiles.path   = $$PREFIX/share/coreapps/theme
-        themefiles.files  = theme/*.qss theme/*.ini
->>>>>>> a14ed78b4d9c66220fcab55eb9b4cc6bf4f496f6
 
         QMAKE_PKGCONFIG_NAME        = libcprime
         QMAKE_PKGCONFIG_DESCRIPTION = Library for coreapps
@@ -88,7 +54,6 @@ unix {
         QMAKE_PKGCONFIG_VERSION     = $$VERSION
         QMAKE_PKGCONFIG_DESTDIR     = pkgconfig
 }
-<<<<<<< HEAD
 
 HEADERS += \
     cprime/globalfunctions.h \
@@ -132,6 +97,3 @@ SOURCES += \
     
 FORMS += \
     cprime/bookmarkdialog.ui
-=======
->>>>>>> a14ed78b4d9c66220fcab55eb9b4cc6bf4f496f6
-    
