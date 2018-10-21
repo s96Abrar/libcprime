@@ -83,7 +83,7 @@ bool SettingsManage::setSpecificValue(QString groupName, QString keyName, QVaria
     return false;
 }
 
-QVariant SettingsManage::getSpecificValue(QString groupName, QString keyName) {
+QVariant SettingsManage::getSpecificValue(QString groupName, QString keyName) const {
     if (!groupName.isEmpty() && !keyName.isEmpty()) {
         cSetting->beginGroup(groupName);
         QVariant v = cSetting->value(keyName);
@@ -95,11 +95,11 @@ QVariant SettingsManage::getSpecificValue(QString groupName, QString keyName) {
 
 //-------------------------CoreApps--------------------------------------
 
-bool SettingsManage::setThemeName(QString themeName) {
+bool SettingsManage::setThemeName(const QString &themeName) {
     return setSpecificValue("CoreApps", "Force-Theme", themeName);
 }
 
-QString SettingsManage::getThemeName() {
+QString SettingsManage::getThemeName() const {
     return getSpecificValue("CoreApps", "Force-Theme").toString();
 }
 
@@ -107,7 +107,7 @@ bool SettingsManage::setShowRecent(bool showRecent) {
     return setSpecificValue("CoreApps", "Recent-Disable", showRecent);
 }
 
-bool SettingsManage::getShowRecent() {
+bool SettingsManage::getShowRecent() const {
     return getSpecificValue("CoreApps", "Recent-Disable").toBool();
 }
 
@@ -115,15 +115,15 @@ bool SettingsManage::setStyleMode(bool mode) {
     return setSpecificValue("CoreApps", "Style-Mode", mode);
 }
 
-bool SettingsManage::getStyleMode() {
+bool SettingsManage::getStyleMode() const {
     return getSpecificValue("CoreApps", "Style-Mode").toBool();
 }
 
-bool SettingsManage::setFontStyle(QString fontStyle) {
+bool SettingsManage::setFontStyle(const QString &fontStyle) {
     return setSpecificValue("CoreApps", "Font-Style", fontStyle);
 }
 
-QString SettingsManage::getFontStyle() {
+QString SettingsManage::getFontStyle() const {
     return getSpecificValue("CoreApps", "Font-Style").toString();
 }
 
@@ -131,63 +131,63 @@ bool SettingsManage::setAddShadow(bool addShadow) {
     return setSpecificValue("CoreApps", "Add-Shadow", addShadow);
 }
 
-bool SettingsManage::getAddShadow() {
+bool SettingsManage::getAddShadow() const {
     return getSpecificValue("CoreApps", "Add-Shadow").toBool();
 }
 
-bool SettingsManage::setTerminal(QString termName) {
+bool SettingsManage::setTerminal(const QString &termName) {
     return setSpecificValue("CoreApps", "Terminal", termName);
 }
 
-QString SettingsManage::getTerminal() {
+QString SettingsManage::getTerminal() const{
     return getSpecificValue("CoreApps", "Terminal").toString();
 }
 
-bool SettingsManage::setFileManager(QString fmName) {
+bool SettingsManage::setFileManager(const QString &fmName) {
     return setSpecificValue("CoreApps", "File-Manager", fmName);
 }
 
-QString SettingsManage::getFileManager() {
+QString SettingsManage::getFileManager() const {
     return getSpecificValue("CoreApps", "File-Manager").toString();
 }
 
-bool SettingsManage::setTextEditor(QString textEditorName) {
+bool SettingsManage::setTextEditor(const QString &textEditorName) {
     return setSpecificValue("CoreApps", "Text-Editor", textEditorName);
 }
 
-QString SettingsManage::getTextEditor() {
+QString SettingsManage::getTextEditor() const {
     return getSpecificValue("CoreApps", "Text-Editor").toString();
 }
 
-bool SettingsManage::setImageViewer(QString imageViewerName) {
+bool SettingsManage::setImageViewer(const QString &imageViewerName) {
     return setSpecificValue("CoreApps", "Image-Viewer", imageViewerName);
 }
 
-QString SettingsManage::getImageViewer() {
+QString SettingsManage::getImageViewer() const {
     return getSpecificValue("CoreApps", "Image-Viewer").toString();
 }
 
-bool SettingsManage::setImageEditor(QString imageEditorName) {
+bool SettingsManage::setImageEditor(const QString &imageEditorName) {
     return setSpecificValue("CoreApps", "Image-Editor", imageEditorName);
 }
 
-QString SettingsManage::getImageEditor() {
+QString SettingsManage::getImageEditor() const {
     return getSpecificValue("CoreApps", "Image-Editor").toString();
 }
 
-bool SettingsManage::setPDFVierwer(QString pdfVierwerName) {
+bool SettingsManage::setPDFVierwer(const QString &pdfVierwerName) {
     return setSpecificValue("CoreApps", "PDF-Viewer", pdfVierwerName);
 }
 
-QString SettingsManage::getPDFVierwer() {
+QString SettingsManage::getPDFVierwer() const {
     return getSpecificValue("CoreApps", "PDF-Viewer").toString();
 }
 
-bool SettingsManage::setMediaPlayer(QString imageEditorName) {
+bool SettingsManage::setMediaPlayer(const QString &imageEditorName) {
     return setSpecificValue("CoreApps", "Media-Player", imageEditorName);
 }
 
-QString SettingsManage::getMediaPlayer() {
+QString SettingsManage::getMediaPlayer() const {
     return getSpecificValue("CoreApps", "Media-Player").toString();
 }
 //-------------------------CoreApps--------------------------------------
@@ -195,11 +195,11 @@ QString SettingsManage::getMediaPlayer() {
 
 //-------------------------CoreFM--------------------------------------
 
-bool SettingsManage::setStartupPath(const QString path) {
+bool SettingsManage::setStartupPath(const QString &path) {
     return setSpecificValue("CoreFM", "Startup-Path", path);
 }
 
-const QString SettingsManage::getStartupPath() {
+QString SettingsManage::getStartupPath() const{
     return getSpecificValue("CoreFM", "Startup-Path").toString();
 }
 
@@ -207,39 +207,39 @@ bool SettingsManage::setIsRealMimeType(bool isRealMime) {
     return setSpecificValue("CoreFM", "Real-Mime-Types", isRealMime);
 }
 
-bool SettingsManage::getIsRealMimeType() {
+bool SettingsManage::getIsRealMimeType() const {
     return getSpecificValue("CoreFM", "Real-Mime-Types").toBool();
 }
 
-bool SettingsManage::setZoomValue(int value) {
+bool SettingsManage::setZoomValue(const int &value) {
     return setSpecificValue("CoreFM", "Zoom", value);
 }
 
-int SettingsManage::getZoomValue() {
+int SettingsManage::getZoomValue() const {
     return getSpecificValue("CoreFM", "Zoom").toInt();
 }
 
-bool SettingsManage::setZoomTreeValue(int value) {
+bool SettingsManage::setZoomTreeValue(const int &value) {
     return setSpecificValue("CoreFM", "Zoom-Tree", value);
 }
 
-int SettingsManage::getZoomTreeValue() {
+int SettingsManage::getZoomTreeValue() const{
     return getSpecificValue("CoreFM", "Zoom-Tree").toInt();
 }
 
-bool SettingsManage::setZoomListValue(int value) {
+bool SettingsManage::setZoomListValue(const int &value) {
     return setSpecificValue("CoreFM", "Zoom-List", value);
 }
 
-int SettingsManage::getZoomListValue() {
+int SettingsManage::getZoomListValue() const {
     return getSpecificValue("CoreFM", "Zoom-List").toInt();
 }
 
-bool SettingsManage::setZoomDetailValue(int value) {
+bool SettingsManage::setZoomDetailValue(const int &value) {
     return setSpecificValue("CoreFM", "Zoom-Detail", value);
 }
 
-int SettingsManage::getZoomDetailValue() {
+int SettingsManage::getZoomDetailValue() const {
     return getSpecificValue("CoreFM", "Zoom-Detail").toInt();
 }
 
@@ -247,7 +247,7 @@ bool SettingsManage::setIsShowThumb(bool isShowThumb) {
     return setSpecificValue("CoreFM", "Show-Thumb", isShowThumb);
 }
 
-bool SettingsManage::getIsShowThumb() {
+bool SettingsManage::getIsShowThumb() const {
     return getSpecificValue("CoreFM", "Show-Thumb").toBool();
 }
 
@@ -255,7 +255,7 @@ bool SettingsManage::setShowToolbox(bool showTool) {
     return setSpecificValue("CoreFM", "Show-Toolbox", showTool);
 }
 
-bool SettingsManage::getShowToolbox() {
+bool SettingsManage::getShowToolbox() const {
     return getSpecificValue("CoreFM", "Show-Toolbox").toBool();
 }
 
@@ -263,7 +263,7 @@ bool SettingsManage::setShowHidden(bool showTool) {
     return setSpecificValue("CoreFM", "Show-Hidden", showTool);
 }
 
-bool SettingsManage::getShowHidden() {
+bool SettingsManage::getShowHidden() const {
     return getSpecificValue("CoreFM", "Show-Hidden").toBool();
 }
 
@@ -271,7 +271,7 @@ bool SettingsManage::setViewMode(bool mode) {
     return setSpecificValue("CoreFM", "View-Mode", mode);
 }
 
-bool SettingsManage::getViewMode() {
+bool SettingsManage::getViewMode() const {
     return getSpecificValue("CoreFM", "View-Mode").toBool();
 }
 
@@ -279,11 +279,11 @@ bool SettingsManage::getViewMode() {
 
 //-------------------------CoreScreenshot------------------------------
 
-bool SettingsManage::setSCSaveLocation(const QString path) {
+bool SettingsManage::setSCSaveLocation(const QString &path) {
     return setSpecificValue("CoreScreenshot", "Save-Location", path);
 }
 
-const QString SettingsManage::getSCSaveLocation() {
+QString SettingsManage::getSCSaveLocation() const {
     return getSpecificValue("CoreScreenshot", "Save-Location").toString();
 }
 
@@ -295,7 +295,7 @@ bool SettingsManage::setSHowTime(bool showTime) {
     return setSpecificValue("CoreAction", "Show-Time", showTime);
 }
 
-bool SettingsManage::getShowTime() {
+bool SettingsManage::getShowTime() const {
     return getSpecificValue("CoreAction", "Show-Time").toBool();
 }
 
@@ -303,7 +303,7 @@ bool SettingsManage::setSHowBattery(bool showBattery) {
     return setSpecificValue("CoreAction", "Show-Battery", showBattery);
 }
 
-bool SettingsManage::getShowBattery() {
+bool SettingsManage::getShowBattery() const {
     return getSpecificValue("CoreAction", "Show-Battery").toBool();
 }
 
@@ -311,7 +311,7 @@ bool SettingsManage::setSHowSystem(bool showSystem) {
     return setSpecificValue("CoreAction", "Show-System", showSystem);
 }
 
-bool SettingsManage::getShowSystem() {
+bool SettingsManage::getShowSystem() const {
     return getSpecificValue("CoreAction", "Show-System").toBool();
 }
 
@@ -319,7 +319,7 @@ bool SettingsManage::setSHowNetwork(bool showNetwork) {
     return setSpecificValue("CoreAction", "Show-Network", showNetwork);
 }
 
-bool SettingsManage::getShowNetwork() {
+bool SettingsManage::getShowNetwork() const {
     return getSpecificValue("CoreAction", "Show-Network").toBool();
 }
 
@@ -327,7 +327,7 @@ bool SettingsManage::setSHowCalander(bool showCalander) {
     return setSpecificValue("CoreAction", "Show-Calander", showCalander);
 }
 
-bool SettingsManage::getShowCalander() {
+bool SettingsManage::getShowCalander() const {
     return getSpecificValue("CoreAction", "Show-Calander").toBool();
 }
 
@@ -335,7 +335,7 @@ bool SettingsManage::setSHowCalculator(bool showCalculator) {
     return setSpecificValue("CoreAction", "Show-Calculator", showCalculator);
 }
 
-bool SettingsManage::getShowCalculator() {
+bool SettingsManage::getShowCalculator() const {
     return getSpecificValue("CoreAction", "Show-Calculator").toBool();
 }
 
@@ -343,7 +343,7 @@ bool SettingsManage::setSHowNote(bool showNote) {
     return setSpecificValue("CoreAction", "Show-Note", showNote);
 }
 
-bool SettingsManage::getShowNote() {
+bool SettingsManage::getShowNote() const {
     return getSpecificValue("CoreAction", "Show-Note").toBool();
 }
 

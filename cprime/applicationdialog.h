@@ -1,5 +1,5 @@
 /*
-An Library for CoreApps .
+A Library for CoreApps .
 
 This file is part of libcprime.
 
@@ -15,9 +15,8 @@ Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
-
-#pragma once
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 #ifndef APPLICATIONDIALOG_H
 #define APPLICATIONDIALOG_H
@@ -40,14 +39,15 @@ class LIBCPRIMESHARED_EXPORT ApplicationDialog : public QDialog {
 
 public:
     explicit ApplicationDialog(QWidget *parent = nullptr);
-    QString getCurrentLauncher() const;
-    QList<DesktopFile> getApplications();
+    const QString getCurrentLauncher() const;
+    const QList<DesktopFile> getApplications();
 
-    static QIcon searchAppIcon(const DesktopFile &app);
+    static const QIcon searchAppIcon(const DesktopFile &app);
+
 protected slots:
     void updateCommand(QTreeWidgetItem* current, QTreeWidgetItem* previous);
 
-protected:
+private:
     QTreeWidget* appList;
     QLineEdit* edtCommand;
     DesktopFile result;

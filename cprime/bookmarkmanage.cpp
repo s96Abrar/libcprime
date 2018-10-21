@@ -19,7 +19,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 #include "bookmarkmanage.h"
 
-
 void BookmarkManage::createBook()
 {
     // Function from utilities.cpp setupFolder...
@@ -207,6 +206,7 @@ QStringList BookmarkManage::keys()
     return list;
 }
 
+// Check on specific section
 QString BookmarkManage::checkingBookPath(QString sectionn, QString bookPath)
 {
     QLineEdit *line = new QLineEdit();
@@ -220,6 +220,7 @@ QString BookmarkManage::checkingBookPath(QString sectionn, QString bookPath)
     return line->text();
 }
 
+// Check all section
 QString BookmarkManage::checkingBookPathEx(QString bookPath)
 {
     QLineEdit *line = new QLineEdit();
@@ -227,7 +228,7 @@ QString BookmarkManage::checkingBookPathEx(QString bookPath)
     foreach (QString section, getBookSections()) {
         foreach (QString bName, getBookNames(section)) {
             if (!QString::compare(bookmarkPath(section, bName), bookPath, Qt::CaseSensitive)) {
-                line->setText(QString("\"%1\" exists in \"%2\" section.").arg(bName).arg(section));
+                line->setText(QString("\"%1\" \nexists in \"%2\" section.").arg(bName).arg(section));
                 return line->text();
             } else { line->setText(""); continue;}
         }

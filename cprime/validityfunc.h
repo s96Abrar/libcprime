@@ -18,30 +18,21 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "stringfunc.h"
+#ifndef VALIDITYFUNC_H
+#define VALIDITYFUNC_H
 
-#include <QStringList>
-#include <QChar>
+#include <QLineEdit>
+#include "cprime.h"
 
-QString CPrime::StringFunc::CapitalizeEachWord(const QString &str)
+namespace CPrime {
+
+class ValidityFunc
 {
-    if (str.count() == 0)
-        return nullptr;
+    static QString checkIsValidDir(const QString &path);
+    static QString checkIsValidFile(const QString &file);
+    static bool setupFileFolder(CPrime::FileFolderSetup fs);
+    static void checkTextWidgetPath(QLineEdit *m_t);
+};
 
-    QStringList sep = str.split(' ');
-    QString total = "";
-    foreach (QString s, sep) {
-        if (!s.count())
-            continue;
-
-        foreach (QChar c, s) {
-            if (c.isLetter()) {
-                s = s.toLower().replace(s.indexOf(c), 1, c.toTitleCase());
-                break;
-            }
-        }
-        total = total + " " + s;
-    }
-
-    return total.remove(0, 1);
 }
+#endif // VALIDITYFUNC_H

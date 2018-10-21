@@ -162,9 +162,9 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg , const QFileInfo &file,QObj
     case GlobalFunc::Category::Terminal: {
 
         QString defultTerminal = sm.getTerminal(); // selected terminal name from settings.
-        QStringList args(defultTerminal.split(" "));
-        QString name = args.at(0);
-        args.removeAt(0);
+//        QStringList args(defultTerminal.split(" "));
+//        QString name = args.at(0);
+//        args.removeAt(0);
 
         QString appName = defultTerminal + ".desktop";
         DesktopFile df = DesktopFile("/usr/share/applications/" + appName);
@@ -185,7 +185,10 @@ void GlobalFunc::appEngine(GlobalFunc::Category ctg , const QFileInfo &file,QObj
 #include <QStringList>
 void GlobalFunc::systemAppOpener(QString appName, const QString &arg) // engine to open app in window
 {
-    QProcess::startDetached(appName.toLower(), QStringList() << arg);
+    if (arg.count())
+        QProcess::startDetached(appName.toLower(), QStringList() << arg);
+    else
+        QProcess::startDetached(appName.toLower());
 
     // Show message
     QString mess = appName + " opening " ;
@@ -193,7 +196,7 @@ void GlobalFunc::systemAppOpener(QString appName, const QString &arg) // engine 
 }
 
 
-void GlobalFunc::appSelectionEngine(const QString &path,QObject *processOwner) // engine send right file to coreapps or system
+void GlobalFunc::appSelectionEngine(const QString &path, QObject *processOwner) // engine send right file to coreapps or system
 {
     QFileInfo file(path);
     if(!file.exists() || path.count() == 0){
@@ -204,10 +207,10 @@ void GlobalFunc::appSelectionEngine(const QString &path,QObject *processOwner) /
 
     QStringList image,txts,pdf,media;
     image << "jpg" << "jpeg" << "png" << "bmp" << "ico" << "svg" << "gif" ;
-    txts << "txt" << "pro" << "" ;
-    pdf << "pdf" << "xps" << "oxps" << "epub" << "cbr" << "cbz" << "cbt" << "cba" ;
+    txts  << "txt" << "pro" << "" ;
+    pdf   << "pdf" << "xps" << "oxps" << "epub" << "cbr" << "cbz" << "cbt" << "cba" ;
     media << "webm" << "ogg" << "mpeg" << "mov" << "mkv" << "flv" << "avi"
-           << "mp3" << "aac" << "m4a"  << "flac" << "mp4";
+          << "mp3" << "aac" << "m4a"  << "flac" << "mp4";
 
     QString suffix = QFileInfo(path).suffix();
 

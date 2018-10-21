@@ -18,30 +18,30 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "stringfunc.h"
+#ifndef THEMEFUNC_H
+#define THEMEFUNC_H
 
-#include <QStringList>
-#include <QChar>
+#include <QWidget>
+#include <QString>
+#include <QSettings>
+#include <QIODevice>
 
-QString CPrime::StringFunc::CapitalizeEachWord(const QString &str)
+#include "cprime.h"
+
+namespace CPrime {
+
+class ThemeFunc
 {
-    if (str.count() == 0)
-        return nullptr;
+public:
+    static void addDropShadow(QWidget *widget, const int alpha, const QColor color, const int blur = 25, const QString &styleSheet = "");
+    static void addDropShadow(QWidget *widget, const int alpha, const int blur = 25, const QString &styleSheet = "");
+    static QIcon getAppIcon(const QString &appName);
+    static QIcon getFileIcon(const QString &filePath);
+    static QSettings *getStyleSheet();
+    static QString getStyleSheetFileContent(CPrime::StyleTypeName s);
+    static QString readStringFromFile(const QString &path, QIODevice::OpenMode mode);
+};
 
-    QStringList sep = str.split(' ');
-    QString total = "";
-    foreach (QString s, sep) {
-        if (!s.count())
-            continue;
-
-        foreach (QChar c, s) {
-            if (c.isLetter()) {
-                s = s.toLower().replace(s.indexOf(c), 1, c.toTitleCase());
-                break;
-            }
-        }
-        total = total + " " + s;
-    }
-
-    return total.remove(0, 1);
 }
+
+#endif // THEMEFUNC_H

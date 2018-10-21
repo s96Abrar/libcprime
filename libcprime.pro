@@ -21,6 +21,11 @@ OBJECTS_DIR		= ../build/obj
 RCC_DIR			= ../build/qrc
 UI_DIR			= ../build/uic
 
+# Must needed
+RESOURCE_FOLDER = /usr/share/coreapps
+THEME_FOLDER    = $$RESOURCE_FOLDER/theme
+DEFINES += COREAPPS_THEME_FOLDER=\"\\\"$${THEME_FOLDER}\\\"\"
+
 unix {
         isEmpty(PREFIX) {
                 PREFIX = /usr
@@ -39,7 +44,7 @@ unix {
         data.path         = $$PREFIX/share/coreapps/docs
         data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt docs/ReleaseNotes
 
-        themefiles.path   = $$PREFIX/share/coreapps/theme
+        themefiles.path   = /usr/share/coreapps/theme
         themefiles.files  = style/*.qss style/*.ini
 
         QMAKE_PKGCONFIG_NAME        = libcprime
@@ -62,7 +67,15 @@ HEADERS += \
     cprime/properties.h \
     libcprime_global.h \
     cprime/mimeutils.h \
-    cprime/stringfunc.h
+    cprime/stringfunc.h \
+    cprime/cprime.h \
+    cprime/themefunc.h \
+    cprime/sortfunc.h \
+    cprime/validityfunc.h \
+    cprime/appopenfunc.h \
+    cprime/infofunc.h \
+    cprime/filefunc.h \
+    cprime/trashmanager.h
 
 SOURCES += \
     cprime/globalfunctions.cpp \
@@ -74,7 +87,14 @@ SOURCES += \
     cprime/desktopfile.cpp \
     cprime/properties.cpp \
     cprime/mimeutils.cpp \
-    cprime/stringfunc.cpp
+    cprime/stringfunc.cpp \
+    cprime/themefunc.cpp \
+    cprime/sortfunc.cpp \
+    cprime/validityfunc.cpp \
+    cprime/appopenfunc.cpp \
+    cprime/infofunc.cpp \
+    cprime/filefunc.cpp \
+    cprime/trashmanager.cpp
     
 FORMS += \
     cprime/bookmarkdialog.ui

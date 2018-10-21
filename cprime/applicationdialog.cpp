@@ -82,7 +82,6 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
     QList<DesktopFile> apps = ApplicationDialog::getApplications();
 
     foreach (DesktopFile app, apps) {
-
       // Check for name
       if (app.getName().compare("") == 0) {
         continue;
@@ -123,7 +122,7 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
  * @param defaultIcon
  * @return icon
  */
-QIcon ApplicationDialog::searchAppIcon(const DesktopFile &app)
+const QIcon ApplicationDialog::searchAppIcon(const DesktopFile &app)
 {
     // Resulting icon
     QIcon icon;
@@ -167,7 +166,7 @@ QIcon ApplicationDialog::searchAppIcon(const DesktopFile &app)
  * @brief Returns list of available applications
  * @return application list
  */
-QList<DesktopFile> ApplicationDialog::getApplications()
+const QList<DesktopFile> ApplicationDialog::getApplications()
 {
     QList<DesktopFile> apps;
     QDirIterator it("/usr/share/applications", QStringList("*.desktop"),
@@ -186,7 +185,7 @@ QList<DesktopFile> ApplicationDialog::getApplications()
  * @brief Returns currently selected launcher
  * @return currently selected launcher
  */
-QString ApplicationDialog::getCurrentLauncher() const
+const QString ApplicationDialog::getCurrentLauncher() const
 {
     return edtCommand->text();
 }

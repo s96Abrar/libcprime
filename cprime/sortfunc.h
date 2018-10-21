@@ -18,30 +18,25 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "stringfunc.h"
+#ifndef SORTFUNC_H
+#define SORTFUNC_H
 
 #include <QStringList>
-#include <QChar>
 
-QString CPrime::StringFunc::CapitalizeEachWord(const QString &str)
+#include "cprime.h"
+
+namespace CPrime {
+
+class SortFunc
 {
-    if (str.count() == 0)
-        return nullptr;
+public:
+    static QStringList sortDate(const QStringList &dateList, CPrime::SortOrder s = CPrime::Ascending, const QString &format = "dd.MM.yyyy");
+    static QStringList sortTime(const QStringList &timeList, CPrime::SortOrder s = CPrime::Ascending, const QString &format = "hh.mm.ss");
+    static QStringList sortList(const QStringList &list, CPrime::SortOrder s = CPrime::Ascending);
+    static QStringList sortDateTime(const QStringList &dateTimeList, CPrime::SortOrder s = CPrime::Ascending, const QString &format = "hh.mm.ss - dd.MM.yyyy");
 
-    QStringList sep = str.split(' ');
-    QString total = "";
-    foreach (QString s, sep) {
-        if (!s.count())
-            continue;
+};
 
-        foreach (QChar c, s) {
-            if (c.isLetter()) {
-                s = s.toLower().replace(s.indexOf(c), 1, c.toTitleCase());
-                break;
-            }
-        }
-        total = total + " " + s;
-    }
-
-    return total.remove(0, 1);
 }
+
+#endif // SORTFUNC_H

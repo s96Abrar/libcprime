@@ -18,30 +18,22 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "stringfunc.h"
+#include "filefunc.h"
 
-#include <QStringList>
-#include <QChar>
-
-QString CPrime::StringFunc::CapitalizeEachWord(const QString &str)
+QString CPrime::FileFunc::formatSize(const quint64 &size)
 {
-    if (str.count() == 0)
-        return nullptr;
+    QString total = nullptr;
 
-    QStringList sep = str.split(' ');
-    QString total = "";
-    foreach (QString s, sep) {
-        if (!s.count())
-            continue;
+    if (size >= TB)
+        total = QString("%1TB").arg(QString::number(qreal(size) / TB, 'f', 2));
+    else if (size >= GB)
+        total = QString("%1GB").arg(QString::number(qreal(size) / GB, 'f', 2));
+    else if (size >= MB)
+        total = QString("%1MB").arg(QString::number(qreal(size) / MB, 'f', 1));
+    else if (size >= KB)
+        total = QString("%1KB").arg(QString::number(qreal(size) / KB,'f', 1));
+    else
+        total = QString("%1 bytes").arg(size);
 
-        foreach (QChar c, s) {
-            if (c.isLetter()) {
-                s = s.toLower().replace(s.indexOf(c), 1, c.toTitleCase());
-                break;
-            }
-        }
-        total = total + " " + s;
-    }
-
-    return total.remove(0, 1);
+    return total;
 }

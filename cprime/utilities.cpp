@@ -18,6 +18,7 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 #include "utilities.h"
+#include "stringfunc.h"
 #include <QDebug>
 
 QRect Utilities::screensize() // gives the system screen size
@@ -252,7 +253,6 @@ QString Utilities::getStylesheetFileContent(Utilities::StyleAppName san)
         break;
     default:
         return nullptr;
-        break;
     }
 
     SettingsManage sm;
@@ -364,6 +364,7 @@ QString Utilities::sentDateText(const QString &dateTime)
 bool Utilities::saveToRecent(const QString &appName, const QString &pathName) // save file path and app name for recent activites
 {
     SettingsManage sm;
+    QString appname = CPrime::StringFunc::CapitalizeEachWord(appName);
     if (sm.getShowRecent() == true) {
         if (appName.count() && pathName.count()) {
             QSettings recentActivity(QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat);
@@ -371,7 +372,7 @@ bool Utilities::saveToRecent(const QString &appName, const QString &pathName) //
             QString group = currentDT.toString("dd.MM.yyyy");
             QString key = currentDT.toString("hh.mm.ss");
             recentActivity.beginGroup(group);
-            recentActivity.setValue(key, appName + "\t\t\t" + pathName);
+            recentActivity.setValue(key, appname + "\t\t\t" + pathName);
             recentActivity.endGroup();
             return true;
         }
@@ -385,7 +386,7 @@ void Utilities::setupFileFolder(FileFolderSetup fs)
     switch (fs) {
     case Utilities::FileFolderSetup::BookmarkFolder: {
         // Setup corebox folder for bookmarks
-        const QString b = QDir::homePath() + ".config/coreBox";
+        const QString b = QDir::homePath() + "/.config/coreBox";
         if (!QDir(b).exists()) {
             QDir::home().mkdir(".config/coreBox");
         }
@@ -401,7 +402,7 @@ void Utilities::setupFileFolder(FileFolderSetup fs)
     }
     case Utilities::FileFolderSetup::TrashFolder: {
         // Setup trash folder
-        const QString t = QDir::homePath() + ".local/share/Trash";
+        const QString t = QDir::homePath() + "/.local/share/Trash";
         if (!QDir(t).exists()) {
             QDir trash = QDir::home();
             trash.cd(".local/share/");

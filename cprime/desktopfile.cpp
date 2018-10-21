@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 #include <QFile>
 
+#include "properties.h"
 #include "desktopfile.h"
 
 /**
@@ -49,7 +50,7 @@ DesktopFile::DesktopFile(const QString &fileName)
       categories.removeFirst();
     }
 
-    if(fileName.endsWith("vlc.desktop")){exec = "vlc";};
+    if(fileName.endsWith("vlc.desktop")) {exec = "vlc";}
 }
 
 QString DesktopFile::getFileName() const {

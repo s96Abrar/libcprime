@@ -18,30 +18,25 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "stringfunc.h"
+#ifndef APPOPENFUNC_H
+#define APPOPENFUNC_H
 
-#include <QStringList>
-#include <QChar>
+#include <QString>
+#include <QObject>
+#include <QFileInfo>
 
-QString CPrime::StringFunc::CapitalizeEachWord(const QString &str)
+#include "cprime.h"
+
+namespace CPrime {
+
+class AppOpenFunc
 {
-    if (str.count() == 0)
-        return nullptr;
+public:
+    static void systemAppOpener(const QString &appName, const QString &arg = nullptr);
+    static void appSelectionEngine(const QString &path, QObject *processOwner);
+    static void appEngine(CPrime::Category ctg , const QFileInfo &file, QObject *processOwner);
+};
 
-    QStringList sep = str.split(' ');
-    QString total = "";
-    foreach (QString s, sep) {
-        if (!s.count())
-            continue;
-
-        foreach (QChar c, s) {
-            if (c.isLetter()) {
-                s = s.toLower().replace(s.indexOf(c), 1, c.toTitleCase());
-                break;
-            }
-        }
-        total = total + " " + s;
-    }
-
-    return total.remove(0, 1);
 }
+
+#endif // APPOPENFUNC_H
