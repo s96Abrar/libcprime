@@ -25,13 +25,14 @@ RESOURCE_FOLDER = /usr/share/coreapps
 THEME_FOLDER    = $$RESOURCE_FOLDER/theme
 DEFINES += COREAPPS_THEME_FOLDER=\"\\\"$${THEME_FOLDER}\\\"\"
 
+message($$PWD)
 unix {
         isEmpty(PREFIX) {
                 PREFIX = /usr
         }
 
         INSTALLS	 += target includes data themefiles
-        CONFIG		 += create_pc no_install_prl link_pkgconfig
+        CONFIG		 += create_pc create_prl no_install_prl link_pkgconfig
         contains(DEFINES, LIB64): target.path = $$INSTALL_PREFIX/lib64
         else: target.path = $$INSTALL_PREFIX/lib
 
@@ -43,16 +44,17 @@ unix {
         data.path         = $$PREFIX/share/coreapps/docs
         data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt docs/ReleaseNotes
 
-        themefiles.path   = /usr/share/coreapps/theme
-        themefiles.files  = style/*.qss style/*.ini
+        themefiles.path   = $$THEME_FOLDER
+        themefiles.files  = theme/*.qss theme/*.ini
 
+        QMAKE_PKGCONFIG_FILE        = cprime
         QMAKE_PKGCONFIG_NAME        = libcprime
-        QMAKE_PKGCONFIG_DESCRIPTION = Library for coreapps
+        QMAKE_PKGCONFIG_DESCRIPTION = Library for CoreApps
         QMAKE_PKGCONFIG_PREFIX      = $$INSTALL_PREFIX
         QMAKE_PKGCONFIG_LIBDIR      = $$target.path
         QMAKE_PKGCONFIG_INCDIR      = $$includes.path
         QMAKE_PKGCONFIG_VERSION     = $$VERSION
-        QMAKE_PKGCONFIG_DESTDIR     = pkgconfig
+        QMAKE_PKGCONFIG_DESTDIR     = pkgconfig # Directory where pkgconfig located
 }
 
 HEADERS += \
