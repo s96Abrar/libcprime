@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include <QDirIterator>
 #include <QDebug>
 
-#include "utilities.h"
+#include "cprime.h"
 #include "applicationdialog.h"
 
 ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
@@ -35,7 +35,7 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
     this->setMinimumSize(320, 320);
 
     // set stylesheet from style.qrc
-    setStyleSheet(Utilities::getStylesheetFileContent(Utilities::StyleAppName::DialogStyle));
+    setStyleSheet(CPrime::ThemeFunc::getStyleSheetFileContent(CPrime::StyleTypeName::DialogStyle));
 
     // Creates app list view
     appList = new QTreeWidget(this);
@@ -166,7 +166,7 @@ const QIcon ApplicationDialog::searchAppIcon(const DesktopFile &app)
  * @brief Returns list of available applications
  * @return application list
  */
-const QList<DesktopFile> ApplicationDialog::getApplications()
+QList<DesktopFile> ApplicationDialog::getApplications()
 {
     QList<DesktopFile> apps;
     QDirIterator it("/usr/share/applications", QStringList("*.desktop"),
@@ -237,7 +237,7 @@ QTreeWidgetItem* ApplicationDialog::findCategory(const DesktopFile &app)
     // Try to find more suitable category
     foreach (QString name, catNames.keys()) {
 
-      // Try cathegory name
+      // Try category name
       if (app.getCategories().contains(name)) {
         category = categories.value(name);
         break;

@@ -44,7 +44,7 @@ void CPrime::AppOpenFunc::systemAppOpener(const QString &appName, const QString 
     }
 
     if (status) {
-        CPrime::InfoFunc::messageEngine(QString(appName + " opening"), CPrime::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(QString(appName + " opening"), CPrime::MessageType::Info, nullptr);
     }
 }
 
@@ -57,7 +57,7 @@ void CPrime::AppOpenFunc::appSelectionEngine(const QString &path, QObject *proce
 {
     QFileInfo file(path);
     if (!file.exists() || path.count() == 0) {
-        CPrime::InfoFunc::messageEngine("File not exists...", CPrime::MessageType::Warning);
+        CPrime::InfoFunc::messageEngine("File not exists...", CPrime::MessageType::Warning, static_cast<QWidget*>(processOwner));
         return;
     }
 
@@ -118,7 +118,7 @@ void CPrime::AppOpenFunc::appEngine(CPrime::Category ctg, const QFileInfo &file,
         mimeUtils->openInApp(df.getExec(), file, processOwner);
 
         // Show message
-        CPrime::InfoFunc::messageEngine(defaultFileManager + " opening", CPrime::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(defaultFileManager + " opening", CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
 
         // Save file to recent activity
         CPrime::InfoFunc::saveToRecent(defaultFileManager, path);
@@ -132,7 +132,7 @@ void CPrime::AppOpenFunc::appEngine(CPrime::Category ctg, const QFileInfo &file,
 
         // Show message
         QString mess = defaultTextEditor + " opening." ;
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
 
         // Save file to RecentActivity
         CPrime::InfoFunc::saveToRecent(defaultTextEditor, path);
@@ -147,7 +147,7 @@ void CPrime::AppOpenFunc::appEngine(CPrime::Category ctg, const QFileInfo &file,
 
         // Show message
         QString mess = defaultImageViewer + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
 
         // Save file to RecentActivity
         CPrime::InfoFunc::saveToRecent(defaultImageViewer,path);
@@ -162,7 +162,7 @@ void CPrime::AppOpenFunc::appEngine(CPrime::Category ctg, const QFileInfo &file,
 
         // Show message
         QString mess = defaultImageEditor + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
 
         // Save file to RecentActivity
         CPrime::InfoFunc::saveToRecent(defaultImageEditor, path);
@@ -177,7 +177,7 @@ void CPrime::AppOpenFunc::appEngine(CPrime::Category ctg, const QFileInfo &file,
 
         // Show message
         QString mess = defaultMediaPlayer + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
 
         // Save file to RecentActivity
         CPrime::InfoFunc::saveToRecent(defaultMediaPlayer, path);
@@ -192,7 +192,7 @@ void CPrime::AppOpenFunc::appEngine(CPrime::Category ctg, const QFileInfo &file,
 
         // Show message
         QString mess = defaultPDFViwer + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
 
         // Save file to RecentActivity
         CPrime::InfoFunc::saveToRecent(defaultPDFViwer, path);
@@ -210,7 +210,7 @@ void CPrime::AppOpenFunc::appEngine(CPrime::Category ctg, const QFileInfo &file,
 
         // Show message
         QString mess = defaultTerminal + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
 
         break;
     }

@@ -40,7 +40,7 @@ class LIBCPRIMESHARED_EXPORT ApplicationDialog : public QDialog {
 public:
     explicit ApplicationDialog(QWidget *parent = nullptr);
     const QString getCurrentLauncher() const;
-    const QList<DesktopFile> getApplications();
+    static QList<DesktopFile> getApplications();
 
     static const QIcon searchAppIcon(const DesktopFile &app);
 

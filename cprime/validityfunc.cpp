@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include <QFileInfo>
+#include <QDebug>
 #include "validityfunc.h"
 #include "mimeutils.h"
 
@@ -96,6 +97,15 @@ bool CPrime::ValidityFunc::setupFileFolder(CPrime::FileFolderSetup fs)
                 status = true;
             }
             break;
+        }
+        case CPrime::RecentActivityFile: {
+            QFile file(CPrime::Variables::CC_CoreApps_RecentActFilePath());
+            if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+                file.close();
+            } else {
+                file.close();
+                qCritical() << "Recent Activity file not created...";
+            }
         }
     }
 

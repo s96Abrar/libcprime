@@ -19,8 +19,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 #include <QDirIterator>
 
-#include "utilities.h"
 #include "mimeutils.h"
+#include "cprime.h"
 
 /**
  * @brief Creates mime utils
@@ -93,7 +93,7 @@ void MimeUtils::openInApp(const QFileInfo &file, QObject *processOwner)
         openInApp(df.getExec(), file, processOwner);
     } else {
         // Function from utilities.cpp
-        Utilities::messageEngine(tr("No default application for mime:\n %1!").arg(mime), Utilities::MessageType::Warning);
+        CPrime::InfoFunc::messageEngine(tr("No default application for mime:\n %1!").arg(mime), CPrime::MessageType::Warning, static_cast<QWidget*>(processOwner));
     }
 }
 
@@ -131,7 +131,7 @@ void MimeUtils::openInApp(QString exe, const QFileInfo &file,QObject *processOwn
     }
 
     // Function from utilities.cpp
-    Utilities::saveToRecent(name, args);
+    CPrime::InfoFunc::saveToRecent(name, args);
 
     // Start application
     QProcess *myProcess = new QProcess(processOwner);

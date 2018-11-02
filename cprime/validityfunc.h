@@ -28,6 +28,7 @@ namespace CPrime {
 
 class ValidityFunc
 {
+public:
     static QString checkIsValidDir(const QString &path);
     static QString checkIsValidFile(const QString &file);
     static bool setupFileFolder(CPrime::FileFolderSetup fs);

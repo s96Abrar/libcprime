@@ -32,7 +32,7 @@ class InfoFunc
 {
 public:
     static QRect screenSize();
-    static void messageEngine(const QString &message, CPrime::MessageType messageType);
+    static void messageEngine(const QString &message, CPrime::MessageType messageType, QWidget *parent);
     static QStringList fStringList(QStringList &left, QStringList &right, QFont font);
 
     static QString sentDateText(const QString &dateTime);

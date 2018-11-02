@@ -140,7 +140,7 @@ bool CPrime::TrashManager::moveToTrash(const QStringList &filePaths)
 //                    }
 
                     // Function from utilities.cpp
-                    CPrime::InfoFunc::messageEngine("File Moved to Trash", CPrime::MessageType::Info);
+                    CPrime::InfoFunc::messageEngine("File Moved to Trash", CPrime::MessageType::Info, nullptr);
 
 
                 }

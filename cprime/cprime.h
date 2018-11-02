@@ -18,12 +18,21 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef CPRIME_H
-#define CPRIME_H
-
 #include <QDir>
 
 #include "settingsmanage.h"
+
+//#include "appopenfunc.h"
+#include "filefunc.h"
+#include "infofunc.h"
+#include "sortfunc.h"
+#include "stringfunc.h"
+#include "themefunc.h"
+#include "validityfunc.h"
+//#include "trashmanager.h"
+
+#ifndef CPRIME_H
+#define CPRIME_H
 
 namespace CPrime {
 
@@ -79,6 +88,16 @@ public:
     static QString CC_CoreApps_MimeFilePath() {
         return QString(CC_CoreApps_ConfigDir() + "/" + CC_CoreApps_MimeFile());
     }
+
+    // Returns the Recent activity file
+    static QString CC_CoreApps_RecentActFile() {
+        return "RecentActivity";
+    }
+
+    // Returns the Recent activity file path
+    static QString CC_CoreApps_RecentActFilePath() {
+        return QString(CC_CoreApps_ConfigDir() + "/" + CC_CoreApps_RecentActFile());
+    }
 };
 
 enum AppsName {
@@ -123,10 +142,11 @@ enum MessageType {
 };
 
 enum FileFolderSetup {
-    BookmarkFolder   = 0x0000,
-    DriveMountFolder = 0x0001,
-    TrashFolder      = 0x0002,
-    MimeFile         = 0x0003
+    BookmarkFolder     = 0x0000,
+    DriveMountFolder   = 0x0001,
+    TrashFolder        = 0x0002,
+    MimeFile           = 0x0003,
+    RecentActivityFile = 0x0004
 };
 
 enum StyleTypeName {

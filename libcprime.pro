@@ -20,16 +20,15 @@ OBJECTS_DIR		= ../build/obj
 RCC_DIR			= ../build/qrc
 UI_DIR			= ../build/uic
 
-# Must needed
-RESOURCE_FOLDER = /usr/share/coreapps
-THEME_FOLDER    = $$RESOURCE_FOLDER/theme
-DEFINES += COREAPPS_THEME_FOLDER=\"\\\"$${THEME_FOLDER}\\\"\"
-
-message($$PWD)
 unix {
         isEmpty(PREFIX) {
                 PREFIX = /usr
         }
+
+        # Must needed
+        RESOURCE_FOLDER = $$PREFIX/share/coreapps
+        THEME_FOLDER    = $$RESOURCE_FOLDER/theme
+        DEFINES += COREAPPS_THEME_FOLDER=\"\\\"$${THEME_FOLDER}\\\"\"
 
         INSTALLS	 += target includes data themefiles
         CONFIG		 += create_pc create_prl no_install_prl link_pkgconfig
@@ -41,7 +40,7 @@ unix {
         includes.files    = cprime/*.h libcprime_global.h
         includes.path     = $$PREFIX/include/cprime/
 
-        data.path         = $$PREFIX/share/coreapps/docs
+        data.path         = $$RESOURCE_FOLDER/docs
         data.files        = docs/Changelog docs/LICENSE docs/To-Do.txt docs/ReleaseNotes
 
         themefiles.path   = $$THEME_FOLDER
@@ -58,8 +57,6 @@ unix {
 }
 
 HEADERS += \
-    cprime/globalfunctions.h \
-    cprime/utilities.h \
     cprime/settingsmanage.h \
     cprime/bookmarkmanage.h \
     cprime/bookmarkdialog.h \
@@ -79,8 +76,6 @@ HEADERS += \
     cprime/trashmanager.h
 
 SOURCES += \
-    cprime/globalfunctions.cpp \
-    cprime/utilities.cpp \
     cprime/settingsmanage.cpp \
     cprime/bookmarkmanage.cpp \
     cprime/bookmarkdialog.cpp \

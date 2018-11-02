@@ -42,14 +42,15 @@ QRect CPrime::InfoFunc::screenSize()
     return scr->availableGeometry();
 }
 
-void CPrime::InfoFunc::messageEngine(const QString &message, CPrime::MessageType messageType)
+void CPrime::InfoFunc::messageEngine(const QString &message, CPrime::MessageType messageType, QWidget *parent)
 {
+    QWidget *mbox = new QWidget(parent);
     QLabel *l = new QLabel(message);
-    QFont f ("Arial", 14, QFont::Bold);
-    QWidget *mbox = new QWidget();
+    QFont f ("Arial", 14, QFont::Bold);    
     QVBoxLayout *bi = new QVBoxLayout();
     QVBoxLayout *bii = new QVBoxLayout();
     QFrame *frame = new QFrame();
+
     frame->setStyleSheet("QFrame { border-radius: 5px; }");
     bii->addWidget(frame);
     frame->setLayout(bi);
