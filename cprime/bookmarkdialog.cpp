@@ -1,5 +1,5 @@
 /*
-An Library for CoreApps .
+A Library for CoreApps .
 
 This file is part of libcprime.
 
@@ -15,23 +15,24 @@ Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 #include <QTimer>
 
 #include "bookmarkdialog.h"
 #include "ui_bookmarkdialog.h"
-#include "utilities.h"
+#include "cprime.h"
 
 bookmarkDialog::bookmarkDialog(QWidget *parent) : QDialog(parent),ui(new Ui::bookmarkDialog)
 {
     ui->setupUi(this);
 
     // set stylesheet from style.qrc
-    setStyleSheet(Utilities::getStylesheetFileContent(Utilities::StyleAppName::DialogStyle));
+    setStyleSheet(CPrime::ThemeFunc::getStyleSheetFileContent(CPrime::StyleTypeName::DialogStyle));
 
     // set the requried folders
-    Utilities::setupFileFolder(Utilities::FileFolderSetup::BookmarkFolder);
+    CPrime::ValidityFunc::setupFileFolder(CPrime::FileFolderSetup::BookmarkFolder);
 
     connect(ui->cancel, &QToolButton::clicked, this, &bookmarkDialog::close);
 
@@ -57,7 +58,7 @@ void bookmarkDialog::on_done_clicked()
         accepted = true;
         QTimer::singleShot(100, this, SLOT(close()));
         // Function from utilities.cpp
-        Utilities::messageEngine("Bookmark Added at '" + ui->bkSection->currentText() + "'", Utilities::MessageType::Info);
+        CPrime::InfoFunc::messageEngine("Bookmark Added at '" + ui->bkSection->currentText() + "'", CPrime::MessageType::Info, this);
     }
 }
 
@@ -155,7 +156,7 @@ void bookmarkDialog::callBookMarkDialog(QWidget *parent, const QString &currentP
     const QString str = bm.checkingBookPathEx(currentPath);
     if (str.count() == 0) {
         bookmarkDialog *bkdlg = new bookmarkDialog(parent);
-        QIcon ico = Utilities::getFileIcon(currentPath);
+        QIcon ico = CPrime::ThemeFunc::getFileIcon(currentPath);
         QPixmap pix = ico.pixmap(QSize(100, 80));
         bkdlg->setBookPath(currentPath);
         bkdlg->setBookName(info.fileName() + "");
@@ -171,6 +172,6 @@ void bookmarkDialog::callBookMarkDialog(QWidget *parent, const QString &currentP
         //sectionRefresh();
     } else {
         // Function from utilities.cpp
-        Utilities::messageEngine(str, Utilities::MessageType::Info);
+        CPrime::InfoFunc::messageEngine(str, CPrime::MessageType::Info, this);
     }
 }

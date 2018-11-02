@@ -17,8 +17,6 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
-#pragma once
-
 #ifndef BOOKMARKDIALOG_H
 #define BOOKMARKDIALOG_H
 
@@ -59,6 +57,7 @@ private slots:
 private:
     Ui::bookmarkDialog *ui;
     BookmarkManage bk;
+
 };
 
 #endif // BOOKMARKDIALOG_H

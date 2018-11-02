@@ -33,8 +33,11 @@ Version 2.3
 - if folder/file is bookmarked, now will only show the file/folder name in messagebox
 - fixed coreinfo not opening any file after installing.
 - added a function to make first letter capital of any word in libcprime.
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> a14ed78b4d9c66220fcab55eb9b4cc6bf4f496f6
 
 
 

@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include <QDirIterator>
 #include <QDebug>
 
-#include "utilities.h"
+#include "cprime.h"
 #include "applicationdialog.h"
 
 ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
@@ -35,7 +35,7 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
     this->setMinimumSize(320, 320);
 
     // set stylesheet from style.qrc
-    setStyleSheet(Utilities::getStylesheetFileContent(Utilities::StyleAppName::DialogStyle));
+    setStyleSheet(CPrime::ThemeFunc::getStyleSheetFileContent(CPrime::StyleTypeName::DialogStyle));
 
     // Creates app list view
     appList = new QTreeWidget(this);
@@ -82,7 +82,6 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
     QList<DesktopFile> apps = ApplicationDialog::getApplications();
 
     foreach (DesktopFile app, apps) {
-
       // Check for name
       if (app.getName().compare("") == 0) {
         continue;
@@ -123,7 +122,7 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
  * @param defaultIcon
  * @return icon
  */
-QIcon ApplicationDialog::searchAppIcon(const DesktopFile &app)
+const QIcon ApplicationDialog::searchAppIcon(const DesktopFile &app)
 {
     // Resulting icon
     QIcon icon;
@@ -186,7 +185,7 @@ QList<DesktopFile> ApplicationDialog::getApplications()
  * @brief Returns currently selected launcher
  * @return currently selected launcher
  */
-QString ApplicationDialog::getCurrentLauncher() const
+const QString ApplicationDialog::getCurrentLauncher() const
 {
     return edtCommand->text();
 }
@@ -238,7 +237,7 @@ QTreeWidgetItem* ApplicationDialog::findCategory(const DesktopFile &app)
     // Try to find more suitable category
     foreach (QString name, catNames.keys()) {
 
-      // Try cathegory name
+      // Try category name
       if (app.getCategories().contains(name)) {
         category = categories.value(name);
         break;

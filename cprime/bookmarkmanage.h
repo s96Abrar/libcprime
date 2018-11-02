@@ -17,8 +17,6 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
-#pragma once
-
 #ifndef BOOKMARKMANAGE_H
 #define BOOKMARKMANAGE_H
 
@@ -32,14 +30,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include <QLineEdit>
 #include <QDateTime>
 
-#include "utilities.h"
-
+#include "cprime.h"
 #include "libcprime_global.h"
-
 
 class LIBCPRIMESHARED_EXPORT BookmarkManage
 {
-
 public:
     bool addSection(QString sectionName);
     bool addBookmark(QString sectionName, QString bookmarkName, QString bookPath);
@@ -51,9 +46,8 @@ public:
     QString checkingBookName(QString sectionName, QString bookName);
     QString checkingBookPath(QString section, QString bookPath);
     QString checkingBookPathEx(QString bookPath);
-    QString cbookName = "CoreBoxBook";
-    QString cbookPath = QDir::homePath() + "/.config/coreBox";
-    QString cbookFullPath = cbookPath + "/" + cbookName;
+
+    const QString cbookFullPath = CPrime::Variables::CC_CoreApps_BookMarkFilePath();
 
     void checkBook();
     void delSection(QString sectionName);
@@ -70,7 +64,6 @@ private:
     QStringList keys();
     QString bookmarkValues(QString sectionName, QString bookmarkName);
     QString keyCount();
-
 };
 
 #endif // BOOKMARKMANAGE_H

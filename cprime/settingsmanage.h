@@ -17,8 +17,6 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
-#pragma once
-
 #ifndef SETTINGSMANAGE_H
 #define SETTINGSMANAGE_H
 
@@ -39,100 +37,100 @@ public:
     void createDefaultSettings();
 
     bool setSpecificValue(QString groupName, QString keyName, QVariant value);
-    QVariant getSpecificValue(QString groupName, QString keyName);
+    QVariant getSpecificValue(QString groupName, QString keyName) const;
 
-    QString getTerminal();
-    bool setTerminal(QString termName);
+    QString getTerminal() const;
+    bool setTerminal(const QString &termName);
 
-    const QString getStartupPath();
-    bool setStartupPath(const QString path);
+    QString getStartupPath() const;
+    bool setStartupPath(const QString &path);
 
-    QString getThemeName();
-    bool setThemeName(QString themeName);
+    QString getThemeName() const;
+    bool setThemeName(const QString &themeName);
 
-    bool setFileManager(QString fmName);
-    QString getFileManager();
+    bool setFileManager(const QString &fmName);
+    QString getFileManager() const;
 
-    bool setTextEditor(QString textEditorName);
-    QString getTextEditor();
+    bool setTextEditor(const QString &textEditorName);
+    QString getTextEditor() const;
 
-    bool setImageViewer(QString imageViewerName);
-    QString getImageViewer();
+    bool setImageViewer(const QString &imageViewerName);
+    QString getImageViewer() const;
 
-    bool setImageEditor(QString imageEditorName);
-    QString getImageEditor();
+    bool setImageEditor(const QString &imageEditorName);
+    QString getImageEditor() const;
 
-    bool setPDFVierwer(QString imageEditorName);
-    QString getPDFVierwer();
+    bool setPDFVierwer(const QString &imageEditorName);
+    QString getPDFVierwer() const;
 
-    bool setMediaPlayer(QString imageEditorName);
-    QString getMediaPlayer();
+    bool setMediaPlayer(const QString &imageEditorName);
+    QString getMediaPlayer() const;
 
-    bool getIsRealMimeType();
+    bool getIsRealMimeType() const;
     bool setIsRealMimeType(bool isRealMime);
 
-    int getZoomValue();
-    bool setZoomValue(int value);
+    int getZoomValue() const;
+    bool setZoomValue(const int &value);
 
-    int getZoomTreeValue();
-    bool setZoomTreeValue(int value);
+    int getZoomTreeValue() const;
+    bool setZoomTreeValue(const int &value);
 
-    int getZoomListValue();
-    bool setZoomListValue(int value);
+    int getZoomListValue() const;
+    bool setZoomListValue(const int &value);
 
-    int getZoomDetailValue();
-    bool setZoomDetailValue(int value);
+    int getZoomDetailValue() const;
+    bool setZoomDetailValue(const int &value);
 
-    bool getIsShowThumb();
+    bool getIsShowThumb() const;
     bool setIsShowThumb(bool isShowThumb);
 
-    bool getShowToolbox();
+    bool getShowToolbox() const;
     bool setShowToolbox(bool showTool);
 
-    bool getViewMode();
+    bool getViewMode() const;
     bool setViewMode(bool mode);
 
-    const QString getSCSaveLocation();
-    bool setSCSaveLocation(const QString path);
+    QString getSCSaveLocation() const;
+    bool setSCSaveLocation(const QString &path);
 
-    bool getShowBattery();
+    bool getShowBattery() const;
     bool setSHowBattery(bool showBattery);
 
-    bool getShowRecent();
+    bool getShowRecent() const;
     bool setShowRecent(bool showRecent);
 
-    QString getTimeFormat();
-    bool setTimeFormat(QString AmPm);
+    QString getTimeFormat() const;
+    bool setTimeFormat(const QString &AmPm);
 
-    bool getShowHidden();
+    bool getShowHidden() const;
     bool setShowHidden(bool showTool);
 
-    bool getShowCalander();
+    bool getShowCalander() const;
     bool setSHowCalander(bool showBattery);
 
-    bool getShowSystem();
+    bool getShowSystem() const;
     bool setSHowSystem(bool showSystem);
 
-    bool getShowNetwork();
+    bool getShowNetwork() const;
     bool setSHowNetwork(bool showNetwork);
 
-    bool getShowCalculator();
+    bool getShowCalculator() const;
     bool setSHowCalculator(bool showCalculator);
 
-    bool getShowNote();
+    bool getShowNote() const;
     bool setSHowNote(bool showNote);
 
     bool setSHowTime(bool showTime);
-    bool getShowTime();
+    bool getShowTime() const;
 
     bool setStyleMode(bool mode);
-    bool getStyleMode();
+    bool getStyleMode() const;
 
-    bool setFontStyle(QString fontStyle);
-    QString getFontStyle();
+    bool setFontStyle(const QString &fontStyle);
+    QString getFontStyle() const;
 
     bool setAddShadow(bool addShadow);
-    bool getAddShadow();
+    bool getAddShadow() const;
 };
 
 #endif // SETTINGSMANAGE_H
