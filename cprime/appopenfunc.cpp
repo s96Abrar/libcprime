@@ -18,13 +18,8 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <QProcess>
-
 #include "appopenfunc.h"
-#include "infofunc.h"
-#include "settingsmanage.h"
-#include "mimeutils.h"
-#include "desktopfile.h"
+
 
 /*
  * Open app using QProcess with argument.

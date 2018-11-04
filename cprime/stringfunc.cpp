@@ -20,8 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "stringfunc.h"
 
-#include <QStringList>
-#include <QChar>
 
 QString CPrime::StringFunc::CapitalizeEachWord(const QString &str)
 {
@@ -44,4 +42,36 @@ QString CPrime::StringFunc::CapitalizeEachWord(const QString &str)
     }
 
     return total.remove(0, 1);
+}
+
+
+QStringList CPrime::StringFunc::fStringList(QStringList &left, QStringList &right, QFont font)
+{
+    QFontMetrics *fontM = new QFontMetrics(font);
+    int large = 0;
+
+    foreach (QString s, left) {
+        if (large < fontM->width(s)) {
+            large = fontM->width(s);
+        }
+    }
+
+    large = large + fontM->width('\t');
+
+    int index = 0;
+    foreach (QString s, left) {
+        while (large >= fontM->width(s)) {
+            left.replace(index++, s + "\t");
+        }
+    }
+
+    index = 0;
+    foreach (QString s, left) {
+        QString rFirstW = s.at(0).toUpper();
+        QString rRestW  = s.right(s.length() - 1);
+        left.replace(index, rFirstW + rRestW + ": " + right.at(index));
+        index++;
+    }
+
+    return left;
 }

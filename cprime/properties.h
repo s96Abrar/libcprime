@@ -25,8 +25,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QVariant>
 #include <QObject>
 #include <QMap>
+#include <QTextStream>
+#include <QFile>
 
 #include "libcprime_global.h"
+
 
 /**
  * @class Properties

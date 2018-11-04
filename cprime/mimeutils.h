@@ -26,10 +26,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QTextStream>
+#include <QDirIterator>
 
 #include "properties.h"
 #include "desktopfile.h"
 #include "libcprime_global.h"
+#include "cprime.h"
+
 
 /**
  * @class MimeUtils
