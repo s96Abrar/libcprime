@@ -80,6 +80,7 @@
 1 - set reminder option.
 
 [CoreImage]
+2 - after deleting image ,it's not removed from the list of images
 0 - thumbnails view is not showing the image with right height.
 1 - ctrl + wheel = zoom shortcut.
 1 - zoom from mouse pointer.
@@ -112,6 +113,10 @@
 
 [CoreRenamer]
 
+[CoreInfo]
+1 - add buttton to open file from the app.
+1 - show message if there is no file.
+
 [Help]
 1 - add some recommendation.
 
@@ -125,13 +130,18 @@
 
 [Packaging]
 0 - fix the fonts in appimage.
-0 - make all deb package at one
+0 - make all deb package at one.
 
 [In-Future]
 1 - make manjaro iso with lxqt desktop as base.
 
 
 [Discuss]
+- add 
+- session 
+- pkgconfig in libcprime.( add manjaro pkg file in that folder??)
+- loop in appopen cpp
+- includes of cpp files 
 - utilities line 482. using qfilewatcher at bookmark, start. 
 - see the itemtotext function in corefm line 2325 .discuss the result in every folder
 - Hidden file count at fileutils.cpp move to struct
@@ -141,14 +151,17 @@
 - changing the theme ,sometime crashes the app(change immediately needed?)
 - all close function name will be same
 - terminal not opening from corefm with new appOpenAppEngin ( only coreterminal opens)(move to the old only for terminal)
+- after saving the shot coreshot crashsh or closes it self.
+- appName must not need to convert to lowercase in libcprime appopenfunc.cpp ???
 
 
 [ABRAR]
+- dasbord crashing after updating lib 
 [DONE]- same name folder and file not move to trash if same name file exist.
-[DONE] - trashing picture from coreimage crashing the app.
 - make the sesssion fetures in start. 
 - not working, create file/folder shortcuts in corefm.(install it,then try)
 [?] - coreimage,corerenamer loads a random folder and corepaint want a file path in start .
+- search activity is showing older date.
 - search is not opening any file with dobulclick.
 - search is not cheacking if the given folder path from "serch activity" or select a folder is exist or not.
 - is there any filewatcher for recentactivites file.if has, it is not working.
@@ -163,6 +176,10 @@
 - corearchiver library
 - message box somtimes not closing (just stuck ). add parent option .
 - fix all the muilt-tab function of corepad,corepaint,(corefm at last).
+- coreimage is not refreshing the list of images after changing folder from menu of coreimage.
+- current file to setwindow title in coreimage.
+- after saving the shot show a messgage in coreshot.
+
 
 
 [SHABER]
@@ -171,12 +188,13 @@
 - fix all the window name with path.corepad,coreimage,search,coreterminal
 - dashboard >> same left space in all pages
 - add hidden file count
-- coreinfo and coreshote ,corepaint ,coreimage(perfet pic) , corepad(with text) ,help, coreterminal= update the picture.
+- corepaint , coreterminal= update the picture.
 - create a link to library in reademe
 - update the help>>corebox.
 - use coreinfo in properties and coreimage.
 - qdirstat
 - find the changed text in qtav lib
+- search resulf header 
 
 
 [More knowledge needed]
@@ -188,6 +206,11 @@
 multipal file trash ,like(702mb +1.2 gb)
 stylesheet [coreimage, about, help, corepad search bar]
 
+
+[Includes]
+1. it's cpp file
+2. qt cpp file
+3. external file
 
 
 *remove unwanted function from all cpp files.

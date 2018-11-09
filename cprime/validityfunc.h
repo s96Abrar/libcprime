@@ -21,8 +21,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef VALIDITYFUNC_H
 #define VALIDITYFUNC_H
 
+#include <QFileInfo>
 #include <QLineEdit>
+#include <QDebug>
+
 #include "cprime.h"
+#include "mimeutils.h"
+
 
 namespace CPrime {
 

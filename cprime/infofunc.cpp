@@ -18,20 +18,8 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <QWidget>
-#include <QFrame>
-#include <QLabel>
-#include <QTimer>
-#include <QVBoxLayout>
-#include <QDateTime>
-#include <QApplication>
-#include <QScreen>
-#include <QSettings>
-
-#include "settingsmanage.h"
-#include "stringfunc.h"
 #include "infofunc.h"
-#include "themefunc.h"
+
 
 /*
  * Return system screen size.
@@ -86,37 +74,6 @@ void CPrime::InfoFunc::messageEngine(const QString &message, CPrime::MessageType
     QTimer::singleShot(3000, mbox, SLOT(close()));
 }
 
-QStringList CPrime::InfoFunc::fStringList(QStringList &left, QStringList &right, QFont font)
-{
-    QFontMetrics *fontM = new QFontMetrics(font);
-    int large = 0;
-
-    foreach (QString s, left) {
-        if (large < fontM->width(s)) {
-            large = fontM->width(s);
-        }
-    }
-
-    large = large + fontM->width('\t');
-
-    int index = 0;
-    foreach (QString s, left) {
-        while (large >= fontM->width(s)) {
-            left.replace(index++, s + "\t");
-        }
-    }
-
-    index = 0;
-    foreach (QString s, left) {
-        QString rFirstW = s.at(0).toUpper();
-        QString rRestW  = s.right(s.length() - 1);
-        left.replace(index, rFirstW + rRestW + ": " + right.at(index));
-        index++;
-    }
-
-    return left;
-}
-
 QString CPrime::InfoFunc::sentDateText(const QString &dateTime)
 {
     QDateTime given = QDateTime::fromString(dateTime, "dd.MM.yyyy");
@@ -132,7 +89,7 @@ bool CPrime::InfoFunc::saveToRecent(const QString &appName, const QString &pathN
     SettingsManage sm;
     QString m_appName = CPrime::StringFunc::CapitalizeEachWord(appName);
 
-    if (sm.getShowRecent()) { //true
+    if (sm.getShowRecent()) {
         if (appName.count() && pathName.count()) {
             QSettings recentActivity(QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat);
             QDateTime currentDT =  QDateTime::currentDateTime();

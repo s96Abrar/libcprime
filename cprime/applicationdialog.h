@@ -29,9 +29,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QTreeWidgetItem>
 #include <QLineEdit>
 #include <QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QCompleter>
+#include <QStringListModel>
+#include <QDirIterator>
+#include <QDebug>
 
+#include "cprime.h"
 #include "desktopfile.h"
 #include "libcprime_global.h"
+
 
 class LIBCPRIMESHARED_EXPORT ApplicationDialog : public QDialog {
 
@@ -41,7 +49,6 @@ public:
     explicit ApplicationDialog(QWidget *parent = nullptr);
     const QString getCurrentLauncher() const;
     static QList<DesktopFile> getApplications();
-
     static const QIcon searchAppIcon(const DesktopFile &app);
 
 protected slots:

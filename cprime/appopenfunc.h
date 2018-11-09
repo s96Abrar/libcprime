@@ -24,8 +24,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QString>
 #include <QObject>
 #include <QFileInfo>
+#include <QProcess>
 
 #include "cprime.h"
+#include "infofunc.h"
+#include "settingsmanage.h"
+#include "mimeutils.h"
+#include "desktopfile.h"
+
 
 namespace CPrime {
 

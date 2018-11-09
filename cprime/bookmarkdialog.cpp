@@ -18,11 +18,9 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <QTimer>
-
 #include "bookmarkdialog.h"
 #include "ui_bookmarkdialog.h"
-#include "cprime.h"
+
 
 bookmarkDialog::bookmarkDialog(QWidget *parent) : QDialog(parent),ui(new Ui::bookmarkDialog)
 {

@@ -33,6 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #include "cprime.h"
 #include "libcprime_global.h"
 
+
 class LIBCPRIMESHARED_EXPORT BookmarkManage
 {
 public:

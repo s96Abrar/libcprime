@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
 #include "bookmarkmanage.h"
 
+
 void BookmarkManage::createBook()
 {
     // Function from utilities.cpp setupFolder...

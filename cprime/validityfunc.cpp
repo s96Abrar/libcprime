@@ -18,10 +18,8 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <QFileInfo>
-#include <QDebug>
 #include "validityfunc.h"
-#include "mimeutils.h"
+
 
 QString CPrime::ValidityFunc::checkIsValidDir(const QString &path)
 {
