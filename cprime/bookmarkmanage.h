@@ -20,50 +20,38 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #ifndef BOOKMARKMANAGE_H
 #define BOOKMARKMANAGE_H
 
-#include <QWidget>
-#include <QSettings>
-#include <QFile>
-#include <QDir>
-#include <QSet>
-#include <QList>
-#include <QTextStream>
-#include <QLineEdit>
-#include <QDateTime>
-
-#include "cprime.h"
+#include "cvariables.h"
 #include "libcprime_global.h"
 
-
-class LIBCPRIMESHARED_EXPORT BookmarkManage
-{
+class LIBCPRIMESHARED_EXPORT BookmarkManage {
 public:
-    bool addSection(QString sectionName);
-    bool addBookmark(QString sectionName, QString bookmarkName, QString bookPath);
+    bool addSection( QString sectionName );
+    bool addBookmark( QString sectionName, QString bookmarkName, QString bookPath );
 
     QStringList getBookSections();
-    QStringList getBookNames(QString sectionName);
-    QString bookingTime(QString sectionName, QString bookmarkName);
-    QString bookmarkPath(QString sectionName, QString bookmarkName);
-    QString checkingBookName(QString sectionName, QString bookName);
-    QString checkingBookPath(QString section, QString bookPath);
-    QString checkingBookPathEx(QString bookPath);
+    QStringList getBookNames( QString sectionName );
+    QString bookingTime( QString sectionName, QString bookmarkName );
+    QString bookmarkPath( QString sectionName, QString bookmarkName );
+    QString checkingBookName( QString sectionName, QString bookName );
+    QString checkingBookPath( QString section, QString bookPath );
+    QString checkingBookPathEx( QString bookPath );
 
     const QString cbookFullPath = CPrime::Variables::CC_CoreApps_BookMarkFilePath();
 
     void checkBook();
-    void delSection(QString sectionName);
-    void delBookmark(QString bookmarkName);
-    void changeAll(QString oldSectionName, QString oldBookmarkName, QString sectionName, QString bookmarkName, QString bookmarkValue);
-    void editbookmark(QString sectionName, QString bookmarkName, QString bookPath);
-    void delbookmark(QString bookmarkName, QString section);
+    void delSection( QString sectionName );
+    void delBookmark( QString bookmarkName );
+    void changeAll( QString oldSectionName, QString oldBookmarkName, QString sectionName, QString bookmarkName, QString bookmarkValue );
+    void editbookmark( QString sectionName, QString bookmarkName, QString bookPath );
+    void delbookmark( QString bookmarkName, QString section );
 
 private:
     void createBook();
-    void changeSection(QString oldSectionName, QString sectionName, QString bookmarkName, QString bookmarkValue);
-    void changeBookmark(QString oldBookmarkName, QString sectionName, QString bookmarkName, QString bookmarkValue);
+    void changeSection( QString oldSectionName, QString sectionName, QString bookmarkName, QString bookmarkValue );
+    void changeBookmark( QString oldBookmarkName, QString sectionName, QString bookmarkName, QString bookmarkValue );
 
     QStringList keys();
-    QString bookmarkValues(QString sectionName, QString bookmarkName);
+    QString bookmarkValues( QString sectionName, QString bookmarkName );
     QString keyCount();
 };
 

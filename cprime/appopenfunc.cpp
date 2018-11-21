@@ -18,28 +18,39 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "appopenfunc.h"
+#include <QProcess>
+#include <QFileInfo>
+#include <QWidget>
 
+#include "infofunc.h"
+#include "cvariables.h"
+
+#include "settingsmanage.h"
+#include "desktopfile.h"
+#include "mimeutils.h"
+
+#include "appopenfunc.h"
 
 /*
  * Open app using QProcess with argument.
  * appName : must need to pass exact app name
  * N.B. There is no checking method to check whether the app name is correct.
  */
-void CPrime::AppOpenFunc::systemAppOpener(const QString &appName, const QString &arg)
+void CPrime::AppOpenFunc::systemAppOpener( const QString &appName, const QString &arg )
 {
     bool status = false;
-    if (arg.count()) {
+
+    if ( arg.count() ) {
         // FIX ME
         // appName must not need to convert to lowercase
         //
-        QProcess::startDetached(appName.toLower(), QStringList() << arg);
+        QProcess::startDetached( appName.toLower(), QStringList() << arg );
     } else {
-        QProcess::startDetached(appName.toLower());
+        QProcess::startDetached( appName.toLower() );
     }
 
-    if (status) {
-        CPrime::InfoFunc::messageEngine(QString(appName + " opening"), CPrime::MessageType::Info, nullptr);
+    if ( status ) {
+        CPrime::InfoFunc::messageEngine( QString( appName + " opening" ), CPrime::MessageType::Info, nullptr );
     }
 }
 
@@ -48,11 +59,12 @@ void CPrime::AppOpenFunc::systemAppOpener(const QString &appName, const QString 
  * path : Need a specific pathCPrimeCPrime
  * processOwner : Object which responsible to open the app
  */
-void CPrime::AppOpenFunc::appSelectionEngine(const QString &path, QObject *processOwner)
+void CPrime::AppOpenFunc::appSelectionEngine( const QString &path, QObject *processOwner )
 {
-    QFileInfo file(path);
-    if (!file.exists() || path.count() == 0) {
-        CPrime::InfoFunc::messageEngine("File not exists...", CPrime::MessageType::Warning, static_cast<QWidget*>(processOwner));
+    QFileInfo file( path );
+
+    if ( !file.exists() || path.count() == 0 ) {
+        CPrime::InfoFunc::messageEngine( "File not exists...", CPrime::MessageType::Warning, static_cast<QWidget *>( processOwner ) );
         return;
     }
 
@@ -65,28 +77,28 @@ void CPrime::AppOpenFunc::appSelectionEngine(const QString &path, QObject *proce
 
     QString suffix = file.suffix().toLower();
 
-    if (file.isDir()) {
-        appEngine(CPrime::Category::FileManager, file, processOwner);
-    } else if (file.isFile()) {
+    if ( file.isDir() ) {
+        appEngine( CPrime::Category::FileManager, file, processOwner );
+    } else if ( file.isFile() ) {
         // Image Viewer
-        if (image.contains(suffix, Qt::CaseInsensitive)) {
-            appEngine(CPrime::Category::ImageViewer, file, processOwner);
+        if ( image.contains( suffix, Qt::CaseInsensitive ) ) {
+            appEngine( CPrime::Category::ImageViewer, file, processOwner );
         }
         // Text Editor
-        else if (text.contains(suffix, Qt::CaseInsensitive)) {
-            appEngine(CPrime::Category::TextEditor, file, processOwner);
+        else if ( text.contains( suffix, Qt::CaseInsensitive ) ) {
+            appEngine( CPrime::Category::TextEditor, file, processOwner );
         }
         // PDF Viewer
-        else if (pdf.contains(suffix, Qt::CaseInsensitive)) {
-            appEngine(CPrime::Category::PDFViewer, file, processOwner);
+        else if ( pdf.contains( suffix, Qt::CaseInsensitive ) ) {
+            appEngine( CPrime::Category::PDFViewer, file, processOwner );
         }
         // Media Player
-        else if (media.contains(suffix, Qt::CaseInsensitive)) {
-            appEngine(CPrime::Category::MediaPlayer, file, processOwner);
+        else if ( media.contains( suffix, Qt::CaseInsensitive ) ) {
+            appEngine( CPrime::Category::MediaPlayer, file, processOwner );
         }
         // Send to System
         else {
-            QProcess::startDetached("xdg-open", QStringList() << path);
+            QProcess::startDetached( "xdg-open", QStringList() << path );
         }
     }
 }
@@ -94,120 +106,126 @@ void CPrime::AppOpenFunc::appSelectionEngine(const QString &path, QObject *proce
 /*
  * Open app (open the *.desktop file) based on category.
  */
-void CPrime::AppOpenFunc::appEngine(CPrime::Category ctg, const QFileInfo &file, QObject *processOwner)
+void CPrime::AppOpenFunc::appEngine( CPrime::Category ctg, const QFileInfo &file, QObject *processOwner )
 {
     SettingsManage sm;
     MimeUtils *mimeUtils = new MimeUtils;
-    QString path(file.absoluteFilePath());
+    QString path( file.absoluteFilePath() );
 
-    switch (ctg) {
-    case CPrime::Category::FileManager: {
-        // Needs to be the *.desktop name
-        QString defaultFileManager = sm.getFileManager(); // Selected File Manager
-        QString appName = defaultFileManager/*.toLower()*/ + ".desktop";
-        DesktopFile df = DesktopFile(CPrime::Variables::CC_System_AppPath() + appName);
-        //        if (!QFileInfo("/usr/share/applications/" + appName).exists()) {
-        //            Utilities::messageEngine(QString("Selected File Manager (%1) Not Found.").arg(appName), Utilities::MessageType::Warning);
-        //            return;
-        //        }
-        mimeUtils->openInApp(df.getExec(), file, processOwner);
+    switch ( ctg ) {
+        case CPrime::Category::FileManager: {
+            // Needs to be the *.desktop name
+            QString defaultFileManager = sm.getFileManager(); // Selected File Manager
+            QString appName = defaultFileManager/*.toLower()*/ + ".desktop";
+            DesktopFile df = DesktopFile( CPrime::Variables::CC_System_AppPath() + appName );
+            //        if (!QFileInfo("/usr/share/applications/" + appName).exists()) {
+            //            Utilities::messageEngine(QString("Selected File Manager (%1) Not Found.").arg(appName), Utilities::MessageType::Warning);
+            //            return;
+            //        }
+            mimeUtils->openInApp( df.getExec(), file, processOwner );
 
-        // Show message
-        CPrime::InfoFunc::messageEngine(defaultFileManager + " opening", CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
+            // Show message
+            CPrime::InfoFunc::messageEngine( defaultFileManager + " opening", CPrime::MessageType::Info, static_cast<QWidget *>( processOwner ) );
 
-        // Save file to recent activity
-        CPrime::InfoFunc::saveToRecent(defaultFileManager, path);
-        break;
-    }
-    case CPrime::Category::TextEditor: {
-        QString defaultTextEditor = sm.getTextEditor();
-        QString appName = defaultTextEditor/*.toLower()*/ + ".desktop";
-        DesktopFile df = DesktopFile(CPrime::Variables::CC_System_AppPath() + appName);
-        mimeUtils->openInApp(df.getExec(), file, processOwner);
+            // Save file to recent activity
+            CPrime::InfoFunc::saveToRecent( defaultFileManager, path );
+            break;
+        }
 
-        // Show message
-        QString mess = defaultTextEditor + " opening." ;
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
+        case CPrime::Category::TextEditor: {
+            QString defaultTextEditor = sm.getTextEditor();
+            QString appName = defaultTextEditor/*.toLower()*/ + ".desktop";
+            DesktopFile df = DesktopFile( CPrime::Variables::CC_System_AppPath() + appName );
+            mimeUtils->openInApp( df.getExec(), file, processOwner );
 
-        // Save file to RecentActivity
-        CPrime::InfoFunc::saveToRecent(defaultTextEditor, path);
-        break;
-    }
-    case CPrime::Category::ImageViewer: {
-        QString defaultImageViewer = sm.getImageViewer(); // selected ImageViewer name from settings.
+            // Show message
+            QString mess = defaultTextEditor + " opening." ;
+            CPrime::InfoFunc::messageEngine( mess, CPrime::MessageType::Info, static_cast<QWidget *>( processOwner ) );
 
-        QString appName = defaultImageViewer/*.toLower()*/ + ".desktop";
-        DesktopFile df = DesktopFile(CPrime::Variables::CC_System_AppPath() + appName);
-        mimeUtils->openInApp(df.getExec(), file, processOwner);
+            // Save file to RecentActivity
+            CPrime::InfoFunc::saveToRecent( defaultTextEditor, path );
+            break;
+        }
 
-        // Show message
-        QString mess = defaultImageViewer + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
+        case CPrime::Category::ImageViewer: {
+            QString defaultImageViewer = sm.getImageViewer(); // selected ImageViewer name from settings.
 
-        // Save file to RecentActivity
-        CPrime::InfoFunc::saveToRecent(defaultImageViewer,path);
-        break;
-    }
-    case CPrime::Category::ImageEditor: {
-        QString defaultImageEditor = sm.getImageEditor(); // selected ImageEditor name from settings.
+            QString appName = defaultImageViewer/*.toLower()*/ + ".desktop";
+            DesktopFile df = DesktopFile( CPrime::Variables::CC_System_AppPath() + appName );
+            mimeUtils->openInApp( df.getExec(), file, processOwner );
 
-        QString appName = defaultImageEditor/*.toLower()*/ + ".desktop";
-        DesktopFile df = DesktopFile(CPrime::Variables::CC_System_AppPath() + appName);
-        mimeUtils->openInApp(df.getExec(), file, processOwner);
+            // Show message
+            QString mess = defaultImageViewer + " opening.";
+            CPrime::InfoFunc::messageEngine( mess, CPrime::MessageType::Info, static_cast<QWidget *>( processOwner ) );
 
-        // Show message
-        QString mess = defaultImageEditor + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
+            // Save file to RecentActivity
+            CPrime::InfoFunc::saveToRecent( defaultImageViewer, path );
+            break;
+        }
 
-        // Save file to RecentActivity
-        CPrime::InfoFunc::saveToRecent(defaultImageEditor, path);
-        break;
-    }
-    case CPrime::Category::MediaPlayer: {
-        QString defaultMediaPlayer = sm.getMediaPlayer(); // selected ImageEditor name from settings.
+        case CPrime::Category::ImageEditor: {
+            QString defaultImageEditor = sm.getImageEditor(); // selected ImageEditor name from settings.
 
-        QString appName = defaultMediaPlayer/*.toLower()*/ + ".desktop";
-        DesktopFile df = DesktopFile(CPrime::Variables::CC_System_AppPath() + appName);
-        mimeUtils->openInApp(df.getExec(), file, processOwner);
+            QString appName = defaultImageEditor/*.toLower()*/ + ".desktop";
+            DesktopFile df = DesktopFile( CPrime::Variables::CC_System_AppPath() + appName );
+            mimeUtils->openInApp( df.getExec(), file, processOwner );
 
-        // Show message
-        QString mess = defaultMediaPlayer + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
+            // Show message
+            QString mess = defaultImageEditor + " opening.";
+            CPrime::InfoFunc::messageEngine( mess, CPrime::MessageType::Info, static_cast<QWidget *>( processOwner ) );
 
-        // Save file to RecentActivity
-        CPrime::InfoFunc::saveToRecent(defaultMediaPlayer, path);
-        break;
-    }
-    case CPrime::Category::PDFViewer: {
-        QString defaultPDFViwer = sm.getPDFVierwer(); // selected ImageEditor name from settings.
+            // Save file to RecentActivity
+            CPrime::InfoFunc::saveToRecent( defaultImageEditor, path );
+            break;
+        }
 
-        QString appName = defaultPDFViwer/*.toLower()*/ + ".desktop";
-        DesktopFile df = DesktopFile(CPrime::Variables::CC_System_AppPath() + appName);
-        mimeUtils->openInApp(df.getExec(), file, processOwner);
+        case CPrime::Category::MediaPlayer: {
+            QString defaultMediaPlayer = sm.getMediaPlayer(); // selected ImageEditor name from settings.
 
-        // Show message
-        QString mess = defaultPDFViwer + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
+            QString appName = defaultMediaPlayer/*.toLower()*/ + ".desktop";
+            DesktopFile df = DesktopFile( CPrime::Variables::CC_System_AppPath() + appName );
+            mimeUtils->openInApp( df.getExec(), file, processOwner );
 
-        // Save file to RecentActivity
-        CPrime::InfoFunc::saveToRecent(defaultPDFViwer, path);
-        break;
-    }
-    case CPrime::Category::Terminal: {
-        QString defaultTerminal = sm.getTerminal(); // selected terminal name from settings.
-//        QStringList args(defultTerminal.split(" "));
-//        QString name = args.at(0);
-//        args.removeAt(0);
+            // Show message
+            QString mess = defaultMediaPlayer + " opening.";
+            CPrime::InfoFunc::messageEngine( mess, CPrime::MessageType::Info, static_cast<QWidget *>( processOwner ) );
 
-        QString appName = defaultTerminal + ".desktop";
-        DesktopFile df = DesktopFile(CPrime::Variables::CC_System_AppPath() + appName);
-        mimeUtils->openInApp(df.getExec(), file, processOwner);
+            // Save file to RecentActivity
+            CPrime::InfoFunc::saveToRecent( defaultMediaPlayer, path );
+            break;
+        }
 
-        // Show message
-        QString mess = defaultTerminal + " opening.";
-        CPrime::InfoFunc::messageEngine(mess, CPrime::MessageType::Info, static_cast<QWidget*>(processOwner));
+        case CPrime::Category::PDFViewer: {
+            QString defaultPDFViwer = sm.getPDFVierwer(); // selected ImageEditor name from settings.
 
-        break;
-    }
+            QString appName = defaultPDFViwer/*.toLower()*/ + ".desktop";
+            DesktopFile df = DesktopFile( CPrime::Variables::CC_System_AppPath() + appName );
+            mimeUtils->openInApp( df.getExec(), file, processOwner );
+
+            // Show message
+            QString mess = defaultPDFViwer + " opening.";
+            CPrime::InfoFunc::messageEngine( mess, CPrime::MessageType::Info, static_cast<QWidget *>( processOwner ) );
+
+            // Save file to RecentActivity
+            CPrime::InfoFunc::saveToRecent( defaultPDFViwer, path );
+            break;
+        }
+
+        case CPrime::Category::Terminal: {
+            QString defaultTerminal = sm.getTerminal(); // selected terminal name from settings.
+            //        QStringList args(defultTerminal.split(" "));
+            //        QString name = args.at(0);
+            //        args.removeAt(0);
+
+            QString appName = defaultTerminal + ".desktop";
+            DesktopFile df = DesktopFile( CPrime::Variables::CC_System_AppPath() + appName );
+            mimeUtils->openInApp( df.getExec(), file, processOwner );
+
+            // Show message
+            QString mess = defaultTerminal + " opening.";
+            CPrime::InfoFunc::messageEngine( mess, CPrime::MessageType::Info, static_cast<QWidget *>( processOwner ) );
+
+            break;
+        }
     }
 }

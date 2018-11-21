@@ -21,27 +21,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef APPOPENFUNC_H
 #define APPOPENFUNC_H
 
-#include <QString>
-#include <QObject>
-#include <QFileInfo>
-#include <QProcess>
+#include "cenums.h"
+#include "libcprime_global.h"
 
-#include "cprime.h"
-#include "infofunc.h"
-#include "settingsmanage.h"
-#include "mimeutils.h"
-#include "desktopfile.h"
-
+class QFileInfo;
 
 namespace CPrime {
 
-class AppOpenFunc
-{
-public:
-    static void systemAppOpener(const QString &appName, const QString &arg = nullptr);
-    static void appSelectionEngine(const QString &path, QObject *processOwner);
-    static void appEngine(CPrime::Category ctg , const QFileInfo &file, QObject *processOwner);
-};
+    class LIBCPRIMESHARED_EXPORT AppOpenFunc {
+    public:
+        static void systemAppOpener( const QString &appName, const QString &arg = nullptr );
+        static void appSelectionEngine( const QString &path, QObject *processOwner );
+        static void appEngine( CPrime::Category ctg, const QFileInfo &file, QObject *processOwner );
+    };
 
 }
 

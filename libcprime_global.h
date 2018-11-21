@@ -21,6 +21,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #define LIBCPRIME_GLOBAL_H
 
 #include <QtCore/qglobal.h>
+#include <QObject>
+#include <QDebug>
 
 #if defined(LIBCPRIME_LIBRARY)
 #  define LIBCPRIMESHARED_EXPORT Q_DECL_EXPORT

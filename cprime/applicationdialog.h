@@ -21,47 +21,37 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef APPLICATIONDIALOG_H
 #define APPLICATIONDIALOG_H
 
-#include <QObject>
 #include <QDialog>
-#include <QWidget>
-#include <QIcon>
-#include <QTreeWidget>
-#include <QTreeWidgetItem>
-#include <QLineEdit>
-#include <QVBoxLayout>
-#include <QDialogButtonBox>
-#include <QFormLayout>
-#include <QCompleter>
-#include <QStringListModel>
-#include <QDirIterator>
-#include <QDebug>
-
-#include "cprime.h"
-#include "desktopfile.h"
+#include <QMap>
 #include "libcprime_global.h"
 
+class QDialog;
+class QTreeWidget;
+class QTreeWidgetItem;
+class QLineEdit;
+class DesktopFile;
 
 class LIBCPRIMESHARED_EXPORT ApplicationDialog : public QDialog {
 
     Q_OBJECT
 
 public:
-    explicit ApplicationDialog(QWidget *parent = nullptr);
-    const QString getCurrentLauncher() const;
+    explicit ApplicationDialog( QWidget *parent = nullptr );
+    ~ApplicationDialog();
+    QString getCurrentLauncher() const;
     static QList<DesktopFile> getApplications();
-    static const QIcon searchAppIcon(const DesktopFile &app);
+    static const QIcon searchAppIcon( const DesktopFile &app );
 
 protected slots:
-    void updateCommand(QTreeWidgetItem* current, QTreeWidgetItem* previous);
+    void updateCommand( QTreeWidgetItem *current, QTreeWidgetItem *previous );
 
 private:
-    QTreeWidget* appList;
-    QLineEdit* edtCommand;
-    DesktopFile result;
+    QTreeWidget *appList;
+    QLineEdit *edtCommand;
     QMap<QString, QStringList> catNames;
-    QMap<QString, QTreeWidgetItem*> categories;
-    QMap<QString, QTreeWidgetItem*> applications;
-    QTreeWidgetItem* findCategory(const DesktopFile &app);
+    QMap<QString, QTreeWidgetItem *> categories;
+    QMap<QString, QTreeWidgetItem *> applications;
+    QTreeWidgetItem *findCategory( const DesktopFile &app );
     void createCategories();
 
 };

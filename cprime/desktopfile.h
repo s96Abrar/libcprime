@@ -20,12 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #ifndef DESKTOPFILE_H
 #define DESKTOPFILE_H
 
-#include <QObject>
-#include <QStringList>
-#include <QFile>
-
 #include "libcprime_global.h"
-#include "properties.h"
 
 /**
  * @class DesktopFile
@@ -36,7 +31,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 class LIBCPRIMESHARED_EXPORT DesktopFile {
 
 public:
-    explicit DesktopFile(const QString &fileName = "");
+    explicit DesktopFile( const QString &fileName = "" );
+    ~DesktopFile();
 
     QString getFileName() const;
     QString getPureFileName() const;

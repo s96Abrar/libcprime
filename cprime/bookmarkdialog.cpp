@@ -18,25 +18,30 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include <QTimer>
+#include <QFileInfo>
+
+#include "cprime.h"
+
+#include "bookmarkmanage.h"
 #include "bookmarkdialog.h"
 #include "ui_bookmarkdialog.h"
 
-
-bookmarkDialog::bookmarkDialog(QWidget *parent) : QDialog(parent),ui(new Ui::bookmarkDialog)
+bookmarkDialog::bookmarkDialog( QWidget *parent ) : QDialog( parent ), ui( new Ui::bookmarkDialog )
 {
-    ui->setupUi(this);
+    ui->setupUi( this );
 
     // set stylesheet from style.qrc
-    setStyleSheet(CPrime::ThemeFunc::getStyleSheetFileContent(CPrime::StyleTypeName::DialogStyle));
+    setStyleSheet( CPrime::ThemeFunc::getStyleSheetFileContent( CPrime::StyleTypeName::DialogStyle ) );
 
     // set the requried folders
-    CPrime::ValidityFunc::setupFileFolder(CPrime::FileFolderSetup::BookmarkFolder);
+    CPrime::ValidityFunc::setupFileFolder( CPrime::FileFolderSetup::BookmarkFolder );
 
-    connect(ui->cancel, &QToolButton::clicked, this, &bookmarkDialog::close);
+    connect( ui->cancel, &QToolButton::clicked, this, &bookmarkDialog::close );
 
     ui->bkSection->clear();
-    ui->bkSection->addItems(bk.getBookSections());
-    ui->done->setEnabled(false);
+    ui->bkSection->addItems( bk.getBookSections() );
+    ui->done->setEnabled( false );
 
     BookmarkManage bm;
     bm.checkBook();
@@ -49,63 +54,69 @@ bookmarkDialog::~bookmarkDialog()
 
 void bookmarkDialog::on_done_clicked()
 {
-    if (ui->bkName->text().count() == 0) {
-        ui->done->setEnabled(false);
+    if ( ui->bkName->text().count() == 0 ) {
+        ui->done->setEnabled( false );
     }
-    if (ui->bkName->text().count() != 0 && ui->bkSection->currentText().count() != 0) {
+
+    if ( ui->bkName->text().count() != 0 && ui->bkSection->currentText().count() != 0 ) {
         accepted = true;
-        QTimer::singleShot(100, this, SLOT(close()));
+        QTimer::singleShot( 100, this, SLOT( close() ) );
         // Function from utilities.cpp
-        CPrime::InfoFunc::messageEngine("Bookmark Added at '" + ui->bkSection->currentText() + "'", CPrime::MessageType::Info, this);
+        CPrime::InfoFunc::messageEngine( "Bookmark Added at '" + ui->bkSection->currentText() + "'", CPrime::MessageType::Info, this );
     }
 }
 
 void bookmarkDialog::bookMarkName_Changed()
 {
-    if (ui->bkName->text().count() > 0) {
-        QString str = bk.checkingBookName(ui->bkSection->currentText(), ui->bkName->text());
-        if (str.count() > 0) {
-            ui->bkStatus->setText(str);
-            ui->done->setEnabled(false);
+    if ( ui->bkName->text().count() > 0 ) {
+        QString str = bk.checkingBookName( ui->bkSection->currentText(), ui->bkName->text() );
+
+        if ( str.count() > 0 ) {
+            ui->bkStatus->setText( str );
+            ui->done->setEnabled( false );
         } else {
-            ui->bkStatus->setText(str);
-            ui->done->setEnabled(true);
+            ui->bkStatus->setText( str );
+            ui->done->setEnabled( true );
         }
-    }
-    else {
-        ui->done->setEnabled(false);
+    } else {
+        ui->done->setEnabled( false );
     }
 }
 
 void bookmarkDialog::checkPath()
 {
-    QString str = bk.checkingBookPath(ui->bkSection->currentText(), ui->bkName->text());
-    if (str.count() > 0) {
-        ui->bkStatus->setText(str);
-        ui->bkName->setEnabled(false);
-        ui->done->setEnabled(false);
-        ui->cancel->setText("OK");
+    QString str = bk.checkingBookPath( ui->bkSection->currentText(), ui->bkName->text() );
+
+    if ( str.count() > 0 ) {
+        ui->bkStatus->setText( str );
+        ui->bkName->setEnabled( false );
+        ui->done->setEnabled( false );
+        ui->cancel->setText( "OK" );
     } else {
-        ui->bkStatus->setText(str);
-        ui->bkName->setEnabled(true);
-        ui->done->setEnabled(true);
-        ui->cancel->setText("Cancel");
+        ui->bkStatus->setText( str );
+        ui->bkName->setEnabled( true );
+        ui->done->setEnabled( true );
+        ui->cancel->setText( "Cancel" );
     }
 }
 
-void bookmarkDialog::setBookPath(const QString &path) {
-    ui->path->setText(path);
+void bookmarkDialog::setBookPath( const QString &path )
+{
+    ui->path->setText( path );
 }
 
-void bookmarkDialog::setBookName(const QString &bName) {
-    ui->bkName->setText(bName);
+void bookmarkDialog::setBookName( const QString &bName )
+{
+    ui->bkName->setText( bName );
 }
 
-QString bookmarkDialog::getBookName() {
+QString bookmarkDialog::getBookName()
+{
     return ui->bkName->text();
 }
 
-QString bookmarkDialog::getSectionName() {
+QString bookmarkDialog::getSectionName()
+{
     return ui->bkSection->currentText();
 }
 
@@ -116,28 +127,29 @@ void bookmarkDialog::item_Changed()
 }
 
 
-void bookmarkDialog::on_bkSection_currentIndexChanged(const QString &arg1)
+void bookmarkDialog::on_bkSection_currentIndexChanged( const QString &arg1 )
 {
-    Q_UNUSED(arg1);
+    Q_UNUSED( arg1 );
     checkPath();
     bookMarkName_Changed();
 }
 
-void bookmarkDialog::on_bkName_textChanged(const QString &arg1)
+void bookmarkDialog::on_bkName_textChanged( const QString &arg1 )
 {
-    Q_UNUSED(arg1);
-    if (ui->bkName->text().count() > 0) {
-        QString str = bk.checkingBookName(ui->bkSection->currentText(), ui->bkName->text());
-        if (str.count() > 0) {
-            ui->bkStatus->setText(str);
-            ui->done->setEnabled(false);
+    Q_UNUSED( arg1 );
+
+    if ( ui->bkName->text().count() > 0 ) {
+        QString str = bk.checkingBookName( ui->bkSection->currentText(), ui->bkName->text() );
+
+        if ( str.count() > 0 ) {
+            ui->bkStatus->setText( str );
+            ui->done->setEnabled( false );
         } else {
-            ui->bkStatus->setText(str);
-            ui->done->setEnabled(true);
+            ui->bkStatus->setText( str );
+            ui->done->setEnabled( true );
         }
-    }
-    else {
-        ui->done->setEnabled(false);
+    } else {
+        ui->done->setEnabled( false );
     }
 }
 
@@ -147,29 +159,31 @@ void bookmarkDialog::on_bkName_textChanged(const QString &arg1)
  * @param currentPath : Path which needs to bookmarked.
  * @param iconPath : Apps icon path from resource.
  */
-void bookmarkDialog::callBookMarkDialog(QWidget *parent, const QString &currentPath)
+void bookmarkDialog::callBookMarkDialog( QWidget *parent, const QString &currentPath )
 {
-    QFileInfo info(currentPath);
+    QFileInfo info( currentPath );
     BookmarkManage bm;
-    const QString str = bm.checkingBookPathEx(currentPath);
-    if (str.count() == 0) {
-        bookmarkDialog *bkdlg = new bookmarkDialog(parent);
-        QIcon ico = CPrime::ThemeFunc::getFileIcon(currentPath);
-        QPixmap pix = ico.pixmap(QSize(100, 80));
-        bkdlg->setBookPath(currentPath);
-        bkdlg->setBookName(info.fileName() + "");
+    const QString str = bm.checkingBookPathEx( currentPath );
+
+    if ( str.count() == 0 ) {
+        bookmarkDialog *bkdlg = new bookmarkDialog( parent );
+        QIcon ico = CPrime::ThemeFunc::getFileIcon( currentPath );
+        QPixmap pix = ico.pixmap( QSize( 100, 80 ) );
+        bkdlg->setBookPath( currentPath );
+        bkdlg->setBookName( info.fileName() + "" );
         bkdlg->checkPath();
 
-        if (bkdlg->exec() == 0) {
-            if (bkdlg->accepted) {
-                bk.addBookmark(bkdlg->getSectionName(), bkdlg->getBookName(), currentPath);
-            } else if (!bkdlg->accepted) {
+        if ( bkdlg->exec() == 0 ) {
+            if ( bkdlg->accepted ) {
+                bk.addBookmark( bkdlg->getSectionName(), bkdlg->getBookName(), currentPath );
+            } else if ( !bkdlg->accepted ) {
                 bkdlg->close();
             }
         }
+
         //sectionRefresh();
     } else {
         // Function from utilities.cpp
-        CPrime::InfoFunc::messageEngine(str, CPrime::MessageType::Info, this);
+        CPrime::InfoFunc::messageEngine( str, CPrime::MessageType::Info, this );
     }
 }

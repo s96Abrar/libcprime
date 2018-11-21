@@ -20,7 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "filefunc.h"
 
-
 QString CPrime::FileFunc::formatSize(const quint64 &size)
 {
     QString total = nullptr;

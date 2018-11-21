@@ -15,56 +15,72 @@ Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
+#include <QWidget>
+#include <QDialog>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QCompleter>
+#include <QStringListModel>
+#include <QDirIterator>
+#include <QDebug>
+#include <QIcon>
+
+#include "cprime.h"
+#include "desktopfile.h"
 #include "applicationdialog.h"
 
-
-ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
+ApplicationDialog::ApplicationDialog( QWidget *parent ) : QDialog( parent )
 {
     // Title and size
-//    this->setWindowIcon(QIcon(":/icons/CoreFM.svg"));
-    this->setWindowTitle(tr("Select application"));
-    this->setMinimumSize(320, 320);
+    //    this->setWindowIcon(QIcon(":/icons/CoreFM.svg"));
+    this->setWindowTitle( tr( "Select application" ) );
+    this->setMinimumSize( 320, 320 );
 
     // set stylesheet from style.qrc
-    setStyleSheet(CPrime::ThemeFunc::getStyleSheetFileContent(CPrime::StyleTypeName::DialogStyle));
+    setStyleSheet( CPrime::ThemeFunc::getStyleSheetFileContent( CPrime::StyleTypeName::DialogStyle ) );
 
     // Creates app list view
-    appList = new QTreeWidget(this);
-    appList->setIconSize(QSize(24, 24));
-    appList->setFocusPolicy(Qt::NoFocus);
-    appList->headerItem()->setText(0, tr("Application"));
+    appList = new QTreeWidget( this );
+    appList->setIconSize( QSize( 24, 24 ) );
+    appList->setFocusPolicy( Qt::NoFocus );
+    appList->headerItem()->setText( 0, tr( "Application" ) );
 
     // Creates buttons
-    QDialogButtonBox *buttons = new QDialogButtonBox(this);
-    buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    connect(buttons, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttons, SIGNAL(rejected()), this, SLOT(reject()));
+    QDialogButtonBox *buttons = new QDialogButtonBox( this );
+    buttons->setStandardButtons( QDialogButtonBox::Ok | QDialogButtonBox::Cancel );
+    connect( buttons, SIGNAL( accepted() ), this, SLOT( accept() ) );
+    connect( buttons, SIGNAL( rejected() ), this, SLOT( reject() ) );
 
     // Command bar
-    edtCommand = new QLineEdit(this);
-    edtCommand->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    QFormLayout* layoutCommand = new QFormLayout();
-    layoutCommand->addRow(tr("Launcher: "), edtCommand);
+    edtCommand = new QLineEdit( this );
+    edtCommand->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+    QFormLayout *layoutCommand = new QFormLayout();
+    layoutCommand->addRow( tr( "Launcher: " ), edtCommand );
 
     // Layout
-    QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->addWidget(appList);
-    layout->addLayout(layoutCommand);
-    layout->addWidget(buttons);
+    QVBoxLayout *layout = new QVBoxLayout( this );
+    layout->addWidget( appList );
+    layout->addLayout( layoutCommand );
+    layout->addWidget( buttons );
 
     // Synonyms for cathegory names
     catNames.clear();
-    catNames.insert("Development", QStringList() << "Programming");
-    catNames.insert("Games", QStringList() << "Game");
-    catNames.insert("Graphics", QStringList());
-    catNames.insert("Internet", QStringList() << "Network" << "WebBrowser");
-    catNames.insert("Multimedia", QStringList() << "AudioVideo" << "Video");
-    catNames.insert("Office", QStringList());
-    catNames.insert("Other", QStringList());
-    catNames.insert("Settings", QStringList() << "System");
-    catNames.insert("Utilities", QStringList() << "Utility");
+    catNames.insert( "Development", QStringList() << "Programming" );
+    catNames.insert( "Games", QStringList() << "Game" );
+    catNames.insert( "Graphics", QStringList() );
+    catNames.insert( "Internet", QStringList() << "Network" << "WebBrowser" );
+    catNames.insert( "Multimedia", QStringList() << "AudioVideo" << "Video" );
+    catNames.insert( "Office", QStringList() );
+    catNames.insert( "Other", QStringList() );
+    catNames.insert( "Settings", QStringList() << "System" );
+    catNames.insert( "Utilities", QStringList() << "Utility" );
 
 
     // Create default application cathegories
@@ -74,39 +90,48 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
     // Load applications and create category tree list
     QList<DesktopFile> apps = ApplicationDialog::getApplications();
 
-    foreach (DesktopFile app, apps) {
-      // Check for name
-      if (app.getName().compare("") == 0) {
-        continue;
-      }
+    foreach ( DesktopFile app, apps ) {
+        // Check for name
+        if ( app.getName().compare( "" ) == 0 ) {
+            continue;
+        }
 
-      // Find category
-      QTreeWidgetItem* category = findCategory(app);
+        // Find category
+        QTreeWidgetItem *category = findCategory( app );
 
-      // Create item from current mime
-      QTreeWidgetItem *item = new QTreeWidgetItem(category);
-      item->setIcon(0, ApplicationDialog::searchAppIcon(app));
-      item->setText(0, app.getName());
-      item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        // Create item from current mime
+        QTreeWidgetItem *item = new QTreeWidgetItem( category );
+        item->setIcon( 0, ApplicationDialog::searchAppIcon( app ) );
+        item->setText( 0, app.getName() );
+        item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
-      // Register application
-      applications.insert(app.getPureFileName(), item);
+        // Register application
+        applications.insert( app.getPureFileName(), item );
     }
 
-    appList->setSortingEnabled(true);
-    appList->sortByColumn(0, Qt::AscendingOrder);
+    appList->setSortingEnabled( true );
+    appList->sortByColumn( 0, Qt::AscendingOrder );
 
     // Create completer and its model for editation of command
-    QStringListModel* model = new QStringListModel(this);
-    model->setStringList(applications.keys());
-    QCompleter* completer = new QCompleter(this);
-    completer->setModel(model);
-    edtCommand->setCompleter(completer);
+    QStringListModel *model = new QStringListModel( this );
+    model->setStringList( applications.keys() );
+    QCompleter *completer = new QCompleter( this );
+    completer->setModel( model );
+    edtCommand->setCompleter( completer );
 
     // Signals
-    connect(appList,
-            SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
-            SLOT(updateCommand(QTreeWidgetItem*,QTreeWidgetItem*)));
+    connect( appList,
+             SIGNAL( currentItemChanged( QTreeWidgetItem *, QTreeWidgetItem * ) ),
+             SLOT( updateCommand( QTreeWidgetItem *, QTreeWidgetItem * ) ) );
+}
+
+ApplicationDialog::~ApplicationDialog()
+{
+    delete appList;
+    delete edtCommand;
+    catNames.clear();
+    categories.clear();
+    applications.clear();
 }
 
 /**
@@ -115,41 +140,45 @@ ApplicationDialog::ApplicationDialog(QWidget *parent) : QDialog(parent)
  * @param defaultIcon
  * @return icon
  */
-const QIcon ApplicationDialog::searchAppIcon(const DesktopFile &app)
+const QIcon ApplicationDialog::searchAppIcon( const DesktopFile &app )
 {
     // Resulting icon
     QIcon icon;
 
     // First attempt, check whether icon is a valid file
-    if (QFile(app.getIcon()).exists()) {
-      icon = QIcon(app.getIcon());
-      if (!icon.isNull()) {
-        return icon;
-      }
+    if ( QFile( app.getIcon() ).exists() ) {
+        icon = QIcon( app.getIcon() );
+
+        if ( !icon.isNull() ) {
+            return icon;
+        }
     }
 
     // Second attempt, try load icon from theme
-    icon = QIcon::fromTheme(app.getIcon());
-    if (!icon.isNull()) {
-      return icon;
+    icon = QIcon::fromTheme( app.getIcon() );
+
+    if ( !icon.isNull() ) {
+        return icon;
     }
 
     // Next, try luck with application name
-    QString name = app.getFileName().remove(".desktop").split("/").last();
-    icon = QIcon::fromTheme(name.toLower());
-    if (!icon.isNull()) {
-      return icon;
+    QString name = app.getFileName().remove( ".desktop" ).split( "/" ).last();
+    icon = QIcon::fromTheme( name.toLower() );
+
+    if ( !icon.isNull() ) {
+        return icon;
     }
 
     // Last chance
-    QDir appIcons("/usr/share/pixmaps","", nullptr, QDir::Files | QDir::NoDotAndDotDot);
+    QDir appIcons( "/usr/share/pixmaps", "", nullptr, QDir::Files | QDir::NoDotAndDotDot );
     QStringList iconFiles = appIcons.entryList();
-    QStringList searchIcons = iconFiles.filter(name);
-    if (searchIcons.count() > 0) {
-      return QIcon("/usr/share/pixmaps/" + searchIcons.at(0));
+    QStringList searchIcons = iconFiles.filter( name );
+
+    if ( searchIcons.count() > 0 ) {
+        return QIcon( "/usr/share/pixmaps/" + searchIcons.at( 0 ) );
     }
 
-    QIcon iconnullptr(QIcon::fromTheme("application-x-executable"));
+    QIcon iconnullptr( QIcon::fromTheme( "application-x-executable" ) );
 
     // Default icon
     return iconnullptr;
@@ -162,13 +191,13 @@ const QIcon ApplicationDialog::searchAppIcon(const DesktopFile &app)
 QList<DesktopFile> ApplicationDialog::getApplications()
 {
     QList<DesktopFile> apps;
-    QDirIterator it("/usr/share/applications", QStringList("*.desktop"),
-                    QDir::Files | QDir::NoDotAndDotDot,
-                    QDirIterator::Subdirectories);
+    QDirIterator it( "/usr/share/applications", QStringList( "*.desktop" ),
+                     QDir::Files | QDir::NoDotAndDotDot,
+                     QDirIterator::Subdirectories );
 
-    while (it.hasNext()) {
-      it.next();
-      apps.append(DesktopFile(it.filePath()));
+    while ( it.hasNext() ) {
+        it.next();
+        apps.append( DesktopFile( it.filePath() ) );
     }
 
     return apps;
@@ -178,7 +207,7 @@ QList<DesktopFile> ApplicationDialog::getApplications()
  * @brief Returns currently selected launcher
  * @return currently selected launcher
  */
-const QString ApplicationDialog::getCurrentLauncher() const
+QString ApplicationDialog::getCurrentLauncher() const
 {
     return edtCommand->text();
 }
@@ -190,30 +219,30 @@ const QString ApplicationDialog::getCurrentLauncher() const
 void ApplicationDialog::createCategories()
 {
     // Create cathegories
-    foreach (QString name, catNames.keys()) {
+    foreach ( QString name, catNames.keys() ) {
 
-      // Find icon
-      QIcon icon = QIcon::fromTheme("applications-" + name.toLower());
+        // Find icon
+        QIcon icon = QIcon::fromTheme( "applications-" + name.toLower() );
 
-      // If icon not found, check synonyms
-      if (icon.isNull()) {
-        foreach (QString synonym, catNames.value(name)) {
-          icon = QIcon::fromTheme("applications-" + synonym.toLower());
-          break;
+        // If icon not found, check synonyms
+        if ( icon.isNull() ) {
+            foreach ( QString synonym, catNames.value( name ) ) {
+                icon = QIcon::fromTheme( "applications-" + synonym.toLower() );
+                break;
+            }
         }
-      }
 
-      // If icon still not found, retrieve default icon
-      if (icon.isNull()) {
-        icon = QIcon::fromTheme("application-x-executable");
-      }
+        // If icon still not found, retrieve default icon
+        if ( icon.isNull() ) {
+            icon = QIcon::fromTheme( "application-x-executable" );
+        }
 
-      // Create category
-      QTreeWidgetItem* category = new QTreeWidgetItem(appList);
-      category->setText(0, name);
-      category->setIcon(0, icon);
-      category->setFlags(Qt::ItemIsEnabled);
-      categories.insert(name, category);
+        // Create category
+        QTreeWidgetItem *category = new QTreeWidgetItem( appList );
+        category->setText( 0, name );
+        category->setIcon( 0, icon );
+        category->setFlags( Qt::ItemIsEnabled );
+        categories.insert( name, category );
     }
 }
 
@@ -222,33 +251,36 @@ void ApplicationDialog::createCategories()
  * @param app
  * @return cathegory
  */
-QTreeWidgetItem* ApplicationDialog::findCategory(const DesktopFile &app)
+QTreeWidgetItem *ApplicationDialog::findCategory( const DesktopFile &app )
 {
     // Default categoty is 'Other'
-    QTreeWidgetItem* category = categories.value("Other");
+    QTreeWidgetItem *category = categories.value( "Other" );
 
     // Try to find more suitable category
-    foreach (QString name, catNames.keys()) {
+    foreach ( QString name, catNames.keys() ) {
 
-      // Try category name
-      if (app.getCategories().contains(name)) {
-        category = categories.value(name);
-        break;
-      }
-
-      // Try synonyms
-      bool found = false;
-      foreach (QString synonym, catNames.value(name)) {
-        if (app.getCategories().contains(synonym)) {
-          found = true;
-          break;
+        // Try category name
+        if ( app.getCategories().contains( name ) ) {
+            category = categories.value( name );
+            break;
         }
-      }
-      if (found) {
-        category = categories.value(name);
-        break;
-      }
+
+        // Try synonyms
+        bool found = false;
+
+        foreach ( QString synonym, catNames.value( name ) ) {
+            if ( app.getCategories().contains( synonym ) ) {
+                found = true;
+                break;
+            }
+        }
+
+        if ( found ) {
+            category = categories.value( name );
+            break;
+        }
     }
+
     return category;
 }
 
@@ -257,8 +289,8 @@ QTreeWidgetItem* ApplicationDialog::findCategory(const DesktopFile &app)
  * @param current
  * @param previous
  */
-void ApplicationDialog::updateCommand(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void ApplicationDialog::updateCommand( QTreeWidgetItem *current, QTreeWidgetItem *previous )
 {
-    Q_UNUSED(previous);
-    edtCommand->setText(applications.key(current));
+    Q_UNUSED( previous );
+    edtCommand->setText( applications.key( current ) );
 }

@@ -20,19 +20,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #ifndef MIMEUTILS_H
 #define MIMEUTILS_H
 
-#include <QObject>
-#include <QFileInfo>
-#include <QProcess>
-#include <QMimeDatabase>
-#include <QMimeType>
-#include <QTextStream>
-#include <QDirIterator>
-
-#include "properties.h"
-#include "desktopfile.h"
 #include "libcprime_global.h"
-#include "cprime.h"
 
+class QFileInfo;
+class DesktopFile;
+class Properties;
 
 /**
  * @class MimeUtils
@@ -41,16 +33,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
  * @date 29.4.2013
  */
 class LIBCPRIMESHARED_EXPORT MimeUtils : public QObject {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit MimeUtils(QObject* parent = nullptr);
+    explicit MimeUtils( QObject *parent = nullptr );
     virtual ~MimeUtils();
-    void openInApp(const QFileInfo &file, QObject* processOwner = nullptr);
-    void openInApp(QString exe, const QFileInfo &file, QObject* processOwner = nullptr);
-    void setDefaultsFileName(const QString &fileName);
-    void setDefault(const QString &mime, const QStringList &apps);
-    QStringList getDefault(const QString &mime) const;
+    void openInApp( const QFileInfo &file, QObject *processOwner = nullptr );
+    void openInApp( QString exe, const QFileInfo &file, QObject *processOwner = nullptr );
+    void setDefaultsFileName( const QString &fileName );
+    void setDefault( const QString &mime, const QStringList &apps );
+    QStringList getDefault( const QString &mime ) const;
     QStringList getMimeTypes() const;
     QString getDefaultsFileName() const;
     static QList<DesktopFile> getApplications();
@@ -63,7 +55,7 @@ public slots:
 private:
     bool defaultsChanged;
     QString defaultsFileName;
-    Properties* defaults;
+    Properties *defaults;
 
 };
 

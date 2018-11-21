@@ -21,22 +21,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef FILEFUNC_H
 #define FILEFUNC_H
 
-#include <QString>
-
+#include "libcprime_global.h"
 
 namespace CPrime {
 
-class FileFunc
-{
-public:
-    // File sizes in bytes.
-    static const quint64 KB = 1024;
-    static const quint64 MB = 1024 * KB;
-    static const quint64 GB = 1024 * MB;
-    static const quint64 TB = 1024 * GB;
+    class LIBCPRIMESHARED_EXPORT FileFunc {
+    public:
+        // File sizes in bytes.
+        static const quint64 KB = 1024;
+        static const quint64 MB = 1024 * KB;
+        static const quint64 GB = 1024 * MB;
+        static const quint64 TB = 1024 * GB;
 
-    static QString formatSize(const quint64 &size);
-};
+        static QString formatSize( const quint64 &size );
+    };
 
 }
 #endif // FILEFUNC_H

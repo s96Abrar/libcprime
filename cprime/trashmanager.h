@@ -21,28 +21,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef TRASHMANAGER_H
 #define TRASHMANAGER_H
 
-#include <QString>
-#include <QStringList>
-#include <QMessageBox>
-#include <QDateTime>
-#include <QDebug>
-
-#include "cprime.h"
-#include "themefunc.h"
-#include "infofunc.h"
-
+#include "libcprime_global.h"
 
 namespace CPrime {
 
-class TrashManager
-{
-public:
-    QStringList failedList;
-    static QString homeTrashLocation();
-    static QString trashLocation(const QString &path);
-    static bool moveToTrash(const QStringList &filePaths);
-    static void restoreFromTrash(const QStringList &filenames);
-};
+    class LIBCPRIMESHARED_EXPORT TrashManager {
+    public:
+        QStringList failedList;
+        static QString homeTrashLocation();
+        static QString trashLocation( const QString &path );
+        static bool moveToTrash( const QStringList &filePaths );
+        static void restoreFromTrash( const QStringList &filenames );
+    };
 
 }
 

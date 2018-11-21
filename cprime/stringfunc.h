@@ -21,23 +21,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef STRINGFUNC_H
 #define STRINGFUNC_H
 
-#include <QString>
-#include <QStringList>
-#include <QChar>
-#include <QFont>
-#include <QFontMetrics>
-
 #include "libcprime_global.h"
 
+class QFont;
+class QFontMetrics;
 
 namespace CPrime {
 
-class StringFunc
-{
-public:
-    static QString CapitalizeEachWord(const QString &str);
-    static QStringList fStringList(QStringList &left, QStringList &right, QFont font);
-};
+    class LIBCPRIMESHARED_EXPORT StringFunc {
+    public:
+        static QString CapitalizeEachWord( const QString &str );
+        static QStringList fStringList( QStringList &left, QStringList &right, QFont font );
+    };
 
 }
 

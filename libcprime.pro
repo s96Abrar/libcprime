@@ -4,7 +4,7 @@ TARGET    = cprime
 TEMPLATE  = lib
 
 # disable all build warnings
-CONFIG   += silent warn_on thread silent build_all c++11
+CONFIG   += silent warn_on thread build_all c++11
 
 INCLUDEPATH += ./cprime/
 DEPENDPATH  += ./cprime/
@@ -53,7 +53,7 @@ unix {
         QMAKE_PKGCONFIG_LIBDIR      = $$target.path
         QMAKE_PKGCONFIG_INCDIR      = $$includes.path
         QMAKE_PKGCONFIG_VERSION     = $$VERSION
-        QMAKE_PKGCONFIG_DESTDIR     = pkgconfig # Directory where pkgconfig located
+        QMAKE_PKGCONFIG_DESTDIR     = pkgconfig # Destination Directory where pkgconfig installed
 }
 
 HEADERS += \
@@ -73,7 +73,10 @@ HEADERS += \
     cprime/appopenfunc.h \
     cprime/infofunc.h \
     cprime/filefunc.h \
-    cprime/trashmanager.h
+    cprime/trashmanager.h \
+    cprime/cenums.h \
+    cprime/cvariables.h \
+    cprime/filepathvalidate.h
 
 SOURCES += \
     cprime/settingsmanage.cpp \
@@ -90,7 +93,9 @@ SOURCES += \
     cprime/appopenfunc.cpp \
     cprime/infofunc.cpp \
     cprime/filefunc.cpp \
-    cprime/trashmanager.cpp
+    cprime/trashmanager.cpp \
+    cprime/cvariables.cpp \
+    cprime/filepathvalidate.cpp
     
 FORMS += \
     cprime/bookmarkdialog.ui

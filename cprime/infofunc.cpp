@@ -18,8 +18,21 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "infofunc.h"
+#include <QWidget>
+#include <QFrame>
+#include <QLabel>
+#include <QTimer>
+#include <QVBoxLayout>
+#include <QDateTime>
+#include <QApplication>
+#include <QScreen>
+#include <QDir>
+#include <QSettings>
 
+#include "settingsmanage.h"
+#include "stringfunc.h"
+#include "themefunc.h"
+#include "infofunc.h"
 
 /*
  * Return system screen size.
@@ -30,73 +43,75 @@ QRect CPrime::InfoFunc::screenSize()
     return scr->availableGeometry();
 }
 
-void CPrime::InfoFunc::messageEngine(const QString &message, CPrime::MessageType messageType, QWidget *parent)
+void CPrime::InfoFunc::messageEngine( const QString &message, CPrime::MessageType messageType, QWidget *parent )
 {
-    QWidget *mbox = new QWidget(parent);
-    QLabel *l = new QLabel(message);
-    QFont f ("Arial", 14, QFont::Bold);    
+    QWidget *mbox = new QWidget( parent );
+    QLabel *l = new QLabel( message );
+    QFont f ( "Arial", 14, QFont::Bold );
     QVBoxLayout *bi = new QVBoxLayout();
     QVBoxLayout *bii = new QVBoxLayout();
     QFrame *frame = new QFrame();
 
-    frame->setStyleSheet("QFrame { border-radius: 5px; }");
-    bii->addWidget(frame);
-    frame->setLayout(bi);
-    mbox->setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::ToolTip);
-    mbox->setAttribute(Qt::WA_TranslucentBackground);
-    mbox->setMinimumSize(230, 50);
-    mbox->setLayout(bii);
-    l->setStyleSheet("QLabel { padding: 10px; }");
-    l->setFont(f);
-    l->setAlignment(Qt::AlignCenter);
-    bi->addWidget(l);
-    bi->setContentsMargins(0, 0, 0, 0);
+    frame->setStyleSheet( "QFrame { border-radius: 5px; }" );
+    bii->addWidget( frame );
+    frame->setLayout( bi );
+    mbox->setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::ToolTip );
+    mbox->setAttribute( Qt::WA_TranslucentBackground );
+    mbox->setMinimumSize( 230, 50 );
+    mbox->setLayout( bii );
+    l->setStyleSheet( "QLabel { padding: 10px; }" );
+    l->setFont( f );
+    l->setAlignment( Qt::AlignCenter );
+    bi->addWidget( l );
+    bi->setContentsMargins( 0, 0, 0, 0 );
     QString stylesheet;
-    if (messageType == CPrime::MessageType::Info) {
+
+    if ( messageType == CPrime::MessageType::Info ) {
         stylesheet = "QWidget { background-color: rgba(35, 35, 35, 200); color: #ffffff; border: 1px #2A2A2A; border-radius: 3px; }";
-    } else if (messageType == CPrime::MessageType::Warning) {
+    } else if ( messageType == CPrime::MessageType::Warning ) {
         stylesheet = "QWidget { background-color: rgba(240, 0, 0, 150); color: #ffffff; border: 1px #2A2A2A; border-radius: 3px; }";
-    } else if (messageType == CPrime::MessageType::Tips) {
+    } else if ( messageType == CPrime::MessageType::Tips ) {
         stylesheet = "QWidget { background-color: rgba(0, 0, 240, 150); color: #ffffff; border: 1px #2A2A2A; border-radius: 3px; }";
     } else {
         return;
     }
 
-    mbox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    CPrime::ThemeFunc::addDropShadow(mbox, 60);
-    mbox->setStyleSheet(stylesheet);
+    mbox->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+    CPrime::ThemeFunc::addDropShadow( mbox, 60 );
+    mbox->setStyleSheet( stylesheet );
     mbox->show();
 
-    int x = CPrime::InfoFunc::screenSize().width() - (mbox->width() + 5);
-    int y = CPrime::InfoFunc::screenSize().height() - (mbox->height() + 5);
-    mbox->move(x,y);
+    int x = screenSize().width() - ( mbox->width() + 5 );
+    int y = screenSize().height() - ( mbox->height() + 5 );
+    mbox->move( x, y );
 
-    QTimer::singleShot(3000, mbox, SLOT(close()));
+    QTimer::singleShot( 3000, mbox, SLOT( close() ) );
 }
 
-QString CPrime::InfoFunc::sentDateText(const QString &dateTime)
+QString CPrime::InfoFunc::sentDateText( const QString &dateTime )
 {
-    QDateTime given = QDateTime::fromString(dateTime, "dd.MM.yyyy");
-    if (QDate::currentDate().toString("dd.MM.yyyy") == dateTime) {
-        return QString("Today");
+    QDateTime given = QDateTime::fromString( dateTime, "dd.MM.yyyy" );
+
+    if ( QDate::currentDate().toString( "dd.MM.yyyy" ) == dateTime ) {
+        return QString( "Today" );
     } else {
-        return QString(given.toString("MMMM dd"));
+        return QString( given.toString( "MMMM dd" ) );
     }
 }
 
-bool CPrime::InfoFunc::saveToRecent(const QString &appName, const QString &pathName)
+bool CPrime::InfoFunc::saveToRecent( const QString &appName, const QString &pathName )
 {
     SettingsManage sm;
-    QString m_appName = CPrime::StringFunc::CapitalizeEachWord(appName);
+    QString m_appName = CPrime::StringFunc::CapitalizeEachWord( appName );
 
-    if (sm.getShowRecent()) {
-        if (appName.count() && pathName.count()) {
-            QSettings recentActivity(QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat);
+    if ( sm.getShowRecent() ) {
+        if ( appName.count() && pathName.count() ) {
+            QSettings recentActivity( QDir::homePath() + "/.config/coreBox/RecentActivity", QSettings::IniFormat );
             QDateTime currentDT =  QDateTime::currentDateTime();
-            QString group = currentDT.toString("dd.MM.yyyy");
-            QString key = currentDT.toString("hh.mm.ss");
-            recentActivity.beginGroup(group);
-            recentActivity.setValue(key, m_appName + "\t\t\t" + pathName);
+            QString group = currentDT.toString( "dd.MM.yyyy" );
+            QString key = currentDT.toString( "hh.mm.ss" );
+            recentActivity.beginGroup( group );
+            recentActivity.setValue( key, m_appName + "\t\t\t" + pathName );
             recentActivity.endGroup();
             return true;
         }

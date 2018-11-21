@@ -18,58 +18,77 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include <QChar>
+#include <QFont>
+#include <QFontMetrics>
+
 #include "stringfunc.h"
 
-
-QString CPrime::StringFunc::CapitalizeEachWord(const QString &str)
+QString CPrime::StringFunc::CapitalizeEachWord( const QString &str )
 {
-    if (str.count() == 0)
+    if ( str.count() == 0 ) {
+        qDebug() << "Error : func(CapitalizeEachWord) : Empty String.";
         return nullptr;
+    }
 
-    QStringList sep = str.split(' ');
-    QString total = "";
-    foreach (QString s, sep) {
-        if (!s.count())
+    QStringList sep = str.split( ' ' );
+    QString total = nullptr;
+
+    foreach ( QString s, sep ) {
+        if ( !s.count() ) {
             continue;
+        }
 
-        foreach (QChar c, s) {
-            if (c.isLetter()) {
-                s = s.toLower().replace(s.indexOf(c), 1, c.toTitleCase());
+        foreach ( QChar c, s ) {
+            if ( c.isLetter() ) {
+                s = s.toLower().replace( s.indexOf( c ), 1, c.toTitleCase() );
                 break;
             }
         }
+
         total = total + " " + s;
     }
 
-    return total.remove(0, 1);
+    if ( !total.count() ) {
+        qDebug() << "Error : func(CapitalizeEachWord) : Nothing to return.";
+        return nullptr;
+    }
+
+    return total.remove( 0, 1 );
 }
 
-
-QStringList CPrime::StringFunc::fStringList(QStringList &left, QStringList &right, QFont font)
+QStringList CPrime::StringFunc::fStringList( QStringList &left, QStringList &right, QFont font )
 {
-    QFontMetrics *fontM = new QFontMetrics(font);
+    if ( !left.count() || !right.count() ) {
+        qDebug() << "Error : func(fStringList) : Empty list given.";
+        return ( QStringList() << nullptr );
+    }
+
+    QFontMetrics *fontM = new QFontMetrics( font );
     int large = 0;
 
-    foreach (QString s, left) {
-        if (large < fontM->width(s)) {
-            large = fontM->width(s);
+    foreach ( QString s, left ) {
+        if ( large < fontM->width( s ) ) {
+            large = fontM->width( s );
         }
     }
 
-    large = large + fontM->width('\t');
+    large = large + fontM->width( '\t' );
 
     int index = 0;
-    foreach (QString s, left) {
-        while (large >= fontM->width(s)) {
-            left.replace(index++, s + "\t");
+
+    for ( index = 0; index < left.count(); index++ ) {
+        while ( large >= fontM->width( left.at( index ) ) ) {
+            left.replace( index, QString( left.at( index ) + QString( '\t' ) ) );
         }
     }
 
     index = 0;
-    foreach (QString s, left) {
-        QString rFirstW = s.at(0).toUpper();
-        QString rRestW  = s.right(s.length() - 1);
-        left.replace(index, rFirstW + rRestW + ": " + right.at(index));
+
+    foreach ( QString s, left ) {
+        QString rFirstW = s.at( 0 ).toUpper();
+        QString rRestW  = s.right( s.length() - 1 );
+        left.replace( index, rFirstW + rRestW + ": " + right.at( index ) );
         index++;
     }
 

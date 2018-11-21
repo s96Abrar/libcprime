@@ -20,32 +20,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 #ifndef BOOKMARKDIALOG_H
 #define BOOKMARKDIALOG_H
 
-#include <QObject>
-#include <QWidget>
 #include <QDialog>
-#include <QTimer>
 
-#include "cprime.h"
 #include "bookmarkmanage.h"
 #include "libcprime_global.h"
 
-
 namespace Ui {
-class bookmarkDialog;
+    class bookmarkDialog;
 }
 
-class LIBCPRIMESHARED_EXPORT bookmarkDialog : public QDialog
-{
+class LIBCPRIMESHARED_EXPORT bookmarkDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit bookmarkDialog(QWidget *parent = nullptr);
+    explicit bookmarkDialog( QWidget *parent = nullptr );
     ~bookmarkDialog();
 
-    void callBookMarkDialog(QWidget *parent, const QString &currentPath);
+    void callBookMarkDialog( QWidget *parent, const QString &currentPath );
     void checkPath();
-    void setBookPath(const QString &path);
-    void setBookName(const QString &bName);
+    void setBookPath( const QString &path );
+    void setBookName( const QString &bName );
     QString getBookName();
     QString getSectionName();
     bool accepted = false;
@@ -54,8 +48,8 @@ private slots:
     void on_done_clicked();
     void bookMarkName_Changed();
     void item_Changed();
-    void on_bkSection_currentIndexChanged(const QString &arg1);
-    void on_bkName_textChanged(const QString &arg1);
+    void on_bkSection_currentIndexChanged( const QString &arg1 );
+    void on_bkName_textChanged( const QString &arg1 );
 
 private:
     Ui::bookmarkDialog *ui;

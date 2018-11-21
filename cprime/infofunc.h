@@ -17,57 +17,25 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
-/*
-A Library for CoreApps .
-
-This file is part of libcprime.
-
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-*/
 
 #ifndef INFOFUNC_H
 #define INFOFUNC_H
 
-#include <QString>
-#include <QWidget>
-#include <QFrame>
-#include <QLabel>
-#include <QTimer>
-#include <QVBoxLayout>
-#include <QDateTime>
-#include <QApplication>
-#include <QScreen>
-#include <QSettings>
+#include "cenums.h"
+#include "libcprime_global.h"
 
-#include "cprime.h"
-#include "settingsmanage.h"
-#include "stringfunc.h"
-#include "themefunc.h"
-
+class QWidget;
 
 namespace CPrime {
 
-class InfoFunc
-{
-public:
-    static QRect screenSize();
-    static void messageEngine(const QString &message, CPrime::MessageType messageType, QWidget *parent);
+    class LIBCPRIMESHARED_EXPORT InfoFunc {
+    public:
+        static QRect screenSize();
+        static void messageEngine( const QString &message, CPrime::MessageType messageType, QWidget *parent );
 
-    static QString sentDateText(const QString &dateTime);
-    static bool saveToRecent(const QString &appName, const QString &pathName);
-};
+        static QString sentDateText( const QString &dateTime );
+        static bool saveToRecent( const QString &appName, const QString &pathName );
+    };
 
 }
 #endif // INFOFUNC_H

@@ -18,19 +18,27 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include <QFileInfo>
+#include <QDebug>
+#include <QDir>
+#include <QLineEdit>
+
+#include "mimeutils.h"
+#include "cvariables.h"
 #include "validityfunc.h"
+#include "filepathvalidate.h"
 
-
-QString CPrime::ValidityFunc::checkIsValidDir(const QString &path)
+QString CPrime::ValidityFunc::checkIsValidDir( const QString &path )
 {
-    if (path.count()) {
-        QFileInfo dir(path);
-        if (dir.isDir()) {
-            if (dir.isRoot()) {
+    if ( path.count() ) {
+        QFileInfo dir( path );
+
+        if ( dir.isDir() ) {
+            if ( dir.isRoot() ) {
                 return path;
             } else {
-                if (path.endsWith('/')) {
-                    return QString(path).remove(path.length() - 1, 1);
+                if ( path.endsWith( '/' ) ) {
+                    return QString( path ).remove( path.length() - 1, 1 );
                 } else {
                     return path;
                 }
@@ -39,70 +47,84 @@ QString CPrime::ValidityFunc::checkIsValidDir(const QString &path)
     } else {
         return nullptr;
     }
+
     return nullptr;
 }
 
-QString CPrime::ValidityFunc::checkIsValidFile(const QString &file)
+QString CPrime::ValidityFunc::checkIsValidFile( const QString &file )
 {
-    if (file.count()) {
-        QFileInfo fi(file);
-        if (fi.isFile()) {
+    if ( file.count() ) {
+        QFileInfo fi( file );
+
+        if ( fi.isFile() ) {
             return file;
         }
     } else {
         return nullptr;
     }
+
     return nullptr;
 }
 
-bool CPrime::ValidityFunc::setupFileFolder(CPrime::FileFolderSetup fs)
+bool CPrime::ValidityFunc::setupFileFolder( CPrime::FileFolderSetup fs )
 {
     bool status = false;
-    switch (fs) {
+
+    switch ( fs ) {
         case CPrime::BookmarkFolder: {
-            if (!QDir(CPrime::Variables::CC_CoreApps_ConfigDir()).exists()) {
-                status = QDir::home().mkdir(".config/coreBox");
+            if ( !QDir( CPrime::Variables::CC_CoreApps_ConfigDir() ).exists() ) {
+                status = QDir::home().mkdir( ".config/coreBox" );
             } else {
                 status = true;
             }
+
             break;
         }
+
         case CPrime::DriveMountFolder: {
-            if (!QDir(CPrime::Variables::CC_CoreApps_MountDir()).exists()) {
-                status = QDir::home().mkdir(".coreBox");
+            if ( !QDir( CPrime::Variables::CC_CoreApps_MountDir() ).exists() ) {
+                status = QDir::home().mkdir( ".coreBox" );
             } else {
                 status = true;
             }
+
             break;
         }
+
         case CPrime::MimeFile: {
-            if (!QFile(CPrime::Variables::CC_CoreApps_MimeFilePath()).exists()) {
+            if ( !QFile( CPrime::Variables::CC_CoreApps_MimeFilePath() ).exists() ) {
                 MimeUtils *mimeUtils = new MimeUtils;
-                mimeUtils->setDefaultsFileName(CPrime::Variables::CC_CoreApps_MimeFilePath());
+                mimeUtils->setDefaultsFileName( CPrime::Variables::CC_CoreApps_MimeFilePath() );
             }
+
             status = true;
             break;
         }
+
         case CPrime::TrashFolder: {
-            if (!QDir(CPrime::Variables::CC_Home_TrashDir()).exists()) {
+            if ( !QDir( CPrime::Variables::CC_Home_TrashDir() ).exists() ) {
                 QDir trash = QDir::home();
-                status = trash.cd(".local/share/");
-                status = trash.mkdir("Trash");
-                status = trash.cd("Trash");
-                status = trash.mkdir("files");
-                status = trash.mkdir("info");
+                status = trash.cd( ".local/share/" );
+                status = trash.mkdir( "Trash" );
+                status = trash.cd( "Trash" );
+                status = trash.mkdir( "files" );
+                status = trash.mkdir( "info" );
             } else {
                 status = true;
             }
+
             break;
         }
+
         case CPrime::RecentActivityFile: {
-            QFile file(CPrime::Variables::CC_CoreApps_RecentActFilePath());
-            if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            QFile file( CPrime::Variables::CC_CoreApps_RecentActFilePath() );
+
+            if ( file.open( QIODevice::ReadWrite | QIODevice::Text ) ) {
+                status = true;
                 file.close();
             } else {
+                status = false;
                 file.close();
-                qCritical() << "Recent Activity file not created...";
             }
         }
     }
@@ -110,15 +132,7 @@ bool CPrime::ValidityFunc::setupFileFolder(CPrime::FileFolderSetup fs)
     return status;
 }
 
-
-// This function is in building do not use it.
-void CPrime::ValidityFunc::checkTextWidgetPath(QLineEdit *m_t)
+void CPrime::ValidityFunc::checkTextWidgetPath( QLineEdit *m_t, QObject *parent )
 {
-    QString m_text = m_t->text();
-    QFileInfo m_info(m_text);
-
-    if (m_info.exists()) {
-
-    }
-
+    CPrime::FilePathValidate::addForValidation( m_t, parent );
 }

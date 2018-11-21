@@ -17,173 +17,192 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA*/
 
-#include "bookmarkmanage.h"
+#include <QWidget>
+#include <QSettings>
+#include <QFile>
+#include <QDir>
+#include <QSet>
+#include <QList>
+#include <QTextStream>
+#include <QLineEdit>
+#include <QDateTime>
 
+#include "cvariables.h"
+#include "validityfunc.h"
+#include "bookmarkmanage.h"
 
 void BookmarkManage::createBook()
 {
     // Function from utilities.cpp setupFolder...
-    CPrime::ValidityFunc::setupFileFolder(CPrime::FileFolderSetup::BookmarkFolder);
+    CPrime::ValidityFunc::setupFileFolder( CPrime::FileFolderSetup::BookmarkFolder );
 
-    QFile file(cbookFullPath);
-    file.open(QFile::ReadWrite);
+    QFile file( cbookFullPath );
+    file.open( QFile::ReadWrite );
     file.close();
 }
 
 void BookmarkManage::checkBook()
 {
-    QFile file(cbookFullPath);
-    if (!file.exists()) {
+    QFile file( cbookFullPath );
+
+    if ( !file.exists() ) {
         createBook();
     }
-    file.open(QFile::ReadOnly);
+
+    file.open( QFile::ReadOnly );
     QString s = file.readAll();
     file.close();
-    if (s.count() == 0) {
-        QTextStream out(&file);
-        file.open(QFile::WriteOnly);
-        out << QString("[Speed%20Dial]\n~~~count~=0");
+
+    if ( s.count() == 0 ) {
+        QTextStream out( &file );
+        file.open( QFile::WriteOnly );
+        out << QString( "[Speed%20Dial]\n~~~count~=0" );
         file.close();
     }
 }
 
 QStringList BookmarkManage::getBookSections()
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
     return bkGet.childGroups();
 }
 
-QStringList BookmarkManage::getBookNames(QString sectionName)
+QStringList BookmarkManage::getBookNames( QString sectionName )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
 
-    bkGet.beginGroup(sectionName);
+    bkGet.beginGroup( sectionName );
     QStringList list = bkGet.allKeys();
     bkGet.endGroup();
-    list.removeOne("~~~count~");
+    list.removeOne( "~~~count~" );
     return list;
 }
 
-bool BookmarkManage::addSection(QString sectionName)
+bool BookmarkManage::addSection( QString sectionName )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
 
-    if (!getBookSections().contains(sectionName, Qt::CaseInsensitive)) {
-        bkGet.beginGroup(sectionName);
-        for (int i = 0; i < getBookSections().count(); ++i) {
-            if (sectionName.contains(getBookSections().at(i), Qt::CaseInsensitive) == false) {
-                bkGet.setValue("~~~count~", "0");
+    if ( !getBookSections().contains( sectionName, Qt::CaseInsensitive ) ) {
+        bkGet.beginGroup( sectionName );
+
+        for ( int i = 0; i < getBookSections().count(); ++i ) {
+            if ( sectionName.contains( getBookSections().at( i ), Qt::CaseInsensitive ) == false ) {
+                bkGet.setValue( "~~~count~", "0" );
             }
         }
+
         bkGet.endGroup();
         return true;
     }
+
     return false;
 }
 
-bool BookmarkManage::addBookmark(QString sectionName, QString bookmarkName, QString bookPath)
+bool BookmarkManage::addBookmark( QString sectionName, QString bookmarkName, QString bookPath )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
 
-    if (!getBookNames(sectionName).contains(bookmarkName, Qt::CaseInsensitive)) {
-        bkGet.beginGroup(sectionName);
-        for (int i = 0; i < getBookNames(sectionName).count(); ++i) {
-            if (bookmarkName.contains("~~~count~", Qt::CaseInsensitive) == true) {
+    if ( !getBookNames( sectionName ).contains( bookmarkName, Qt::CaseInsensitive ) ) {
+        bkGet.beginGroup( sectionName );
+
+        for ( int i = 0; i < getBookNames( sectionName ).count(); ++i ) {
+            if ( bookmarkName.contains( "~~~count~", Qt::CaseInsensitive ) == true ) {
                 return false;
             } else {
-                if (bookmarkName.contains(getBookNames(sectionName).at(i), Qt::CaseInsensitive) == false) {
-                    bkGet.setValue("~~~count~", bkGet.childKeys().count());
+                if ( bookmarkName.contains( getBookNames( sectionName ).at( i ), Qt::CaseInsensitive ) == false ) {
+                    bkGet.setValue( "~~~count~", bkGet.childKeys().count() );
                 }
             }
         }
 
-        bkGet.setValue(bookmarkName, bookPath + "\t\t\t" + QDateTime::currentDateTime().toString("hh.mm.ss - dd.MM.yyyy"));
+        bkGet.setValue( bookmarkName, bookPath + "\t\t\t" + QDateTime::currentDateTime().toString( "hh.mm.ss - dd.MM.yyyy" ) );
         bkGet.endGroup();
         return true;
     }
+
     return false;
 }
 
-void BookmarkManage::delSection(QString sectionName)
+void BookmarkManage::delSection( QString sectionName )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
-    bkGet.remove(sectionName);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
+    bkGet.remove( sectionName );
 }
 
-void BookmarkManage::delBookmark(QString bookmarkName)
+void BookmarkManage::delBookmark( QString bookmarkName )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
-    bkGet.remove(bookmarkName);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
+    bkGet.remove( bookmarkName );
 }
-void BookmarkManage::delbookmark(QString bookmarkName , QString section)
+void BookmarkManage::delbookmark( QString bookmarkName, QString section )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
-    bkGet.beginGroup(section);
-    bkGet.remove(bookmarkName);
-    bkGet.setValue("~~~count~", bkGet.childKeys().count());
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
+    bkGet.beginGroup( section );
+    bkGet.remove( bookmarkName );
+    bkGet.setValue( "~~~count~", bkGet.childKeys().count() );
     bkGet.endGroup();
 }
 
-void BookmarkManage::editbookmark(QString sectionName, QString bookmarkName, QString bookPath)
+void BookmarkManage::editbookmark( QString sectionName, QString bookmarkName, QString bookPath )
 {
-    addBookmark(sectionName, bookmarkName, bookPath);
+    addBookmark( sectionName, bookmarkName, bookPath );
 }
 
-void BookmarkManage::changeAll(QString oldSectionName, QString oldBookmarkName, QString sectionName, QString bookmarkName, QString bookmarkValue)
+void BookmarkManage::changeAll( QString oldSectionName, QString oldBookmarkName, QString sectionName, QString bookmarkName, QString bookmarkValue )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
-    delbookmark(oldBookmarkName, oldSectionName);
-    addBookmark(sectionName, bookmarkName, bookmarkValue);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
+    delbookmark( oldBookmarkName, oldSectionName );
+    addBookmark( sectionName, bookmarkName, bookmarkValue );
 }
 
-void BookmarkManage::changeSection(QString oldSectionName, QString sectionName, QString bookmarkName, QString bookmarkValue)
+void BookmarkManage::changeSection( QString oldSectionName, QString sectionName, QString bookmarkName, QString bookmarkValue )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
 
-    bkGet.beginGroup(oldSectionName);
-    bkGet.remove(bookmarkName);
-    bkGet.setValue("~~~count~", bkGet.childKeys().count());
+    bkGet.beginGroup( oldSectionName );
+    bkGet.remove( bookmarkName );
+    bkGet.setValue( "~~~count~", bkGet.childKeys().count() );
     bkGet.endGroup();
 
-    bkGet.beginGroup(sectionName);
-    bkGet.setValue(bookmarkName, bookmarkValue);
-    bkGet.setValue("~~~count~", bkGet.childKeys().count());
-    bkGet.endGroup();
-}
-
-void BookmarkManage::changeBookmark(QString oldBookmarkName, QString sectionName, QString bookmarkName, QString bookmarkValue)
-{
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
-    bkGet.remove(oldBookmarkName);
-
-    bkGet.beginGroup(sectionName);
-    bkGet.setValue(bookmarkName, bookmarkValue);
+    bkGet.beginGroup( sectionName );
+    bkGet.setValue( bookmarkName, bookmarkValue );
+    bkGet.setValue( "~~~count~", bkGet.childKeys().count() );
     bkGet.endGroup();
 }
 
-QString BookmarkManage::bookmarkValues(QString sectionName, QString bookmarkName)
+void BookmarkManage::changeBookmark( QString oldBookmarkName, QString sectionName, QString bookmarkName, QString bookmarkValue )
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
+    bkGet.remove( oldBookmarkName );
 
-    bkGet.beginGroup(sectionName);
-    return bkGet.value(bookmarkName).toString();
+    bkGet.beginGroup( sectionName );
+    bkGet.setValue( bookmarkName, bookmarkValue );
+    bkGet.endGroup();
 }
 
-QString BookmarkManage::bookmarkPath(QString sectionName, QString bookmarkName)
+QString BookmarkManage::bookmarkValues( QString sectionName, QString bookmarkName )
 {
-    QStringList values(bookmarkValues(sectionName, bookmarkName).split("\t\t\t"));
-    return values.at(0);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
+
+    bkGet.beginGroup( sectionName );
+    return bkGet.value( bookmarkName ).toString();
 }
 
-QString BookmarkManage::bookingTime(QString sectionName, QString bookmarkName)
+QString BookmarkManage::bookmarkPath( QString sectionName, QString bookmarkName )
 {
-    QStringList values(bookmarkValues(sectionName, bookmarkName).split("\t\t\t"));
-    return values.at(1);
+    QStringList values( bookmarkValues( sectionName, bookmarkName ).split( "\t\t\t" ) );
+    return values.at( 0 );
 }
 
-QString BookmarkManage::checkingBookName(QString sectionName, QString bookName)
+QString BookmarkManage::bookingTime( QString sectionName, QString bookmarkName )
 {
-    if (getBookNames(sectionName).contains(bookName, Qt::CaseInsensitive)) {
+    QStringList values( bookmarkValues( sectionName, bookmarkName ).split( "\t\t\t" ) );
+    return values.at( 1 );
+}
+
+QString BookmarkManage::checkingBookName( QString sectionName, QString bookName )
+{
+    if ( getBookNames( sectionName ).contains( bookName, Qt::CaseInsensitive ) ) {
         return "Bookmark exists.";
     } else {
         return "";
@@ -192,47 +211,57 @@ QString BookmarkManage::checkingBookName(QString sectionName, QString bookName)
 
 QString BookmarkManage::keyCount()
 {
-    return QString("%1").arg(keys().count());
+    return QString( "%1" ).arg( keys().count() );
 }
 
 QStringList BookmarkManage::keys()
 {
-    QSettings bkGet(cbookFullPath, QSettings::IniFormat);
+    QSettings bkGet( cbookFullPath, QSettings::IniFormat );
     QStringList list;
-    for(int i = 0; i < bkGet.allKeys().count(); ++i) {
-        list.append(QString(bkGet.allKeys().at(i)).split("/").at(1));
+
+    for ( int i = 0; i < bkGet.allKeys().count(); ++i ) {
+        list.append( QString( bkGet.allKeys().at( i ) ).split( "/" ).at( 1 ) );
     }
+
     list = list.toSet().toList();
-    list.removeOne("~~~count~");
+    list.removeOne( "~~~count~" );
     return list;
 }
 
 // Check on specific section
-QString BookmarkManage::checkingBookPath(QString sectionn, QString bookPath)
+QString BookmarkManage::checkingBookPath( QString sectionn, QString bookPath )
 {
     QLineEdit *line = new QLineEdit();
 
-    foreach (QString bName, getBookNames(sectionn)) {
-        if (!QString::compare(bookmarkPath(sectionn, bName), bookPath, Qt::CaseSensitive)) {
-            line->setText("Path exists in this section.");
+    foreach ( QString bName, getBookNames( sectionn ) ) {
+        if ( !QString::compare( bookmarkPath( sectionn, bName ), bookPath, Qt::CaseSensitive ) ) {
+            line->setText( "Path exists in this section." );
             return line->text();
-        } else { line->setText(""); continue;}
+        } else {
+            line->setText( "" );
+            continue;
+        }
     }
+
     return line->text();
 }
 
 // Check all section
-QString BookmarkManage::checkingBookPathEx(QString bookPath)
+QString BookmarkManage::checkingBookPathEx( QString bookPath )
 {
     QLineEdit *line = new QLineEdit();
 
-    foreach (QString section, getBookSections()) {
-        foreach (QString bName, getBookNames(section)) {
-            if (!QString::compare(bookmarkPath(section, bName), bookPath, Qt::CaseSensitive)) {
-                line->setText(QString("\"%1\" \nexists in \"%2\" section.").arg(bName).arg(section));
+    foreach ( QString section, getBookSections() ) {
+        foreach ( QString bName, getBookNames( section ) ) {
+            if ( !QString::compare( bookmarkPath( section, bName ), bookPath, Qt::CaseSensitive ) ) {
+                line->setText( QString( "\"%1\" \nexists in \"%2\" section." ).arg( bName ).arg( section ) );
                 return line->text();
-            } else { line->setText(""); continue;}
+            } else {
+                line->setText( "" );
+                continue;
+            }
         }
     }
+
     return line->text();
 }

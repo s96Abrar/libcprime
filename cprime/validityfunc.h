@@ -21,24 +21,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef VALIDITYFUNC_H
 #define VALIDITYFUNC_H
 
-#include <QFileInfo>
-#include <QLineEdit>
-#include <QDebug>
+#include "cenums.h"
+#include "libcprime_global.h"
 
-#include "cprime.h"
-#include "mimeutils.h"
-
+class QLineEdit;
 
 namespace CPrime {
 
-class ValidityFunc
-{
-public:
-    static QString checkIsValidDir(const QString &path);
-    static QString checkIsValidFile(const QString &file);
-    static bool setupFileFolder(CPrime::FileFolderSetup fs);
-    static void checkTextWidgetPath(QLineEdit *m_t);
-};
+    class LIBCPRIMESHARED_EXPORT ValidityFunc {
+    public:
+        static QString checkIsValidDir( const QString &path );
+        static QString checkIsValidFile( const QString &file );
+        static bool setupFileFolder( CPrime::FileFolderSetup fs );
+        static void checkTextWidgetPath( QLineEdit *m_t, QObject *parent );
+    };
 
 }
 #endif // VALIDITYFUNC_H

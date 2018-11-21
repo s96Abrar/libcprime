@@ -18,23 +18,27 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef SORTFUNC_H
-#define SORTFUNC_H
+#ifndef FILEPATHVALIDATE_H
+#define FILEPATHVALIDATE_H
 
-#include "cenums.h"
 #include "libcprime_global.h"
+
+class QLineEdit;
+class QPalette;
 
 namespace CPrime {
 
-    class LIBCPRIMESHARED_EXPORT SortFunc {
+    class LIBCPRIMESHARED_EXPORT FilePathValidate : public QObject {
     public:
-        static QStringList sortDate( const QStringList &dateList, CPrime::SortOrder s = CPrime::Ascending, const QString &format = "dd.MM.yyyy" );
-        static QStringList sortTime( const QStringList &timeList, CPrime::SortOrder s = CPrime::Ascending, const QString &format = "hh.mm.ss" );
-        static QStringList sortList( const QStringList &list, CPrime::SortOrder s = CPrime::Ascending );
-        static QStringList sortDateTime( const QStringList &dateTimeList, CPrime::SortOrder s = CPrime::Ascending, const QString &format = "hh.mm.ss - dd.MM.yyyy" );
+        FilePathValidate( QLineEdit *lineEdit, QObject *parent );
+        static void addForValidation( QLineEdit *lineEdit, QObject *parent );
 
+    private:
+        QLineEdit *mLineEdit;
+        QPalette *p;
+        void checkPathExistence( const QString &str );
     };
 
 }
 
-#endif // SORTFUNC_H
+#endif // FILEPATHVALIDATE_H

@@ -156,8 +156,14 @@
 
 
 [ABRAR]
-- dasbord crashing after updating lib 
-[DONE]- same name folder and file not move to trash if same name file exist.
+recent activity have filewatcher
+
+- recent can open but search can't open any file folder
+[True] - parent closed then close the messagebox immediately
+- search folder as window title
+- add Hidden file count at corefm
+[Done] - dashbord crashing after updating lib 
+[DONE] - same name folder and file not move to trash if same name file exist.
 - make the sesssion fetures in start. 
 - not working, create file/folder shortcuts in corefm.(install it,then try)
 [?] - coreimage,corerenamer loads a random folder and corepaint want a file path in start .

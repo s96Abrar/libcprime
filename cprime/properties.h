@@ -21,15 +21,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef PROPERTIES_H
 #define PROPERTIES_H
 
-#include <QStringList>
 #include <QVariant>
-#include <QObject>
 #include <QMap>
-#include <QTextStream>
-#include <QFile>
 
 #include "libcprime_global.h"
-
 
 /**
  * @class Properties
@@ -40,17 +35,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 class LIBCPRIMESHARED_EXPORT Properties {
 
 public:
-  explicit Properties(const QString &fileName = "", const QString &group = "");
-  explicit Properties(const Properties &other);
-  QVariant value(const QString &key, const QVariant &defaultValue = QVariant());
-  bool load(const QString &fileName, const QString &group = "");
-  bool save(const QString &fileName, const QString &group = "");
-  void set(const QString &key, const QVariant &value);
-  bool contains(const QString &key) const;
-  QStringList getKeys() const;
+    explicit Properties( const QString &fileName = "", const QString &group = "" );
+    explicit Properties( const Properties &other );
+    QVariant value( const QString &key, const QVariant &defaultValue = QVariant() );
+    bool load( const QString &fileName, const QString &group = "" );
+    bool save( const QString &fileName, const QString &group = "" );
+    void set( const QString &key, const QVariant &value );
+    bool contains( const QString &key ) const;
+    QStringList getKeys() const;
 
 protected:
-  QMap<QString, QVariant> data;
+    QMap<QString, QVariant> data;
 
 };
 
